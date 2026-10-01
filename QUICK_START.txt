@@ -1,0 +1,61 @@
+UFC MATCHUP ANALYZER — QUICK START
+
+1. Right-click the downloaded ZIP and choose Extract All.
+2. Open the extracted UFC Matchup Analyzer folder.
+3. Double-click UFC Matchup Analyzer.exe.
+4. Choose the division, enter the fight date and two fighters, then click Analyze.
+
+No installation is needed. Keep the app and runtime folders beside the EXE.
+Use a writable folder, such as Documents. You can move the complete app folder.
+
+Type at least two characters: suggestions appear automatically. Use the
+arrow keys and Enter, or click the fighter you want. Swap exchanges fighters.
+Misspelled names can produce suggestions; select the fighter you intended.
+The date format is YYYY-MM-DD. Use Today or Calendar to choose a date.
+History counts exclude the selected date and later. Confirm unusual divisions
+or zero-history hypothetical matchups before starting.
+
+Analyze prepares comparison statistics first, then fits prediction models.
+Compare statistics only skips prediction training and produces no probability.
+An analysis usually takes a few minutes. The window remains usable and shows
+elapsed time. Cancel stops the analysis. Predictions work without internet.
+
+Copy complete report copies the whole displayed analysis. Select text in Full
+report and press Ctrl+C to copy a portion. Save TXT / HTML offers text or HTML,
+then opens a normal dialog with the matching filename entered for you.
+Changing inputs does not change a completed result.
+
+Overview shows probabilities, warnings and key statistics. Fighter comparison
+contains grouped statistics, section selection, filtering and metric definitions.
+Full report contains all text and model notes. A/B follow your fighter order.
+Use the bottom scrollbar for wide tables. N/A means unavailable; pp means
+percentage points. Copy and Save include the entire report, not just visible rows.
+
+Recent analyses automatically keeps the latest 50 completed analyses, capped
+at 50 MB, inside the app folder. Identical valid requests can reuse a result;
+the original time is shown. Recalculate runs afresh. Outdated results remain
+viewable. Help can disable history; Recent analyses can delete/clear entries.
+HTML exports open offline and can be printed from a browser.
+Edit matchup reopens collapsed inputs. Text size and window size are remembered.
+Keyboard: Ctrl+Enter analyzes; Ctrl+S saves; Ctrl+Shift+C copies; Ctrl+F finds
+a metric; Ctrl+Plus/Minus adjusts report text size.
+
+Update datasets needs internet. It checks both models, stages new completed
+fights, rebuilds features, validates and safely applies changes. On failure,
+your current datasets are preserved. Keep at least 1 GB free for updates.
+Do not move or delete the app folder while an operation is running.
+
+Help contains instructions, installation checks, diagnostics, local feature
+rebuilding and restoration of the previous datasets. An interrupted update
+is checked and recovered at the next launch before analysis is enabled.
+
+Probabilities are estimates, not guarantees. Historical fight statistics exclude
+the chosen date and later fights; profile measurements may reflect corrections.
+Dataset updates do not change the selected algorithms; a new app release
+supplies algorithm changes.
+
+LOCAL REVIEW CANDIDATE: dataset redistribution rights are not cleared.
+Do not publish this bundled-data package until that release blocker is resolved.
+
+Full instructions: app/README.md
+Verification and known limitations: app/RELEASE_VERIFICATION.md

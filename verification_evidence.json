@@ -1,0 +1,1984 @@
+{
+  "version": "0.3.0",
+  "scope": "Fresh v0.3 local verification; public distribution remains blocked",
+  "baseline": {
+    "version": "0.2.1",
+    "source_commit": "6900c7ff3c8af887e9155c77aaf42475decaaeac",
+    "restored_source_files": 87,
+    "verified_dataset_files": 15,
+    "hashes_verified": true
+  },
+  "environment": {
+    "os": "Windows 10 Pro x64 build 19045",
+    "cpu": "Intel Core i7-4510U, four logical processors",
+    "ram_gib": 16,
+    "python": "3.14.7 x64",
+    "tcl_tk": "9.0.4",
+    "runtime_dependencies": 18,
+    "actual_windows_scale_percent": 125
+  },
+  "regression": {
+    "status": "PASS",
+    "tests": 96,
+    "skips": 0,
+    "seconds": 12.567,
+    "command": "bundled Python: unittest discover -s tests -v",
+    "log": "work/v03-tests-final.log"
+  },
+  "feature_parity": {
+    "status": "PASS",
+    "sample_fights": 20,
+    "features": 270,
+    "comparisons": 10800,
+    "mismatches": 0,
+    "max_numeric_delta": 2.842170943040401e-14,
+    "log": "work/v3-parity/report.md"
+  },
+  "native_dependencies": {
+    "status": "PASS",
+    "amd64_pe_files": 299,
+    "missing_imports": 0,
+    "launcher_windows_subsystem": 2
+  },
+  "dataset_bytes": 206791890,
+  "frozen_men": {
+    "local_evidence": "work/frozen-men/report.json",
+    "result": {
+      "python": "3.14.7",
+      "tk": "9.0.4",
+      "runs": [
+        {
+          "case": "forward",
+          "seconds": 108.92,
+          "gui_ticks": 1951,
+          "full_app_process_tree_working_set_mib": 524.0,
+          "visible_owned_console_windows": 0,
+          "probability": 0.8229788712684363,
+          "engine_seconds": 98.52,
+          "first_comparison_seconds": 96.542,
+          "stage_timings_seconds": {
+            "loading": 2.737,
+            "features": 85.045,
+            "training": 1.024,
+            "prediction": 0.093,
+            "validation": 8.945
+          },
+          "render_seconds": 0.032,
+          "peak_working_set_mib": 338.8,
+          "model": "v3_bayes_smoothed",
+          "report_lines": 197,
+          "comparison_rows": 108,
+          "copy_and_save": "PASS"
+        },
+        {
+          "case": "reverse",
+          "seconds": 178.34,
+          "gui_ticks": 2941,
+          "full_app_process_tree_working_set_mib": 524.4,
+          "visible_owned_console_windows": 0,
+          "probability": 0.17702112873156378,
+          "engine_seconds": 148.96,
+          "first_comparison_seconds": 146.708,
+          "stage_timings_seconds": {
+            "loading": 3.276,
+            "features": 121.805,
+            "training": 1.131,
+            "prediction": 0.116,
+            "validation": 27.057
+          },
+          "render_seconds": 0.024,
+          "peak_working_set_mib": 347.8,
+          "model": "v3_bayes_smoothed",
+          "report_lines": 197,
+          "comparison_rows": 108,
+          "copy_and_save": "PASS"
+        },
+        {
+          "case": "single-worker",
+          "seconds": 145.52,
+          "gui_ticks": 2553,
+          "full_app_process_tree_working_set_mib": 524.7,
+          "visible_owned_console_windows": 0,
+          "probability": 0.8229788712684363,
+          "engine_seconds": 129.36,
+          "first_comparison_seconds": 127.413,
+          "stage_timings_seconds": {
+            "loading": 3.239,
+            "features": 108.464,
+            "training": 0.945,
+            "prediction": 0.129,
+            "validation": 14.074
+          },
+          "render_seconds": 0.031,
+          "peak_working_set_mib": 347.0,
+          "model": "v3_bayes_smoothed",
+          "report_lines": 197,
+          "comparison_rows": 108,
+          "copy_and_save": "PASS"
+        },
+        {
+          "case": "historical",
+          "seconds": 178.92,
+          "gui_ticks": 2786,
+          "full_app_process_tree_working_set_mib": 530.8,
+          "visible_owned_console_windows": 0,
+          "probability": 0.8432395019728887,
+          "engine_seconds": 164.58,
+          "first_comparison_seconds": 162.242,
+          "stage_timings_seconds": {
+            "loading": 4.415,
+            "features": 142.782,
+            "training": 1.022,
+            "prediction": 0.11,
+            "validation": 12.16
+          },
+          "render_seconds": 0.039,
+          "peak_working_set_mib": 347.4,
+          "model": "v3_bayes_smoothed",
+          "report_lines": 197,
+          "comparison_rows": 108,
+          "copy_and_save": "PASS"
+        }
+      ],
+      "offline": true,
+      "startup": {
+        "seconds": 15.6,
+        "gui_ticks": 289,
+        "full_app_process_tree_working_set_mib": 211.4,
+        "visible_owned_console_windows": 0
+      },
+      "freshness": "Datasets through: men 2026-09-26  \u00b7  women 2026-09-26",
+      "status": "PASS"
+    }
+  },
+  "frozen_women": {
+    "local_evidence": "work/frozen-women/report.json",
+    "result": {
+      "python": "3.14.7",
+      "tk": "9.0.4",
+      "runs": [
+        {
+          "case": "forward",
+          "seconds": 141.61,
+          "gui_ticks": 2488,
+          "full_app_process_tree_working_set_mib": 997.7,
+          "visible_owned_console_windows": 0,
+          "probability": 0.485904994646593,
+          "engine_seconds": 139.53,
+          "first_comparison_seconds": 19.427,
+          "stage_timings_seconds": {
+            "loading": 1.985,
+            "features": 5.145,
+            "cross_validation": 94.365,
+            "training": 24.179,
+            "prediction": 0.029,
+            "validation": 0.644
+          },
+          "render_seconds": 0.017,
+          "peak_working_set_mib": 897.0,
+          "model": "v1_current_ensemble",
+          "report_lines": 226,
+          "comparison_rows": 114,
+          "copy_and_save": "PASS"
+        },
+        {
+          "case": "reverse",
+          "seconds": 147.11,
+          "gui_ticks": 2573,
+          "full_app_process_tree_working_set_mib": 995.6,
+          "visible_owned_console_windows": 0,
+          "probability": 0.5140950053534047,
+          "engine_seconds": 145.62,
+          "first_comparison_seconds": 12.939,
+          "stage_timings_seconds": {
+            "loading": 1.412,
+            "features": 3.71,
+            "cross_validation": 106.322,
+            "training": 24.622,
+            "prediction": 0.04,
+            "validation": 0.432
+          },
+          "render_seconds": 0.018,
+          "peak_working_set_mib": 894.2,
+          "model": "v1_current_ensemble",
+          "report_lines": 226,
+          "comparison_rows": 114,
+          "copy_and_save": "PASS"
+        },
+        {
+          "case": "single-worker",
+          "seconds": 122.0,
+          "gui_ticks": 2256,
+          "full_app_process_tree_working_set_mib": 302.2,
+          "visible_owned_console_windows": 0,
+          "probability": 0.485904994646593,
+          "engine_seconds": 120.08,
+          "first_comparison_seconds": 12.902,
+          "stage_timings_seconds": {
+            "loading": 1.434,
+            "features": 3.334,
+            "cross_validation": 86.249,
+            "training": 19.592,
+            "prediction": 0.438,
+            "validation": 0.593
+          },
+          "render_seconds": 0.026,
+          "peak_working_set_mib": 200.5,
+          "model": "v1_current_ensemble",
+          "report_lines": 226,
+          "comparison_rows": 114,
+          "copy_and_save": "PASS"
+        },
+        {
+          "case": "historical",
+          "seconds": 122.17,
+          "gui_ticks": 2242,
+          "full_app_process_tree_working_set_mib": 300.4,
+          "visible_owned_console_windows": 0,
+          "probability": 0.5018935214876001,
+          "engine_seconds": 120.49,
+          "first_comparison_seconds": 12.41,
+          "stage_timings_seconds": {
+            "loading": 1.282,
+            "features": 3.166,
+            "cross_validation": 80.578,
+            "training": 26.531,
+            "prediction": 0.033,
+            "validation": 0.5
+          },
+          "render_seconds": 0.02,
+          "peak_working_set_mib": 199.1,
+          "model": "v1_current_ensemble",
+          "report_lines": 224,
+          "comparison_rows": 114,
+          "copy_and_save": "PASS"
+        }
+      ],
+      "offline": true,
+      "startup": {
+        "seconds": 28.76,
+        "gui_ticks": 507,
+        "full_app_process_tree_working_set_mib": 212.3,
+        "visible_owned_console_windows": 0
+      },
+      "freshness": "Datasets through: men 2026-09-26  \u00b7  women 2026-09-26",
+      "status": "PASS"
+    }
+  },
+  "usability": {
+    "local_evidence": "work/usability-final/report.json",
+    "result": {
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "men statistics-only without prediction fitting",
+          "status": "PASS",
+          "seconds": 83.171,
+          "first_comparison_seconds": 74.619,
+          "stages": [
+            "checking",
+            "loading",
+            "loading",
+            "features",
+            "report",
+            "complete"
+          ]
+        },
+        {
+          "name": "men exact statistics reuse",
+          "status": "PASS",
+          "seconds": 7.796,
+          "history_entries": 1
+        },
+        {
+          "name": "men filtered-view complete TXT/HTML/clipboard values",
+          "status": "PASS"
+        },
+        {
+          "name": "women statistics-only without prediction fitting",
+          "status": "PASS",
+          "seconds": 13.52,
+          "first_comparison_seconds": 11.533,
+          "stages": [
+            "checking",
+            "loading",
+            "loading",
+            "features",
+            "report",
+            "complete"
+          ]
+        },
+        {
+          "name": "women exact statistics reuse",
+          "status": "PASS",
+          "seconds": 1.182,
+          "history_entries": 2
+        },
+        {
+          "name": "women filtered-view complete TXT/HTML/clipboard values",
+          "status": "PASS"
+        },
+        {
+          "name": "zero dated history requires explicit confirmation",
+          "status": "PASS"
+        },
+        {
+          "name": "real comparison preview before training, then cancellation",
+          "status": "PASS",
+          "seconds": 16.679
+        },
+        {
+          "name": "history disabled stops both reuse and storage",
+          "status": "PASS"
+        }
+      ],
+      "offline": true
+    }
+  },
+  "history_gui": {
+    "local_evidence": "work/history-gui/report.json",
+    "result": {
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "Open history while training; retain, open and copy cancelled comparison",
+          "status": "PASS"
+        },
+        {
+          "name": "Real network maintenance failure preserves a displayed completed prediction fixture",
+          "status": "PASS"
+        },
+        {
+          "name": "Native recent-history dialog deletes selected analysis",
+          "status": "PASS"
+        },
+        {
+          "name": "Explicit Clear history removes entries and preserves displayed report",
+          "status": "PASS"
+        }
+      ]
+    }
+  },
+  "maintenance": {
+    "local_evidence": "work/maintenance-measured/report.json",
+    "result": {
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "bounded live update",
+          "type": "result",
+          "seconds": 53.88,
+          "status": "no_changes",
+          "message": null,
+          "summary": {
+            "men": {
+              "added_fights": 0,
+              "changed": false
+            },
+            "women": {
+              "added_fights": 0,
+              "changed": false
+            }
+          }
+        },
+        {
+          "name": "full local rebuild",
+          "type": "result",
+          "seconds": 535.91,
+          "status": "committed",
+          "message": null,
+          "summary": {
+            "men": {
+              "added_fights": 0,
+              "changed": true
+            },
+            "women": {
+              "added_fights": 0,
+              "changed": true
+            }
+          }
+        },
+        {
+          "name": "GUI restore previous datasets",
+          "type": "result",
+          "seconds": null,
+          "status": null,
+          "message": null,
+          "summary": null
+        },
+        {
+          "name": "actual network failure",
+          "type": "error",
+          "seconds": 41.26,
+          "status": null,
+          "message": "Operation failed (exit 1). Diagnostic log: <project>\\work\\ZIP QA \u2014 Rom\u00e2nia\\UFC Matchup Analyzer\\app\\.runtime\\transactions\\20261001T113750-e69a04d9\\logs\\men-update.log",
+          "summary": null
+        },
+        {
+          "name": "actual malformed source page",
+          "type": "error",
+          "seconds": 20.05,
+          "status": null,
+          "message": "Operation failed (exit 1). Diagnostic log: <project>\\work\\ZIP QA \u2014 Rom\u00e2nia\\UFC Matchup Analyzer\\app\\.runtime\\transactions\\20261001T113832-263e4cc7\\logs\\men-update.log",
+          "summary": null
+        },
+        {
+          "name": "real GUI analysis cancellation",
+          "type": "error",
+          "seconds": null,
+          "status": null,
+          "message": "Cancelled. Your installed datasets were not changed.",
+          "summary": null
+        },
+        {
+          "name": "post-failure installation check",
+          "type": "result",
+          "seconds": 15.91,
+          "status": null,
+          "message": null,
+          "summary": null
+        }
+      ],
+      "peak_additional_runtime_bytes": 221250130,
+      "disk_sampling_seconds": 0.25,
+      "all_original_hashes_restored": true
+    }
+  },
+  "native_text_save": {
+    "local_evidence": "work/native-save-final/report.json",
+    "result": {
+      "status": "PASS",
+      "checks": [
+        {
+          "scenario": "save",
+          "observations": [
+            "default filename confirmed"
+          ],
+          "status": "PASS"
+        },
+        {
+          "scenario": "overwrite-cancel",
+          "observations": [
+            "default filename confirmed",
+            "native overwrite confirmation displayed"
+          ],
+          "status": "PASS"
+        },
+        {
+          "scenario": "cancel",
+          "observations": [
+            "default filename confirmed"
+          ],
+          "status": "PASS"
+        }
+      ]
+    }
+  },
+  "native_html_save": {
+    "local_evidence": "work/native-html-action/report.json",
+    "result": {
+      "status": "PASS",
+      "observations": [
+        "Native HTML filename and file type confirmed"
+      ],
+      "filename": "Islam Makhachev vs Justin Gaethje.html",
+      "utf8_complete_html": true
+    }
+  },
+  "layout": {
+    "local_evidence": "work/layout-final-all-tabs.json",
+    "result": {
+      "status": "PASS",
+      "native_display_dpi": 120,
+      "method": "Tk scaling simulation on the current Windows display; not a change to Windows display scaling",
+      "scales": [
+        {
+          "scale_percent": 100,
+          "width": 1126,
+          "height": 876,
+          "output_height": 575,
+          "status": "PASS"
+        },
+        {
+          "scale_percent": 125,
+          "width": 1126,
+          "height": 876,
+          "output_height": 498,
+          "status": "PASS"
+        },
+        {
+          "scale_percent": 150,
+          "width": 1349,
+          "height": 990,
+          "output_height": 602,
+          "status": "PASS"
+        },
+        {
+          "scale_percent": 200,
+          "width": 1800,
+          "height": 990,
+          "output_height": 560,
+          "status": "PASS"
+        }
+      ]
+    }
+  },
+  "performance": {
+    "local_evidence": "work/performance/report.json",
+    "result": {
+      "status": "PASS",
+      "runs": [
+        {
+          "sex": "men",
+          "version": "baseline",
+          "wall_seconds": 103.943,
+          "engine_seconds": 94.5,
+          "probability": 0.8229788712684363,
+          "engine_working_set_mib": 347.1,
+          "stages": null
+        },
+        {
+          "sex": "men",
+          "version": "v03",
+          "wall_seconds": 85.007,
+          "engine_seconds": 76.44,
+          "probability": 0.8229788712684363,
+          "engine_working_set_mib": 416.7,
+          "stages": {
+            "loading": 2.257,
+            "features": 64.867,
+            "training": 0.751,
+            "prediction": 0.711,
+            "validation": 7.587
+          },
+          "wall_change_percent": -18.22
+        },
+        {
+          "sex": "women",
+          "version": "baseline",
+          "wall_seconds": 146.376,
+          "engine_seconds": 145.58,
+          "probability": 0.485904994646593,
+          "engine_working_set_mib": 206.6,
+          "stages": null
+        },
+        {
+          "sex": "women",
+          "version": "v03",
+          "wall_seconds": 119.809,
+          "engine_seconds": 118.24,
+          "probability": 0.485904994646593,
+          "engine_working_set_mib": 199.9,
+          "stages": {
+            "loading": 1.347,
+            "features": 3.384,
+            "cross_validation": 84.026,
+            "training": 19.513,
+            "prediction": 0.028,
+            "validation": 0.552
+          },
+          "wall_change_percent": -18.15
+        }
+      ],
+      "scope": "Same computer, sequential single-worker CLI runs, verified identical dataset bytes and Python binary. Other release computations completed before this comparison."
+    }
+  },
+  "memory_investigation": {
+    "local_evidence": "work/memory-comparison/report.json",
+    "result": {
+      "status": "PASS",
+      "runs": [
+        {
+          "version": "v021",
+          "wall_seconds": 129.579,
+          "probability": 0.8229788712684363,
+          "os_peak_engine_mib": 391.86,
+          "simultaneous_tree_sample_mib": 406.34,
+          "samples_seconds": 0.1
+        },
+        {
+          "version": "v03",
+          "wall_seconds": 88.986,
+          "probability": 0.8229788712684363,
+          "os_peak_engine_mib": 424.86,
+          "simultaneous_tree_sample_mib": 482.62,
+          "samples_seconds": 0.1
+        }
+      ],
+      "engine_peak_change_percent": 8.42,
+      "scope": "OS PeakWorkingSetSize queried at 100ms intervals, sequential real one-worker predictions, identical verified datasets/runtime. This captures earlier peaks even between samples; tree totals remain sampled."
+    }
+  },
+  "validation_profile": {
+    "local_evidence": "work/validation-profile.json",
+    "result": {
+      "status": "PASS",
+      "runs": [
+        {
+          "repetition": 1,
+          "method": "separate hashing and CSV scan",
+          "seconds": 37.191
+        },
+        {
+          "repetition": 1,
+          "method": "single-pass prototype",
+          "seconds": 11.858
+        },
+        {
+          "repetition": 2,
+          "method": "single-pass prototype",
+          "seconds": 12.25
+        },
+        {
+          "repetition": 2,
+          "method": "separate hashing and CSV scan",
+          "seconds": 12.251
+        }
+      ],
+      "scope": "Hash/schema/row-count prototype, not a replacement for full semantic validation. Same data, alternating order."
+    }
+  },
+  "startup_retry": {
+    "local_evidence": "work/startup-retry.json",
+    "result": {
+      "python": "3.14.7",
+      "tk": "9.0.4",
+      "runs": [],
+      "offline": false,
+      "startup": {
+        "seconds": 14.98,
+        "gui_ticks": 268,
+        "full_app_process_tree_working_set_mib": 204.0,
+        "visible_owned_console_windows": 0
+      },
+      "freshness": "Datasets through: men 2026-09-26  \u00b7  women 2026-09-26",
+      "status": "PASS"
+    }
+  },
+  "delivery_men": {
+    "local_evidence": "work/delivery-men/report.json",
+    "result": {
+      "python": "3.14.7",
+      "tk": "9.0.4",
+      "runs": [
+        {
+          "case": "forward",
+          "seconds": 179.92,
+          "gui_ticks": 2537,
+          "full_app_process_tree_working_set_mib": 523.7,
+          "visible_owned_console_windows": 0,
+          "probability": 0.8229788712684363,
+          "engine_seconds": 168.18,
+          "first_comparison_seconds": 165.176,
+          "stage_timings_seconds": {
+            "loading": 2.986,
+            "features": 148.062,
+            "training": 1.546,
+            "prediction": 0.117,
+            "validation": 9.633
+          },
+          "render_seconds": 0.066,
+          "peak_working_set_mib": 347.5,
+          "model": "v3_bayes_smoothed",
+          "report_lines": 197,
+          "comparison_rows": 108,
+          "copy_and_save": "PASS"
+        },
+        {
+          "case": "reverse",
+          "seconds": 250.99,
+          "gui_ticks": 3788,
+          "full_app_process_tree_working_set_mib": 523.6,
+          "visible_owned_console_windows": 0,
+          "probability": 0.17702112873156378,
+          "engine_seconds": 194.11,
+          "first_comparison_seconds": 191.473,
+          "stage_timings_seconds": {
+            "loading": 13.97,
+            "features": 139.102,
+            "training": 1.04,
+            "prediction": 0.119,
+            "validation": 51.762
+          },
+          "render_seconds": 0.018,
+          "peak_working_set_mib": 347.3,
+          "model": "v3_bayes_smoothed",
+          "report_lines": 197,
+          "comparison_rows": 108,
+          "copy_and_save": "PASS"
+        },
+        {
+          "case": "single-worker",
+          "seconds": 176.48,
+          "gui_ticks": 2974,
+          "full_app_process_tree_working_set_mib": 524.6,
+          "visible_owned_console_windows": 0,
+          "probability": 0.8229788712684363,
+          "engine_seconds": 161.73,
+          "first_comparison_seconds": 159.457,
+          "stage_timings_seconds": {
+            "loading": 3.389,
+            "features": 124.597,
+            "training": 1.074,
+            "prediction": 0.113,
+            "validation": 11.747
+          },
+          "render_seconds": 0.037,
+          "peak_working_set_mib": 435.6,
+          "model": "v3_bayes_smoothed",
+          "report_lines": 197,
+          "comparison_rows": 108,
+          "copy_and_save": "PASS"
+        },
+        {
+          "case": "historical",
+          "seconds": 136.32,
+          "gui_ticks": 2353,
+          "full_app_process_tree_working_set_mib": 536.7,
+          "visible_owned_console_windows": 0,
+          "probability": 0.8432395019728887,
+          "engine_seconds": 122.04,
+          "first_comparison_seconds": 120.411,
+          "stage_timings_seconds": {
+            "loading": 3.261,
+            "features": 102.802,
+            "training": 0.748,
+            "prediction": 0.064,
+            "validation": 12.57
+          },
+          "render_seconds": 0.029,
+          "peak_working_set_mib": 347.4,
+          "model": "v3_bayes_smoothed",
+          "report_lines": 197,
+          "comparison_rows": 108,
+          "copy_and_save": "PASS"
+        }
+      ],
+      "offline": true,
+      "startup": {
+        "seconds": 21.3,
+        "gui_ticks": 364,
+        "full_app_process_tree_working_set_mib": 214.9,
+        "visible_owned_console_windows": 0
+      },
+      "freshness": "Datasets through: men 2026-09-26  \u00b7  women 2026-09-26",
+      "status": "PASS"
+    }
+  },
+  "delivery_women": {
+    "local_evidence": "work/delivery-women/report.json",
+    "result": {
+      "python": "3.14.7",
+      "tk": "9.0.4",
+      "runs": [
+        {
+          "case": "forward",
+          "seconds": 145.62,
+          "gui_ticks": 2433,
+          "full_app_process_tree_working_set_mib": 996.2,
+          "visible_owned_console_windows": 0,
+          "probability": 0.485904994646593,
+          "engine_seconds": 143.91,
+          "first_comparison_seconds": 20.783,
+          "stage_timings_seconds": {
+            "loading": 1.861,
+            "features": 4.623,
+            "cross_validation": 96.135,
+            "training": 24.307,
+            "prediction": 0.391,
+            "validation": 0.516
+          },
+          "render_seconds": 0.025,
+          "peak_working_set_mib": 891.7,
+          "model": "v1_current_ensemble",
+          "report_lines": 226,
+          "comparison_rows": 114,
+          "copy_and_save": "PASS"
+        },
+        {
+          "case": "reverse",
+          "seconds": 191.7,
+          "gui_ticks": 3405,
+          "full_app_process_tree_working_set_mib": 998.2,
+          "visible_owned_console_windows": 0,
+          "probability": 0.5140950053532389,
+          "engine_seconds": 187.85,
+          "first_comparison_seconds": 60.574,
+          "stage_timings_seconds": {
+            "loading": 1.427,
+            "features": 3.577,
+            "cross_validation": 91.091,
+            "training": 33.939,
+            "prediction": 0.085,
+            "validation": 1.49
+          },
+          "render_seconds": 0.034,
+          "peak_working_set_mib": 896.6,
+          "model": "v1_current_ensemble",
+          "report_lines": 226,
+          "comparison_rows": 114,
+          "copy_and_save": "PASS"
+        },
+        {
+          "case": "single-worker",
+          "seconds": 191.89,
+          "gui_ticks": 3413,
+          "full_app_process_tree_working_set_mib": 303.7,
+          "visible_owned_console_windows": 0,
+          "probability": 0.485904994646593,
+          "engine_seconds": 188.49,
+          "first_comparison_seconds": 25.587,
+          "stage_timings_seconds": {
+            "loading": 1.779,
+            "features": 7.548,
+            "cross_validation": 114.56,
+            "training": 46.3,
+            "prediction": 0.391,
+            "validation": 1.107
+          },
+          "render_seconds": 0.029,
+          "peak_working_set_mib": 201.8,
+          "model": "v1_current_ensemble",
+          "report_lines": 226,
+          "comparison_rows": 114,
+          "copy_and_save": "PASS"
+        },
+        {
+          "case": "historical",
+          "seconds": 174.91,
+          "gui_ticks": 3087,
+          "full_app_process_tree_working_set_mib": 301.2,
+          "visible_owned_console_windows": 0,
+          "probability": 0.5018935214876001,
+          "engine_seconds": 172.84,
+          "first_comparison_seconds": 17.671,
+          "stage_timings_seconds": {
+            "loading": 1.863,
+            "features": 4.619,
+            "cross_validation": 122.932,
+            "training": 30.936,
+            "prediction": 0.053,
+            "validation": 0.657
+          },
+          "render_seconds": 0.021,
+          "peak_working_set_mib": 198.4,
+          "model": "v1_current_ensemble",
+          "report_lines": 224,
+          "comparison_rows": 114,
+          "copy_and_save": "PASS"
+        }
+      ],
+      "offline": true,
+      "startup": {
+        "seconds": 25.92,
+        "gui_ticks": 451,
+        "full_app_process_tree_working_set_mib": 212.6,
+        "visible_owned_console_windows": 0
+      },
+      "freshness": "Datasets through: men 2026-09-26  \u00b7  women 2026-09-26",
+      "status": "PASS"
+    }
+  },
+  "delivery_usability": {
+    "local_evidence": "work/delivery-usability/report.json",
+    "result": {
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "men statistics-only without prediction fitting",
+          "status": "PASS",
+          "seconds": 84.74,
+          "first_comparison_seconds": 73.857,
+          "stages": [
+            "checking",
+            "loading",
+            "loading",
+            "features",
+            "report",
+            "complete"
+          ]
+        },
+        {
+          "name": "men exact statistics reuse",
+          "status": "PASS",
+          "seconds": 8.674,
+          "history_entries": 5
+        },
+        {
+          "name": "men filtered-view complete TXT/HTML/clipboard values",
+          "status": "PASS"
+        },
+        {
+          "name": "women statistics-only without prediction fitting",
+          "status": "PASS",
+          "seconds": 14.086,
+          "first_comparison_seconds": 12.066,
+          "stages": [
+            "checking",
+            "loading",
+            "loading",
+            "features",
+            "report",
+            "complete"
+          ]
+        },
+        {
+          "name": "women exact statistics reuse",
+          "status": "PASS",
+          "seconds": 1.543,
+          "history_entries": 6
+        },
+        {
+          "name": "women filtered-view complete TXT/HTML/clipboard values",
+          "status": "PASS"
+        },
+        {
+          "name": "zero dated history requires explicit confirmation",
+          "status": "PASS"
+        },
+        {
+          "name": "real comparison preview before training, then cancellation",
+          "status": "PASS",
+          "seconds": 14.135
+        },
+        {
+          "name": "history disabled stops both reuse and storage",
+          "status": "PASS"
+        }
+      ],
+      "offline": true
+    }
+  },
+  "delivery_history": {
+    "local_evidence": "work/delivery-history/report.json",
+    "result": {
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "Open history while training; retain, open and copy cancelled comparison",
+          "status": "PASS"
+        },
+        {
+          "name": "Real network maintenance failure preserves a displayed completed prediction fixture",
+          "status": "PASS"
+        },
+        {
+          "name": "Native recent-history dialog deletes selected analysis",
+          "status": "PASS"
+        },
+        {
+          "name": "Explicit Clear history removes entries and preserves displayed report",
+          "status": "PASS"
+        }
+      ]
+    }
+  },
+  "delivery_launcher": {
+    "local_evidence": "work/delivery-launcher.json",
+    "result": {
+      "ready": true,
+      "version": "0.3.0",
+      "python": "3.14.7",
+      "tcl": "9.0.4",
+      "tk": "9.0.4",
+      "window_title": "UFC Matchup Analyzer",
+      "window_size": [
+        1126,
+        876
+      ],
+      "status": "Ready to analyze.",
+      "freshness": "Datasets through: men 2026-09-26  \u00b7  women 2026-09-26",
+      "seconds": 29.3,
+      "dialogs": []
+    }
+  },
+  "delivery_html_save": {
+    "local_evidence": "work/delivery-html-save/report.json",
+    "result": {
+      "status": "PASS",
+      "observations": [
+        "Native HTML filename and file type confirmed"
+      ],
+      "filename": "Islam Makhachev vs Justin Gaethje.html",
+      "utf8_complete_html": true
+    }
+  },
+  "delivery_text_save": {
+    "local_evidence": "work/delivery-text-save/report.json",
+    "result": {
+      "status": "PASS",
+      "checks": [
+        {
+          "scenario": "save",
+          "observations": [
+            "default filename confirmed"
+          ],
+          "status": "PASS"
+        },
+        {
+          "scenario": "overwrite-cancel",
+          "observations": [
+            "default filename confirmed",
+            "native overwrite confirmation displayed"
+          ],
+          "status": "PASS"
+        },
+        {
+          "scenario": "cancel",
+          "observations": [
+            "default filename confirmed"
+          ],
+          "status": "PASS"
+        }
+      ]
+    }
+  },
+  "final_audit": {
+    "local_evidence": "work/audit-delivery.json",
+    "result": {
+      "status": "PASS",
+      "python_files": 67,
+      "public_files": 98,
+      "dependency_checks": 18,
+      "errors": []
+    }
+  },
+  "final_inventory": {
+    "local_evidence": "work/delivery-integrity.json",
+    "result": {
+      "status": "PASS",
+      "phase": "tested implementation before documentation-only final packaging",
+      "stable_application_runtime_data_files": 3577,
+      "dataset_files": 15,
+      "real_model_cases": 8,
+      "original_workspace_preserved": true,
+      "scope": "Every non-documentation installed file matches the tested ZIP manifest and candidate folder; application/engine Python matches source. Final archives additionally require verify_archives.py and extraction hash checks."
+    }
+  },
+  "dependency_constraints": {
+    "local_evidence": "work/dependency-constraints.json",
+    "result": {
+      "status": "PASS",
+      "runtime_distributions": 18,
+      "active_dependency_constraints": 15,
+      "checks": [
+        {
+          "package": "beautifulsoup4",
+          "requirement": "soupsieve>=1.6.1",
+          "installed": "2.8.3",
+          "status": "PASS"
+        },
+        {
+          "package": "beautifulsoup4",
+          "requirement": "typing-extensions>=4.0.0",
+          "installed": "4.15.0",
+          "status": "PASS"
+        },
+        {
+          "package": "pandas",
+          "requirement": "numpy>=2.3.3; python_version >= \"3.14\"",
+          "installed": "2.4.5",
+          "status": "PASS"
+        },
+        {
+          "package": "pandas",
+          "requirement": "python-dateutil>=2.8.2",
+          "installed": "2.9.0.post0",
+          "status": "PASS"
+        },
+        {
+          "package": "pandas",
+          "requirement": "tzdata; sys_platform == \"win32\"",
+          "installed": "2026.2",
+          "status": "PASS"
+        },
+        {
+          "package": "python-dateutil",
+          "requirement": "six>=1.5",
+          "installed": "1.17.0",
+          "status": "PASS"
+        },
+        {
+          "package": "requests",
+          "requirement": "charset_normalizer<4,>=2",
+          "installed": "3.4.7",
+          "status": "PASS"
+        },
+        {
+          "package": "requests",
+          "requirement": "idna<4,>=2.5",
+          "installed": "3.15",
+          "status": "PASS"
+        },
+        {
+          "package": "requests",
+          "requirement": "urllib3<3,>=1.26",
+          "installed": "2.7.0",
+          "status": "PASS"
+        },
+        {
+          "package": "requests",
+          "requirement": "certifi>=2023.5.7",
+          "installed": "2026.4.22",
+          "status": "PASS"
+        },
+        {
+          "package": "scikit-learn",
+          "requirement": "numpy>=1.24.1",
+          "installed": "2.4.5",
+          "status": "PASS"
+        },
+        {
+          "package": "scikit-learn",
+          "requirement": "scipy>=1.10.0",
+          "installed": "1.17.1",
+          "status": "PASS"
+        },
+        {
+          "package": "scikit-learn",
+          "requirement": "joblib>=1.3.0",
+          "installed": "1.5.3",
+          "status": "PASS"
+        },
+        {
+          "package": "scikit-learn",
+          "requirement": "threadpoolctl>=3.2.0",
+          "installed": "3.6.0",
+          "status": "PASS"
+        },
+        {
+          "package": "scipy",
+          "requirement": "numpy<2.7,>=1.26.4",
+          "installed": "2.4.5",
+          "status": "PASS"
+        }
+      ],
+      "errors": [],
+      "qa_parser_only": true
+    }
+  },
+  "cold_start_profile": {
+    "local_evidence": "work/startup-cold-profile.json",
+    "result": {
+      "status": "PASS",
+      "seconds": 104.607,
+      "stages": [
+        {
+          "stage": "dependency metadata",
+          "seconds": 0.43
+        },
+        {
+          "stage": "CSV mens_ufc_model/data/raw/ufcstats_men/events.csv",
+          "seconds": 0.075
+        },
+        {
+          "stage": "SHA mens_ufc_model/data/raw/ufcstats_men/events.csv",
+          "seconds": 0.001
+        },
+        {
+          "stage": "CSV mens_ufc_model/data/raw/ufcstats_men/fights.csv",
+          "seconds": 0.209
+        },
+        {
+          "stage": "SHA mens_ufc_model/data/raw/ufcstats_men/fights.csv",
+          "seconds": 0.012
+        },
+        {
+          "stage": "CSV mens_ufc_model/data/raw/ufcstats_men/fight_stats.csv",
+          "seconds": 0.394
+        },
+        {
+          "stage": "SHA mens_ufc_model/data/raw/ufcstats_men/fight_stats.csv",
+          "seconds": 0.036
+        },
+        {
+          "stage": "CSV mens_ufc_model/data/raw/ufcstats_men/fighters.csv",
+          "seconds": 0.074
+        },
+        {
+          "stage": "SHA mens_ufc_model/data/raw/ufcstats_men/fighters.csv",
+          "seconds": 0.003
+        },
+        {
+          "stage": "CSV mens_ufc_model/data/interim/mens_prefight_snapshots.csv",
+          "seconds": 0.531
+        },
+        {
+          "stage": "SHA mens_ufc_model/data/interim/mens_prefight_snapshots.csv",
+          "seconds": 0.054
+        },
+        {
+          "stage": "CSV mens_ufc_model/data/interim/mens_model_ready_matchups.csv",
+          "seconds": 0.579
+        },
+        {
+          "stage": "SHA mens_ufc_model/data/interim/mens_model_ready_matchups.csv",
+          "seconds": 0.059
+        },
+        {
+          "stage": "CSV mens_ufc_model/data/processed/mens_training_rows.csv",
+          "seconds": 1.031
+        },
+        {
+          "stage": "SHA mens_ufc_model/data/processed/mens_training_rows.csv",
+          "seconds": 0.109
+        },
+        {
+          "stage": "CSV mens_ufc_model/data/processed/mens_training_rows_with_elo.csv",
+          "seconds": 1.149
+        },
+        {
+          "stage": "SHA mens_ufc_model/data/processed/mens_training_rows_with_elo.csv",
+          "seconds": 0.105
+        },
+        {
+          "stage": "CSV mens_ufc_model/data/processed/mens_training_rows_v2_advanced.csv",
+          "seconds": 2.551
+        },
+        {
+          "stage": "SHA mens_ufc_model/data/processed/mens_training_rows_v2_advanced.csv",
+          "seconds": 0.227
+        },
+        {
+          "stage": "CSV mens_ufc_model/data/processed/mens_training_rows_v3_bayes_smoothing_candidate.csv",
+          "seconds": 17.818
+        },
+        {
+          "stage": "SHA mens_ufc_model/data/processed/mens_training_rows_v3_bayes_smoothing_candidate.csv",
+          "seconds": 3.357
+        },
+        {
+          "stage": "CSV womens_ufc_model/output_td_repaired/ufc_womens_fighter_fight_stats_td_control_repaired.csv",
+          "seconds": 0.322
+        },
+        {
+          "stage": "SHA womens_ufc_model/output_td_repaired/ufc_womens_fighter_fight_stats_td_control_repaired.csv",
+          "seconds": 0.007
+        },
+        {
+          "stage": "CSV womens_ufc_model/output_advanced_features_sig_fixed/ufc_womens_model_training_rows_advanced_sig_fixed.csv",
+          "seconds": 0.821
+        },
+        {
+          "stage": "SHA womens_ufc_model/output_advanced_features_sig_fixed/ufc_womens_model_training_rows_advanced_sig_fixed.csv",
+          "seconds": 0.377
+        },
+        {
+          "stage": "CSV womens_ufc_model/output_bayesian_prefight_smoothing_sig_fixed_v1/ufc_womens_model_training_rows_advanced_plus_bayes_prefight_smoothing_v1.csv",
+          "seconds": 1.472
+        },
+        {
+          "stage": "SHA womens_ufc_model/output_bayesian_prefight_smoothing_sig_fixed_v1/ufc_womens_model_training_rows_advanced_plus_bayes_prefight_smoothing_v1.csv",
+          "seconds": 0.105
+        },
+        {
+          "stage": "CSV womens_ufc_model/output_advanced_features/advanced_prefight_snapshots.csv",
+          "seconds": 0.362
+        },
+        {
+          "stage": "SHA womens_ufc_model/output_advanced_features/advanced_prefight_snapshots.csv",
+          "seconds": 0.008
+        },
+        {
+          "stage": "CSV womens_ufc_model/output_quality_fixed/ufc_womens_fighter_profiles.csv",
+          "seconds": 0.256
+        },
+        {
+          "stage": "SHA womens_ufc_model/output_quality_fixed/ufc_womens_fighter_profiles.csv",
+          "seconds": 0.001
+        },
+        {
+          "stage": "complete dataset validation",
+          "seconds": 32.183
+        },
+        {
+          "stage": "import numpy",
+          "seconds": 8.011
+        },
+        {
+          "stage": "import pytz",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import .relativedelta",
+          "seconds": 0.055
+        },
+        {
+          "stage": "import pytz",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import numexpr",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import bottleneck",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import pandas",
+          "seconds": 14.842
+        },
+        {
+          "stage": "import scipy.sparse",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import numpy",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import encodings.ascii",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.big5",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.big5hkscs",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp037",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp1006",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp1026",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp1125",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp1140",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp1250",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp1251",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp1252",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp1253",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp1254",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp1255",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.cp1256",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp1257",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp1258",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp273",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp424",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp437",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import encodings.cp500",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp720",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp737",
+          "seconds": 0.004
+        },
+        {
+          "stage": "import encodings.cp775",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp850",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.cp852",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp855",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.cp856",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp857",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp858",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp860",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp861",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp862",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp863",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp864",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp865",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp866",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp869",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.cp874",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp875",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp932",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp949",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.cp950",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.euc_jis_2004",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.euc_jisx0213",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.euc_jp",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.euc_kr",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.gb18030",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.gb2312",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.gbk",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.hp_roman8",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.hz",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.iso2022_jp",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.iso2022_jp_1",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.iso2022_jp_2",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.iso2022_jp_2004",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.iso2022_jp_3",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.iso2022_jp_ext",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.iso2022_kr",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.iso8859_10",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.iso8859_11",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.iso8859_13",
+          "seconds": 0.003
+        },
+        {
+          "stage": "import encodings.iso8859_14",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.iso8859_15",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.iso8859_16",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.iso8859_2",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.iso8859_3",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.iso8859_4",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.iso8859_5",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.iso8859_6",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.iso8859_7",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.iso8859_8",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.iso8859_9",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.johab",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.koi8_r",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.koi8_t",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.koi8_u",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.kz1048",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.latin_1",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.mac_cyrillic",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.mac_greek",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.mac_iceland",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.mac_latin2",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.mac_roman",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.mac_turkish",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.ptcp154",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.shift_jis",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.shift_jis_2004",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import encodings.shift_jisx0213",
+          "seconds": 0.001
+        },
+        {
+          "stage": "import encodings.tis_620",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import numpy.linalg",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import numpy.fft",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.spatial",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.spatial",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.spatial",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.spatial",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.optimize",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.integrate",
+          "seconds": 1.967
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.005
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import scipy.stats",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import sklearn",
+          "seconds": 42.377
+        },
+        {
+          "stage": "import joblib",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import chardet",
+          "seconds": 0.002
+        },
+        {
+          "stage": "import charset_normalizer",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import certifi",
+          "seconds": 0.0
+        },
+        {
+          "stage": "import requests",
+          "seconds": 2.184
+        },
+        {
+          "stage": "import bs4",
+          "seconds": 1.103
+        },
+        {
+          "stage": "import lxml.etree",
+          "seconds": 0.0
+        },
+        {
+          "stage": "history men",
+          "seconds": 0.379
+        },
+        {
+          "stage": "history women",
+          "seconds": 0.689
+        }
+      ],
+      "scope": "First use of new unmodified ZIP extraction; actual startup checks, same local-temp environment, no GUI/controller sampling. Concurrent model verification ongoing."
+    }
+  },
+  "cold_gui": {
+    "local_evidence": "work/delivery-cold-gui.json",
+    "result": {
+      "python": "3.14.7",
+      "tk": "9.0.4",
+      "runs": [],
+      "offline": true,
+      "startup": {
+        "seconds": 34.88,
+        "gui_ticks": 619,
+        "full_app_process_tree_working_set_mib": 212.9,
+        "visible_owned_console_windows": 0
+      },
+      "freshness": "Datasets through: men 2026-09-26  \u00b7  women 2026-09-26",
+      "status": "PASS"
+    }
+  },
+  "known_failure": {
+    "name": "Three first-use new-extraction launches exceeded the former 90-second QA timeout",
+    "outcome": "Retries passed. New unmodified extraction checks completed in 104.607 seconds: dataset verification 32.183, NumPy 8.011, pandas 14.842, scikit-learn 42.377 seconds under concurrent load. Test allowance increased to 300 seconds; another fresh real GUI first launch passed without restarting in 34.88 seconds. Underlying OS/disk import slowdown cause is not asserted; this is not a clean-machine pass."
+  },
+  "scope_notes": [
+    "Eight frozen-ZIP predictions ran real engines, forced fresh; no cache or mock counted as a prediction. Both baseline probabilities and overlapping raw report metrics checked.",
+    "Final GUI export/error callback changes were independently regression/native-tested, then exercised through the delivery ZIP. Runtime, calculation modules, engine and data hashes are checked across packaging phases.",
+    "Maintenance was rerun on disposable extracted data, including full rebuild and restoration. No genuinely new live fight was promoted; additions and fault cases are fixtures.",
+    "Source-only remote CI and macOS/Linux execution are unverified. The Python-installation missing/declined branches were mocked."
+  ],
+  "help_menu_fix": {
+    "status": "PASS",
+    "date": "2026-10-01",
+    "cause": "Unchanged menu entry states were configured every 150 ms, triggering native Windows popup redraws.",
+    "change": "Only configure a Help menu entry when its enabled/disabled state changes; retain operation and backup safeguards.",
+    "regression": {
+      "tests": 98,
+      "skips": 0,
+      "seconds": 15.905,
+      "log": "work/help-menu-regression.log"
+    },
+    "before_fix": "Both new regression tests failed; 20 idle polls made 60 unnecessary native menu configurations.",
+    "native_menu": {
+      "method": "Actual packaged GUI, bundled runtime, real startup and doctor workers; native Tk menu posted for ready/busy states while controller polling runs",
+      "checks": [
+        {
+          "state": "ready",
+          "seconds": 2.501,
+          "scheduled_ticks": 20,
+          "redundant_menu_configurations": 0,
+          "entry_states": [
+            "normal",
+            "normal",
+            "disabled"
+          ]
+        },
+        {
+          "state": "busy",
+          "seconds": 2.504,
+          "scheduled_ticks": 20,
+          "redundant_menu_configurations": 0,
+          "entry_states": [
+            "disabled",
+            "disabled",
+            "disabled"
+          ]
+        }
+      ],
+      "log": "work/help-menu-native.json"
+    },
+    "visual_capture": "Computer Use capture unavailable: FrameArrived timed out; retry reported window capture timed out. Native posted-menu checks passed.",
+    "scope": "GUI state updates only. Prediction/model/runtime/data files unchanged; previous model and leakage evidence retained."
+  },
+  "comparison_navigation_fix": {
+    "status": "PASS",
+    "date": "2026-10-01",
+    "behavior": "Compare statistics only navigates to the existing comparison for an exact current displayed matchup, without creating a new analysis or modifying the prediction/report/history.",
+    "regression": {
+      "tests": 104,
+      "skips": 0,
+      "seconds": 12.868,
+      "log": "work/comparison-navigation-tests.log",
+      "final_ui_tests": 18,
+      "final_ui_seconds": 7.331
+    },
+    "real_offline_predictions": {
+      "men": {
+        "model": "v3_bayes_smoothed",
+        "probability": 0.8229788712684363,
+        "prediction_seconds": 160.79,
+        "comparison_navigation_seconds": 0.0662,
+        "result": "No new worker; report/metrics/timestamp/history preserved; copy and TXT exports passed; baseline probability/feature equality checked",
+        "log": "work/comparison-navigation-men/report.json"
+      },
+      "women": {
+        "model": "v1_current_ensemble",
+        "probability": 0.485904994646593,
+        "prediction_seconds": 130.52,
+        "comparison_navigation_seconds": 0.1006,
+        "result": "No new worker; report/metrics/timestamp/history preserved; copy and TXT exports passed; baseline probability/feature equality checked",
+        "log": "work/comparison-navigation-women/report.json"
+      }
+    },
+    "safeguards": "Changed category/fighters/order/IDs/division/date/cutoff, outdated fingerprints, incomplete metrics and failed/cancelled/pending results follow normal validated preparation. Recalculate bypasses reuse. Navigation works with automatic history disabled because it displays the existing report rather than loading a cached calculation."
+  }
+}

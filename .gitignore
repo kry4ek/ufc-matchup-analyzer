@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.pyc
+.runtime/
+predictions/
+mens_ufc_model/data/
+mens_ufc_model/cache/
+mens_ufc_model/_update_manifests/
+mens_ufc_model/_backup*/
+womens_ufc_model/output*/
+womens_ufc_model/cache/
+womens_ufc_model/_update_manifests/
+womens_ufc_model/_backup*/
+*.log
+dist/
+work/
+release-assets/

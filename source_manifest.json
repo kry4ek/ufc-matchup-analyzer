@@ -1,0 +1,197 @@
+{
+  "source_commit": "6900c7ff3c8af887e9155c77aaf42475decaaeac",
+  "allowlist": [
+    "mens_ufc_model/src/__init__.py",
+    "mens_ufc_model/src/common/__init__.py",
+    "mens_ufc_model/src/common/utils.py",
+    "mens_ufc_model/src/data/__init__.py",
+    "mens_ufc_model/src/data/build_mens_training_dataset.py",
+    "mens_ufc_model/src/data/ingest_ufcstats.py",
+    "mens_ufc_model/src/data/ufcstats_scraper.py",
+    "mens_ufc_model/src/features/__init__.py",
+    "mens_ufc_model/src/features/add_mens_elo_features.py",
+    "mens_ufc_model/src/features/build_mens_advanced_features.py",
+    "mens_ufc_model/src/features/build_mens_bayes_smoothing_candidate.py",
+    "mens_ufc_model/src/features/mens_elo.py",
+    "mens_ufc_model/src/features/mens_features.py",
+    "mens_ufc_model/src/features/mens_live_v2_features.py",
+    "mens_ufc_model/src/features/mens_live_v3_bayes_features.py",
+    "mens_ufc_model/src/models/__init__.py",
+    "mens_ufc_model/src/models/model_registry.py",
+    "mens_ufc_model/src/models/train_baseline.py",
+    "mens_ufc_model/src/prediction/__init__.py",
+    "mens_ufc_model/src/prediction/fighter_lookup.py",
+    "mens_ufc_model/src/prediction/predict_matchup.py",
+    "mens_ufc_model/src/prediction/prediction_engine.py",
+    "mens_ufc_model/src/validation/__init__.py",
+    "mens_ufc_model/src/validation/validate_live_v3_bayes_parity.py",
+    "mens_ufc_model/src/validation/validate_mens_dataset.py",
+    "mens_ufc_model/update_ufc_mens_dataset_incremental.py",
+    "womens_ufc_model/build_prefight_bayesian_smoothing_v1_REBUILT.py",
+    "womens_ufc_model/compute_live_bayes_smoothing_features_v1.py",
+    "womens_ufc_model/predict_matchup_advanced.py",
+    "womens_ufc_model/update_ufc_womens_dataset_incremental.py"
+  ],
+  "files": [
+    {
+      "path": "mens_ufc_model/src/__init__.py",
+      "source_sha256": "38f718a20ab758359a4d0f9454f3b6fba7abc939a95eda2c953ea102b49cb94e",
+      "exported_sha256": "38f718a20ab758359a4d0f9454f3b6fba7abc939a95eda2c953ea102b49cb94e"
+    },
+    {
+      "path": "mens_ufc_model/src/common/__init__.py",
+      "source_sha256": "95a4108a6c36bea247f75415ac3adac64413032ae20a42072665490b085d953b",
+      "exported_sha256": "95a4108a6c36bea247f75415ac3adac64413032ae20a42072665490b085d953b"
+    },
+    {
+      "path": "mens_ufc_model/src/common/utils.py",
+      "source_sha256": "ed76191210ee765236f7ddf06080def99bf3efe18b823a1a7cc6e370539da28e",
+      "exported_sha256": "ed76191210ee765236f7ddf06080def99bf3efe18b823a1a7cc6e370539da28e"
+    },
+    {
+      "path": "mens_ufc_model/src/data/__init__.py",
+      "source_sha256": "b6afbed42f026ccc2c6cf9e0a7eb7f1b3dd9ab764562c80c3961bcbcba118d6a",
+      "exported_sha256": "b6afbed42f026ccc2c6cf9e0a7eb7f1b3dd9ab764562c80c3961bcbcba118d6a"
+    },
+    {
+      "path": "mens_ufc_model/src/data/build_mens_training_dataset.py",
+      "source_sha256": "380c1d75a4390aadc58d76ead101a7d042999c85ccb56a0dc0d8c68c8c053cb6",
+      "exported_sha256": "380c1d75a4390aadc58d76ead101a7d042999c85ccb56a0dc0d8c68c8c053cb6"
+    },
+    {
+      "path": "mens_ufc_model/src/data/ingest_ufcstats.py",
+      "source_sha256": "7c8481835d9772991b81edfee21a6a3bbaed7bf42ee45e00a11c1acca266f564",
+      "exported_sha256": "7c8481835d9772991b81edfee21a6a3bbaed7bf42ee45e00a11c1acca266f564"
+    },
+    {
+      "path": "mens_ufc_model/src/data/ufcstats_scraper.py",
+      "source_sha256": "72de90e4be60e369fde60493d5eaeececf5df39616aa03e737758007e5c2a70a",
+      "exported_sha256": "72de90e4be60e369fde60493d5eaeececf5df39616aa03e737758007e5c2a70a"
+    },
+    {
+      "path": "mens_ufc_model/src/features/__init__.py",
+      "source_sha256": "23d090f1ea70e3861d065f255c07be532dd1d1a64cb6b6e2d0d4047a7a6149a0",
+      "exported_sha256": "23d090f1ea70e3861d065f255c07be532dd1d1a64cb6b6e2d0d4047a7a6149a0"
+    },
+    {
+      "path": "mens_ufc_model/src/features/add_mens_elo_features.py",
+      "source_sha256": "088ea8174e8ddc0309fdf397000bf1945f4665dd1e8e2304d7fcfc0ef568133b",
+      "exported_sha256": "088ea8174e8ddc0309fdf397000bf1945f4665dd1e8e2304d7fcfc0ef568133b"
+    },
+    {
+      "path": "mens_ufc_model/src/features/build_mens_advanced_features.py",
+      "source_sha256": "fc3461d4ac7ac3eaed89dfe944c604c959392f0ba3134778f4ff2eb313ab83a3",
+      "exported_sha256": "fc3461d4ac7ac3eaed89dfe944c604c959392f0ba3134778f4ff2eb313ab83a3"
+    },
+    {
+      "path": "mens_ufc_model/src/features/build_mens_bayes_smoothing_candidate.py",
+      "source_sha256": "970440bd5e084906afa68412d4a1f3643dd3ed60414262a46de1b4a3853b0d36",
+      "exported_sha256": "55b30738cde95043ce53700ff08e4a201c7b7b6c0a4bc10443f171fde54f497e"
+    },
+    {
+      "path": "mens_ufc_model/src/features/mens_elo.py",
+      "source_sha256": "7ba6537483bc8a2e683e5bddde28f7c8aa378b28cd4a9f489e80bbd5a30ac78a",
+      "exported_sha256": "7ba6537483bc8a2e683e5bddde28f7c8aa378b28cd4a9f489e80bbd5a30ac78a"
+    },
+    {
+      "path": "mens_ufc_model/src/features/mens_features.py",
+      "source_sha256": "e6f5afd3a4a0b55822fcd6480d0382cf6ff4d93d093d9c4ef5d2c60b683a646a",
+      "exported_sha256": "e6f5afd3a4a0b55822fcd6480d0382cf6ff4d93d093d9c4ef5d2c60b683a646a"
+    },
+    {
+      "path": "mens_ufc_model/src/features/mens_live_v2_features.py",
+      "source_sha256": "5ad4fcd91a04d29abf1ded043bf5004554bd538e1ed5cd0ca05c0d33fa231def",
+      "exported_sha256": "19b59d53a3dee9ea59c13521342ebb3cf92ba51f16c4c146cc1327d83851a9f9"
+    },
+    {
+      "path": "mens_ufc_model/src/features/mens_live_v3_bayes_features.py",
+      "source_sha256": "1605695915a467cc5575cce5918d2e0a85a8fd66797c97312254eb4ac0a3125c",
+      "exported_sha256": "bf3518dd8786603c473997fbd5fdfaa459d64758677d5c3f76d52e82adb72f81"
+    },
+    {
+      "path": "mens_ufc_model/src/models/__init__.py",
+      "source_sha256": "7f44248fb02cfd7652bb8ee460f706a5359dd71bc0f207a8f863d3715098b418",
+      "exported_sha256": "7f44248fb02cfd7652bb8ee460f706a5359dd71bc0f207a8f863d3715098b418"
+    },
+    {
+      "path": "mens_ufc_model/src/models/model_registry.py",
+      "source_sha256": "33ea848eb79be49e6848683ef532446b31c5d7e155f5f5109647ca70285b162d",
+      "exported_sha256": "cda14d878cac76f303bf3f3883f2be15f9029f6874abbf89654112fba63a0585"
+    },
+    {
+      "path": "mens_ufc_model/src/models/train_baseline.py",
+      "source_sha256": "8078506cd93584c418ca74d833d46d802715044274dccbac8fb5053eeedc28c4",
+      "exported_sha256": "8078506cd93584c418ca74d833d46d802715044274dccbac8fb5053eeedc28c4"
+    },
+    {
+      "path": "mens_ufc_model/src/prediction/__init__.py",
+      "source_sha256": "bdf77a4e79d53839b163143960d0377c35d9e0edc2d25281ce9cfacb596809bf",
+      "exported_sha256": "bdf77a4e79d53839b163143960d0377c35d9e0edc2d25281ce9cfacb596809bf"
+    },
+    {
+      "path": "mens_ufc_model/src/prediction/fighter_lookup.py",
+      "source_sha256": "a545356bbb160348db8e24458703da361bff20674b5353a6395ecc70211d2f42",
+      "exported_sha256": "a545356bbb160348db8e24458703da361bff20674b5353a6395ecc70211d2f42"
+    },
+    {
+      "path": "mens_ufc_model/src/prediction/predict_matchup.py",
+      "source_sha256": "5db9a2ccc872021faa4b7a6ea70560f4264a3bb91c71200b1e04d35b4204d86f",
+      "exported_sha256": "5db9a2ccc872021faa4b7a6ea70560f4264a3bb91c71200b1e04d35b4204d86f"
+    },
+    {
+      "path": "mens_ufc_model/src/prediction/prediction_engine.py",
+      "source_sha256": "20c91e45c28b9733b854b7294ef76c5ece64467445246f0d309d3b21d9dd8885",
+      "exported_sha256": "ffde46624e621d39b4cbb2b18ec1d37a6bc199cc61317abd1d41d96b4a673351"
+    },
+    {
+      "path": "mens_ufc_model/src/validation/__init__.py",
+      "source_sha256": "e23bbc8f4cc72c5e9ed2e5a83b779d4972b80c37fdfef0394351c93e7ddc3586",
+      "exported_sha256": "e23bbc8f4cc72c5e9ed2e5a83b779d4972b80c37fdfef0394351c93e7ddc3586"
+    },
+    {
+      "path": "mens_ufc_model/src/validation/validate_live_v3_bayes_parity.py",
+      "source_sha256": "5afaa7a2c66cb59d99df7d40246526db930e70bd412b5564a8e6b25ae1022b99",
+      "exported_sha256": "5afaa7a2c66cb59d99df7d40246526db930e70bd412b5564a8e6b25ae1022b99"
+    },
+    {
+      "path": "mens_ufc_model/src/validation/validate_mens_dataset.py",
+      "source_sha256": "5fd3bf3e8847392f30f6f4bf05a04473adf15188a121e4618cc0ee8e08850738",
+      "exported_sha256": "5fd3bf3e8847392f30f6f4bf05a04473adf15188a121e4618cc0ee8e08850738"
+    },
+    {
+      "path": "mens_ufc_model/update_ufc_mens_dataset_incremental.py",
+      "source_sha256": "b4553241a3c57a0f80d3054695c36709d418152d63af4111243c9eb045222c75",
+      "exported_sha256": "767182e1ed5f6b94209d009e7eb1c2177a3be0e60e1c7a4a1f1516cadf94755b"
+    },
+    {
+      "path": "womens_ufc_model/build_prefight_bayesian_smoothing_v1_REBUILT.py",
+      "source_sha256": "c563fbb8f6e62141748234ca8169554662f0c6fad36a9cfef60ed6562a154abd",
+      "exported_sha256": "c563fbb8f6e62141748234ca8169554662f0c6fad36a9cfef60ed6562a154abd"
+    },
+    {
+      "path": "womens_ufc_model/compute_live_bayes_smoothing_features_v1.py",
+      "source_sha256": "65168122ce9537aac733761e3807689925ca962f8011523abee5f98679797800",
+      "exported_sha256": "65168122ce9537aac733761e3807689925ca962f8011523abee5f98679797800"
+    },
+    {
+      "path": "womens_ufc_model/predict_matchup_advanced.py",
+      "source_sha256": "32a549cd9c083381fa1cfe761bdcad0f8ce608f260b608fb319be70373a3fb7a",
+      "exported_sha256": "a0a484fb447e90b92bb09a5b672f9061d6f3878790a35d2dade6010020d164c2"
+    },
+    {
+      "path": "womens_ufc_model/update_ufc_womens_dataset_incremental.py",
+      "source_sha256": "53015b091efac41f8a80677f0af423dbe29d3c2fa0f8c8a327303d0a42d42d89",
+      "exported_sha256": "cb8a104579a5f5a1af08228ef7f5163410b514b49e1b5e80dc71be0cda3d5724"
+    }
+  ],
+  "adaptations": [
+    "public men default v3",
+    "feature manifest relocated",
+    "updaters reject empty or malformed event listings",
+    "updaters filter future events before applying inspection limits",
+    "women cross-validation failures stop prediction instead of silently changing ensemble weights",
+    "UTF-8 and LF line endings for portable checkout hashes",
+    "prediction JSON exposes computed live comparison values, women ensemble weights and full reliability details without changing calculations",
+    "v0.3 prepares dated comparison once before unchanged prediction fitting and exposes structured progress"
+  ]
+}

@@ -1,0 +1,1365 @@
+{
+  "python_version": "3.14.7",
+  "python_sha256": "d297e5ff019966817ad8502465176139f2d3d840fa4ed84b13bed399a6ab1f15",
+  "tcltk_msi_sha256": "4ae542ab046b3a1b2f10e6c1ee91a215cb4d0638aae373d6e0687472eb7170bd",
+  "zig_version": "0.15.2",
+  "zig_exe_sha256": "d408dd38eed3e5204af841bcebf70502a4dbbb8399a3a3262be55059370bc018",
+  "wheels": [
+    {
+      "file": "beautifulsoup4-4.14.3-py3-none-any.whl",
+      "sha256": "0918bfe44902e6ad8d57732ba310582e98da931428d231a5ecb9e7c703a735bb",
+      "url": "https://files.pythonhosted.org/packages/1a/39/47f9197bdd44df24d67ac8893641e16f386c984a0619ef2ee4c51fbbc019/beautifulsoup4-4.14.3-py3-none-any.whl"
+    },
+    {
+      "file": "certifi-2026.4.22-py3-none-any.whl",
+      "sha256": "3cb2210c8f88ba2318d29b0388d1023c8492ff72ecdde4ebdaddbb13a31b1c4a",
+      "url": "https://files.pythonhosted.org/packages/22/30/7cd8fdcdfbc5b869528b079bfb76dcdf6056b1a2097a662e5e8c04f42965/certifi-2026.4.22-py3-none-any.whl"
+    },
+    {
+      "file": "charset_normalizer-3.4.7-cp314-cp314-win_amd64.whl",
+      "sha256": "92a0a01ead5e668468e952e4238cccd7c537364eb7d851ab144ab6627dbbe12f",
+      "url": "https://files.pythonhosted.org/packages/48/77/72dcb0921b2ce86420b2d79d454c7022bf5be40202a2a07906b9f2a35c97/charset_normalizer-3.4.7-cp314-cp314-win_amd64.whl"
+    },
+    {
+      "file": "idna-3.15-py3-none-any.whl",
+      "sha256": "048adeaf8c2d788c40fee287673ccaa74c24ffd8dcf09ffa555a2fbb59f10ac8",
+      "url": "https://files.pythonhosted.org/packages/d2/23/408243171aa9aaba178d3e2559159c24c1171a641aa83b67bdd3394ead8e/idna-3.15-py3-none-any.whl"
+    },
+    {
+      "file": "joblib-1.5.3-py3-none-any.whl",
+      "sha256": "5fc3c5039fc5ca8c0276333a188bbd59d6b7ab37fe6632daa76bc7f9ec18e713",
+      "url": "https://files.pythonhosted.org/packages/7b/91/984aca2ec129e2757d1e4e3c81c3fcda9d0f85b74670a094cc443d9ee949/joblib-1.5.3-py3-none-any.whl"
+    },
+    {
+      "file": "lxml-6.1.0-cp314-cp314-win_amd64.whl",
+      "sha256": "398443df51c538bd578529aa7e5f7afc6c292644174b47961f3bf87fe5741120",
+      "url": "https://files.pythonhosted.org/packages/1a/a4/263ebb0710851a3c6c937180a9a86df1206fdfe53cc43005aa2237fd7736/lxml-6.1.0-cp314-cp314-win_amd64.whl"
+    },
+    {
+      "file": "numpy-2.4.5-cp314-cp314-win_amd64.whl",
+      "sha256": "4bd2cd4ef9c0afa87de73723c0a33c0edff62143e1432917458e26d3d195d87f",
+      "url": "https://files.pythonhosted.org/packages/aa/92/d063df4d63d988b20d881856c74df76c0c1786229bb870f3a52af0981d4d/numpy-2.4.5-cp314-cp314-win_amd64.whl"
+    },
+    {
+      "file": "pandas-3.0.3-cp314-cp314-win_amd64.whl",
+      "sha256": "3c20a521bbb85902f79f7270c80a59e1b5452d96d170c034f207181870f97ac5",
+      "url": "https://files.pythonhosted.org/packages/38/55/792619469bab9882d8bbd5865d45a72f6478762d04a9af4bf0d08c503e95/pandas-3.0.3-cp314-cp314-win_amd64.whl"
+    },
+    {
+      "file": "python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+      "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
+      "url": "https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl"
+    },
+    {
+      "file": "requests-2.34.2-py3-none-any.whl",
+      "sha256": "2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0",
+      "url": "https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl"
+    },
+    {
+      "file": "scikit_learn-1.8.0-cp314-cp314-win_amd64.whl",
+      "sha256": "56079a99c20d230e873ea40753102102734c5953366972a71d5cb39a32bc40c6",
+      "url": "https://files.pythonhosted.org/packages/76/18/a8def8f91b18cd1ba6e05dbe02540168cb24d47e8dcf69e8d00b7da42a08/scikit_learn-1.8.0-cp314-cp314-win_amd64.whl"
+    },
+    {
+      "file": "scipy-1.17.1-cp314-cp314-win_amd64.whl",
+      "sha256": "3877ac408e14da24a6196de0ddcace62092bfc12a83823e92e49e40747e52c19",
+      "url": "https://files.pythonhosted.org/packages/4b/39/f0e8ea762a764a9dc52aa7dabcfad51a354819de1f0d4652b6a1122424d6/scipy-1.17.1-cp314-cp314-win_amd64.whl"
+    },
+    {
+      "file": "six-1.17.0-py2.py3-none-any.whl",
+      "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+      "url": "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl"
+    },
+    {
+      "file": "soupsieve-2.8.3-py3-none-any.whl",
+      "sha256": "ed64f2ba4eebeab06cc4962affce381647455978ffc1e36bb79a545b91f45a95",
+      "url": "https://files.pythonhosted.org/packages/46/2c/1462b1d0a634697ae9e55b3cecdcb64788e8b7d63f54d923fcd0bb140aed/soupsieve-2.8.3-py3-none-any.whl"
+    },
+    {
+      "file": "threadpoolctl-3.6.0-py3-none-any.whl",
+      "sha256": "43a0b8fd5a2928500110039e43a5eed8480b918967083ea48dc3ab9f13c4a7fb",
+      "url": "https://files.pythonhosted.org/packages/32/d5/f9a850d79b0851d1d4ef6456097579a9005b31fea68726a4ae5f2d82ddd9/threadpoolctl-3.6.0-py3-none-any.whl"
+    },
+    {
+      "file": "typing_extensions-4.15.0-py3-none-any.whl",
+      "sha256": "f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548",
+      "url": "https://files.pythonhosted.org/packages/18/67/36e9267722cc04a6b9f15c7f3441c2363321a3ea07da7ae0c0707beb2a9c/typing_extensions-4.15.0-py3-none-any.whl"
+    },
+    {
+      "file": "tzdata-2026.2-py2.py3-none-any.whl",
+      "sha256": "bbe9af844f658da81a5f95019480da3a89415801f6cc966806612cc7169bffe7",
+      "url": "https://files.pythonhosted.org/packages/ce/e4/dccd7f47c4b64213ac01ef921a1337ee6e30e8c6466046018326977efd95/tzdata-2026.2-py2.py3-none-any.whl"
+    },
+    {
+      "file": "urllib3-2.7.0-py3-none-any.whl",
+      "sha256": "9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897",
+      "url": "https://files.pythonhosted.org/packages/7f/3e/5db95bcf282c52709639744ca2a8b149baccf648e39c8cc87553df9eae0c/urllib3-2.7.0-py3-none-any.whl"
+    }
+  ],
+  "tk_files": [
+    {
+      "path": "DLLs/_tkinter.pyd",
+      "sha256": "ee3eb2cdac591821cf71cda8035a6bc9b148d92996dd45b24e3ae3715613315d"
+    },
+    {
+      "path": "DLLs/libtommath.dll",
+      "sha256": "2d760fefb452665b6af8c8d9d29f3a8378f10fc0847cdd9938ea0cb5edf1d573"
+    },
+    {
+      "path": "DLLs/tcl90.dll",
+      "sha256": "a1fb45f963b05cb083a97df1449c2023b484eb921d40a463da7501b0f60e0f70"
+    },
+    {
+      "path": "DLLs/tcl9tk90.dll",
+      "sha256": "31f625c52e65d29d126e710ed8bab2ec964cb770e4fc59bc329dfff02cb6ddcf"
+    },
+    {
+      "path": "DLLs/zlib1.dll",
+      "sha256": "f07195206534ebb1fe75093d4ec6c54a7a9227281b0c09d2113465b71da9e900"
+    },
+    {
+      "path": "Lib/idlelib/__init__.py",
+      "sha256": "4b0fddb52b5b9c8d3371b1915fe54915cfdc34b0c175857bb4331446f8f628c6"
+    },
+    {
+      "path": "Lib/idlelib/__main__.py",
+      "sha256": "2c737df894fe4e04001cc99aa9bb419afc6a0e59ffcd39319af911421db089ca"
+    },
+    {
+      "path": "Lib/idlelib/autocomplete.py",
+      "sha256": "d6863e5703612857b03bc44ce9e5c591b24bbaa02eade5900664e9d87217df10"
+    },
+    {
+      "path": "Lib/idlelib/autocomplete_w.py",
+      "sha256": "3d88d2b736871d3302cf31eaf785d02c0a2d9acd4b23f1b088857bbd2f2bafa8"
+    },
+    {
+      "path": "Lib/idlelib/autoexpand.py",
+      "sha256": "eec10ffd8d460fb90aaa61fb286f25f982793df124a55d52a92b34a0b15c3f4c"
+    },
+    {
+      "path": "Lib/idlelib/browser.py",
+      "sha256": "9b7fb874bdc94408d6b3a8579235783c53eb56eea39b43c6c81b24290cc9d3c2"
+    },
+    {
+      "path": "Lib/idlelib/calltip.py",
+      "sha256": "7e24fc65b0dfe9b0abfbb0dea97ab222098aa978f85f2e79a2ac56ff92f5bb2a"
+    },
+    {
+      "path": "Lib/idlelib/calltip_w.py",
+      "sha256": "1476595ef18d6adf82d23b435354968683f4099a88fcdb2d814706da3e3ca4fb"
+    },
+    {
+      "path": "Lib/idlelib/ChangeLog",
+      "sha256": "c4ebd1900bc9aac681b38afdfe01716194e2a50b23547817626023af543b40cc"
+    },
+    {
+      "path": "Lib/idlelib/codecontext.py",
+      "sha256": "8d93dbc7c9c3b356473ed21ae215c0bf372936966b2c26263cf52d0a35252daf"
+    },
+    {
+      "path": "Lib/idlelib/colorizer.py",
+      "sha256": "6a8895a1c6ed720103e40756a066ec7e110b8b2d787293ca3ec3448455955df5"
+    },
+    {
+      "path": "Lib/idlelib/config-extensions.def",
+      "sha256": "9a85cddd234ebef874603be43931ba8e4dc472ab296ba7078b4070ae1d3bd111"
+    },
+    {
+      "path": "Lib/idlelib/config-highlight.def",
+      "sha256": "b196aa1f93dee8419ac4014149dde19c5d75f3eb650e5504c7e25ebb98de36fb"
+    },
+    {
+      "path": "Lib/idlelib/config-keys.def",
+      "sha256": "7ff9cafaf6debba83dd4d0f1cf983f0ce4c2c741d5601c63bf58f8a968546073"
+    },
+    {
+      "path": "Lib/idlelib/config-main.def",
+      "sha256": "a4ec0f92913b0262098a6bf6062ca1b17a4500c0a3b0714f0d23a3decb73dcc5"
+    },
+    {
+      "path": "Lib/idlelib/config.py",
+      "sha256": "7a7097ec536f7f5de852eb7b192c0d9b7b4c0568b038b9ca6f3d1da59324cd46"
+    },
+    {
+      "path": "Lib/idlelib/config_key.py",
+      "sha256": "00bc58751f927ecf96c7639bdaee3465230a62904f1422e2d6fccdeea85d6836"
+    },
+    {
+      "path": "Lib/idlelib/configdialog.py",
+      "sha256": "eae800c41a45f4660d89ac0b6478c8e3e36e7ba6154576fc8eac1f24c7d45c2b"
+    },
+    {
+      "path": "Lib/idlelib/CREDITS.txt",
+      "sha256": "e76c48ee5de0e3d6eef5fb074eaba2222cf2df85e84c36351eace6ad7ced64af"
+    },
+    {
+      "path": "Lib/idlelib/debugger.py",
+      "sha256": "b6675126a9492e6411c627561a783446f6067abbb953c1c55861cfe66864664c"
+    },
+    {
+      "path": "Lib/idlelib/debugger_r.py",
+      "sha256": "a6993114bc2beec73984ebb74329b7346e455af8afb5ae8b8aa0f3eb9bc3b5d5"
+    },
+    {
+      "path": "Lib/idlelib/debugobj.py",
+      "sha256": "1fccd8335e8c3ce7ca07dff376137b2ddec41e477a84b422df40e2edd0d5b0ba"
+    },
+    {
+      "path": "Lib/idlelib/debugobj_r.py",
+      "sha256": "58b528ea4605d5f039442830286c80b4720dcc23b0339281dab5dccc14374936"
+    },
+    {
+      "path": "Lib/idlelib/delegator.py",
+      "sha256": "699e43c46f1924a7becb3137653c5260c4a913fa7563b899fd590cd47f68d963"
+    },
+    {
+      "path": "Lib/idlelib/dynoption.py",
+      "sha256": "f783fac61fba739a734520a3e80199aac78ff90840020fc73b8e71e482af494c"
+    },
+    {
+      "path": "Lib/idlelib/editor.py",
+      "sha256": "e4e50b77cdc38d571a1ed3a0acfe834a0da8e99ca815334dfd884b81e50700d5"
+    },
+    {
+      "path": "Lib/idlelib/extend.txt",
+      "sha256": "76b8dc255a5f782561676bb60c3da5cae09d28c05bd8b5d92ed4497ec538bb8e"
+    },
+    {
+      "path": "Lib/idlelib/filelist.py",
+      "sha256": "43b9500c4f2af931384752874f91dbe9ead2c12127f64c5c6a39d0cf624a2727"
+    },
+    {
+      "path": "Lib/idlelib/format.py",
+      "sha256": "54a083ab464bb220bd30ab3ce6c7bb0da43cd1b45bd13ab77dc62f2a8a3f7abb"
+    },
+    {
+      "path": "Lib/idlelib/grep.py",
+      "sha256": "b6cf03c53cbebcd05fee212fdeedf4e20183889d82caa6c5ac96bc159b905985"
+    },
+    {
+      "path": "Lib/idlelib/help.html",
+      "sha256": "4d4f56b0f917ced388b53b6810eae7adb68136c8f67ea8326431d158a8055eaf"
+    },
+    {
+      "path": "Lib/idlelib/help.py",
+      "sha256": "f11e0e7a661908b9b686437116ddc64df104a75bb8a070422e763982be0676a4"
+    },
+    {
+      "path": "Lib/idlelib/help_about.py",
+      "sha256": "ea0b73366c5c7aa6f70c30678e132981eef0fd4ce012c55182cbdfe28e4e5b30"
+    },
+    {
+      "path": "Lib/idlelib/history.py",
+      "sha256": "3aa21fec9e929f5d7ee6eeb9334e03317198bb3de054bb7b216fd62dc8fbf48a"
+    },
+    {
+      "path": "Lib/idlelib/HISTORY.txt",
+      "sha256": "a1ffe4ad9ded2632b863b0da44557b1dff0ead3a2b3b43d788f7c43803598662"
+    },
+    {
+      "path": "Lib/idlelib/hyperparser.py",
+      "sha256": "e81e9177fcf8acfae3d47ea8a9552ee4f012cc733e3e4a2043e86856403abe40"
+    },
+    {
+      "path": "Lib/idlelib/Icons/folder.gif",
+      "sha256": "7c98d566a13fd599d1c11a375f387fef69b6c595c4f18c5d88c188a860be0e55"
+    },
+    {
+      "path": "Lib/idlelib/Icons/idle.ico",
+      "sha256": "7f13eeb5dca39d05e24b9eb069c6dcb2748633822d67288a8bf8b7e21cdddf55"
+    },
+    {
+      "path": "Lib/idlelib/Icons/idle_16.gif",
+      "sha256": "fe3af292b38660a8a58b1a8b4fa4240aa190602e7e9a700ea0536b3181fc968e"
+    },
+    {
+      "path": "Lib/idlelib/Icons/idle_16.png",
+      "sha256": "78fb3fb0ec11f61bc6cf0947f3c3923aa18e1c6513684058ed0fa01ac858143e"
+    },
+    {
+      "path": "Lib/idlelib/Icons/idle_256.png",
+      "sha256": "a6f573efc06f2b2edce284c5758bd94344114547eb4c5e26baa8453eeaa91cf1"
+    },
+    {
+      "path": "Lib/idlelib/Icons/idle_32.gif",
+      "sha256": "fe70991cfccd1267922e94d91e02e9a58d2d29fd3382a2f4975280b9023cb7b9"
+    },
+    {
+      "path": "Lib/idlelib/Icons/idle_32.png",
+      "sha256": "797cd05f1964d57c4c6c248ac7f7ea6a38019ada32a9ab7e6c28d060f87b03de"
+    },
+    {
+      "path": "Lib/idlelib/Icons/idle_48.gif",
+      "sha256": "37484901eb40eefa846308e1da3ff6f240ea98f769a2afc3cf4fdba00327ecbe"
+    },
+    {
+      "path": "Lib/idlelib/Icons/idle_48.png",
+      "sha256": "a09f433197c8870b12bb7859cc4c3fe2068908cb1ddbd4880ab0f6fee91b6c23"
+    },
+    {
+      "path": "Lib/idlelib/Icons/minusnode.gif",
+      "sha256": "efa5aa1d1e3439ab85425bd2aa3a25b9e6c21309e672690cfb32219e1eb7a7f3"
+    },
+    {
+      "path": "Lib/idlelib/Icons/openfolder.gif",
+      "sha256": "9a59e2abf1840156e9db8f85a38822fd56ab79a139eb95ec86f1fba1bb87326b"
+    },
+    {
+      "path": "Lib/idlelib/Icons/plusnode.gif",
+      "sha256": "6ace9e90a2bcb16d06c4d78837137f2c14bc26b3bd9f24b7b6afeadb689bdafb"
+    },
+    {
+      "path": "Lib/idlelib/Icons/python.gif",
+      "sha256": "158c31382f8e5b41fded0c2aa9cc66a382928b003cdd8b5b0518836ad9c89377"
+    },
+    {
+      "path": "Lib/idlelib/Icons/README.txt",
+      "sha256": "6aa3d7c255c4e2afb81d2098dfaf63c19a8f8cf932661a707a637451b1216576"
+    },
+    {
+      "path": "Lib/idlelib/Icons/tk.gif",
+      "sha256": "7f16cb2e322891dbd9101302c09ffda0c2a3a72d053bb8c0927d507414c59cad"
+    },
+    {
+      "path": "Lib/idlelib/idle.bat",
+      "sha256": "15a3977f0d2c6a8e87db2ef7050ea10afb3a88b064bf5ef95439924e42464114"
+    },
+    {
+      "path": "Lib/idlelib/idle.py",
+      "sha256": "4e32dfca06f56cd261043b9de10a7901e939436c7f36626dc716e2f435fd1b15"
+    },
+    {
+      "path": "Lib/idlelib/idle.pyw",
+      "sha256": "b8bd323142da1e1365064e78e94466a9cca7694a31c7c70f67e0e06a2e3efecb"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/__init__.py",
+      "sha256": "72e7ff9d0a12e4c218d38fee837c7dd413ecb0abd08bd26c57f33dbc5e08b358"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/example_noext",
+      "sha256": "ec3f7a3773f65ee985181e92d7e327366937dd1aad11133009bf1c3fd868eb50"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/example_stub.pyi",
+      "sha256": "590406a8044a52502630aa7877c90096f7be57510bef64a676ad5207b4897902"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/htest.py",
+      "sha256": "110f05db6647b7dd2ac2602aba3f7fa0a7103dc5134b522bc3d6ab564a57ce91"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/mock_idle.py",
+      "sha256": "576aa5c6ed0b5a42a1474fd90d54b97c8f2d9abb408fa5e3f3e4d374a5d427de"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/mock_tk.py",
+      "sha256": "679d19c85a426a888b76cac538a6fd7225f281234d0017c08a14305fc70ed57a"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/README.txt",
+      "sha256": "0fd76009a4f4d948d8e82d83a4b999b772507edddd84e046bf98e0c61d1e0844"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/template.py",
+      "sha256": "19f7864debd3340f6654472216c1610a04f843495673e6b8ec6653682f37d14b"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_autocomplete.py",
+      "sha256": "c6f32bc7d37b1460d136e6a974d893f4562eb2355b2ce16e6f57e7ea1e92b259"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_autocomplete_w.py",
+      "sha256": "b8d2fa36733f7c5abfb68bbb852db0de27a55142dbd888ef201b41a855d5e87f"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_autoexpand.py",
+      "sha256": "5b6866d92d66a1f70f529bc8e32c689dfdbf39c34e8a01b546371f8d92246e07"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_browser.py",
+      "sha256": "532a269a58e66953bf6f9cb8eb36825b9fc58396c88b6ce9c08af0ae875d75b2"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_calltip.py",
+      "sha256": "218fcebfc3653927f3824cb722ed04a004d9fe5809c5ef68b9f219a6b102d2e8"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_calltip_w.py",
+      "sha256": "f3bdc45a886d5805fc30bcca5bf893344c215f57f285fd7ab834da3ea3a0876f"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_codecontext.py",
+      "sha256": "866bb8ee88f3ea76a9d615c47dde491777cc17c58063b7548ea4adc34f14e7a1"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_colorizer.py",
+      "sha256": "0db88c731c18c501ed2a33a5857697708f70dfd8a4122c8e9711d947c6f873fe"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_config.py",
+      "sha256": "018719324d4e7ffc4c495875fe0f5a2c4368e1464f73db38ddce262702101b88"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_config_key.py",
+      "sha256": "f99447b4386e957db35df678ee8601fd77f36fc8883bc5d983d062130ee48e5b"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_configdialog.py",
+      "sha256": "5fc0499adc1ceb6a5e00bce2dab092016719968ef95b983e9ad6b63c82a33818"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_debugger.py",
+      "sha256": "e113da7790f551b007e71b58c4a29ed21280da9344c6c44917ca912050f442bc"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_debugger_r.py",
+      "sha256": "0eb3b8e1d20e47f63ed327aeeeda491d2ffb41777a9108feee158aa445790a5f"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_debugobj.py",
+      "sha256": "a3a5ceec69ce1794649b088ac861183b8adc4c91881b29fbb221cea1089b71ca"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_debugobj_r.py",
+      "sha256": "264859e8deff2f9cf3f81045142a09d3bf925f350dd48db5ba69368faf2f29f3"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_delegator.py",
+      "sha256": "2acbe98d9db036baa7dcd46ac24b5832cf6b716c588c267365558bada2166387"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_editmenu.py",
+      "sha256": "4d2f853daceabb90cd183571d13083b9713f8d8279af0e1f6ae7d787a41c8010"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_editor.py",
+      "sha256": "e113353de3d1953ba7ee0e1b2b8c2e441bf73c924fadb5e0f85b188c62e96e2b"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_filelist.py",
+      "sha256": "cd359485d4f520a93d55aba8ac663bebc4c2c5101245d37a63a971fa6c175e6e"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_format.py",
+      "sha256": "80a2e9dfc0e7cb896b1e9bd61abe68c6b15f74c7349e393c3aa1eb05a363651f"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_grep.py",
+      "sha256": "7741096b156140ce0cb3d90a414bf095fc2505620e610f1f95d175c73f011331"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_help.py",
+      "sha256": "a545fb4eb522dfaa7a79b969b6a1be5d5ac2d037043fdf14a254fe909f098c20"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_help_about.py",
+      "sha256": "7e528fa30564a319c9524e13f18bf8e08115888c0e1b182096c9e1d0dce49cdd"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_history.py",
+      "sha256": "cac6c984ce34456d4aefff5721b8d4c6fbe76286bfbbef8ddacf61d5d36071b7"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_hyperparser.py",
+      "sha256": "166421c087bdace4bbf6cb1fd8b8bba986b0dfb485762521c9a7ae5618edc166"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_iomenu.py",
+      "sha256": "ba79786fe1b74a77ea04dbc96301a0562acdcadf99e45c90d624e77de945dec8"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_macosx.py",
+      "sha256": "6fbee21adef8f95f9be575f6058322d66a66775924ae594f0d9fa2e98d8d688f"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_mainmenu.py",
+      "sha256": "e3c6bfccc93c9c0469bb6ead80ee552699871ab85ecfd3002241dae936ca7bb6"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_multicall.py",
+      "sha256": "255022e2c3ad8bef001ceca7fdcf0dfc7b8dfe6db8d7f5f338f5fe4e69e1fc70"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_outwin.py",
+      "sha256": "af78c637b4198fa522609d5aa50f82b329e151b5dac30e3728346d5ba5b4ed8e"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_parenmatch.py",
+      "sha256": "d41411dfe26afe7f3302029333c7c9b896abfe96e68ec991df6ebb61daff408f"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_pathbrowser.py",
+      "sha256": "7396a4069a03423f2c6c5ad62d92c742d17df0e3f2e7f66839ff111958ed1bf1"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_percolator.py",
+      "sha256": "348ed04617a2937915b9c594792d5dbdb3edac826380da206fd54ff1abc556b5"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_pyparse.py",
+      "sha256": "232fe6760557664952185c669a444c0e16042fa28be2d293d595214e011562a7"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_pyshell.py",
+      "sha256": "7cd737908ea463b420648a8b8b760ecf8e757772ad26ec97f2a6ecb1fd8f7040"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_query.py",
+      "sha256": "1fdf0e86c3880c894e134ffb8102c5ae98c34f50a7b9d8e3f26753e208e6eed7"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_redirector.py",
+      "sha256": "7c5ac19ef05920dd922e81153bc9f0c88092a0cec1a0fad264d964cb68a7b574"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_replace.py",
+      "sha256": "bdc68df1437a3d5051236b73c8601e9e08035a923947ba21d4b8618b4edba6e3"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_rpc.py",
+      "sha256": "38e3bb1648cab509be226a34405f1bb6fb477ea215bf1121e08c745469fb9a0f"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_run.py",
+      "sha256": "2cb0ef1fbe6a04a3ebe450442308172bad214ecc8672ae03d4b664b6a5723067"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_runscript.py",
+      "sha256": "90e900bbdc01eb2c436761fa20909d0d5b96741a7f1c5bea83f52c70a66d4d7a"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_scrolledlist.py",
+      "sha256": "7b63939b3d15478a401e9496991d75be3a7ed8a4414858a08bb277206b0620d9"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_search.py",
+      "sha256": "cefe25b6190417849c1b47cba06d47ec1be2cc7740be00d03dd8aa5d68970a7b"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_searchbase.py",
+      "sha256": "a57aac6c593c3fba1fd99839b0aa8b5a064143bfdf5771e356583877026db204"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_searchengine.py",
+      "sha256": "cd1ca903cf5f79683bea784da0157659f0b12baca04f5d54ea49957f2089ef5b"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_sidebar.py",
+      "sha256": "c379708e1c42ce1e53220b165d765bf55d180a6d4c37398d54257dff60ecf45e"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_squeezer.py",
+      "sha256": "479f4bd15124fc01284bd90a656953dad7de1ab022587aa54047b89364a6e113"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_stackviewer.py",
+      "sha256": "304aa8a2818eb4964062861e0ba7b6ab13060ba767dc1c1c82d48eda4dd5f50a"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_statusbar.py",
+      "sha256": "d2760da19add51c076b561934f8d6dfc14f2aa1459db22eb56341a06659d33b4"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_text.py",
+      "sha256": "a2cba8c23d68b6c26f08e525231491689092badbc78948032f2a5f2a20484944"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_textview.py",
+      "sha256": "06da4e9636798407c88563a0b734b8e68e1008a48333612406daa4d6b0ea6382"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_tooltip.py",
+      "sha256": "b2f02f500266a3ef9047f631ac8aa2596f9fa59686a691f2c2e6db4788bb0dda"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_tree.py",
+      "sha256": "266ad30f2f7a299a15ae7f2222568fb318276faf74be49f08b8b483692040931"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_undo.py",
+      "sha256": "ff7dff12d672fd67d763456ea3267077bfc8eaa6c46c1dfcd9185cc61e5615fd"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_util.py",
+      "sha256": "8b2acdfbbbc13ab1d92eccd56d2fb8f2dd31ee03a2b0d46e21b7f7e0dccf7902"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_warning.py",
+      "sha256": "2c47f4ebcdb0fa7670df468f9e6e7808d2aa1ebcb6a37deebcb5ff6d4b4f3f6e"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_window.py",
+      "sha256": "82b52f668ebdf1a53f2f83d2e4f193feac3ea2be6d96a66c5542ae6f452e56fc"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_zoomheight.py",
+      "sha256": "d25e89a3bbf8d32d400b64450148ccfed3c14f0ed64aedf08797568afac335b2"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_zzdummy.py",
+      "sha256": "a18c8f8cd2a6e54fca207d61ba03766e7f02e196cf822ea1bc0c722edf150943"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/test_zzdummy_user.py",
+      "sha256": "e6eafccdd10eee83776f08647f6e4d964cd7393c9507ac571bb3d4c24992b066"
+    },
+    {
+      "path": "Lib/idlelib/idle_test/tkinter_testing_utils.py",
+      "sha256": "fd23ab4162889e63c2240f324cf0cb654b49e17306d0a114ccd7d32c99e636ed"
+    },
+    {
+      "path": "Lib/idlelib/iomenu.py",
+      "sha256": "bb243eae31f9aade0eec9705b4cf27e912d947e012793de5444e9fa21f2ef081"
+    },
+    {
+      "path": "Lib/idlelib/macosx.py",
+      "sha256": "83580b3ea5771bd526b832c1714914da4a733c9c4255be2b77f501f9c76906e6"
+    },
+    {
+      "path": "Lib/idlelib/mainmenu.py",
+      "sha256": "0873aa2511c4518588021aa884fa250b8d961d1a22ba0bdf11f965eccc76db65"
+    },
+    {
+      "path": "Lib/idlelib/multicall.py",
+      "sha256": "e0e10f9f1f53260b3670fe0b8c233525c24ff7ce86d3ef2f149aea439f614656"
+    },
+    {
+      "path": "Lib/idlelib/NEWS2x.txt",
+      "sha256": "315c47ef623db6592c0923c3df2b168cd4e9ec702feebce9109e9b56eafe4e07"
+    },
+    {
+      "path": "Lib/idlelib/News3.txt",
+      "sha256": "e4575738439ca86780af39b513a873b4a034f2f5163a07e3ee9504487d4e9433"
+    },
+    {
+      "path": "Lib/idlelib/outwin.py",
+      "sha256": "e26019afeb3cc3191fff4a5e592382d403185fdf3e19f001e98f46aad4954715"
+    },
+    {
+      "path": "Lib/idlelib/parenmatch.py",
+      "sha256": "1e79fcd497d449836554772c565cbf3f31930f8da0ddfc499096e23a9f96a18c"
+    },
+    {
+      "path": "Lib/idlelib/pathbrowser.py",
+      "sha256": "85ca313137a19c6f9ad57db14ef0f002d1c298f155d566bc1ac67c12a8ebaf61"
+    },
+    {
+      "path": "Lib/idlelib/percolator.py",
+      "sha256": "48b2c2718f6600caab78ac6d2ce5e590978f3bd591d6b32cbbd56077a53b65ef"
+    },
+    {
+      "path": "Lib/idlelib/pyparse.py",
+      "sha256": "2b0bd9d69ca690db15d675a20f6a82efe85adebc41d333492fd3f4e486aed9cc"
+    },
+    {
+      "path": "Lib/idlelib/pyshell.py",
+      "sha256": "a252432316edaaf81643ad189791b291af60421c8dd172f8a153eb210e66b35f"
+    },
+    {
+      "path": "Lib/idlelib/query.py",
+      "sha256": "91afbefab85009eb1910e4e061ea3b22c2019961626dc3db59b212a6225f4604"
+    },
+    {
+      "path": "Lib/idlelib/README.txt",
+      "sha256": "dcd6421ae86c6a0b52bdf28f94582e2c20829f230e8d8e0e3f4b59c8d0e269ed"
+    },
+    {
+      "path": "Lib/idlelib/redirector.py",
+      "sha256": "8d769296f88603bdac1e1bc7c82f2f375c112f588e9006034b1b21bc1c6ba9ff"
+    },
+    {
+      "path": "Lib/idlelib/replace.py",
+      "sha256": "1893b9c6eaf0ce9b3709a7c9afdd3990c5af2eeca123e250443b52c74a692710"
+    },
+    {
+      "path": "Lib/idlelib/rpc.py",
+      "sha256": "e61ee58f3e64bfca03c3a3d07e0dcfdcc84507a51e2b6e8b1842c3e3d8c276a3"
+    },
+    {
+      "path": "Lib/idlelib/run.py",
+      "sha256": "00f1dc1ed7dbe1a3db79fbdec5b1f52337c574ce2773097c9174b4e04fac3935"
+    },
+    {
+      "path": "Lib/idlelib/runscript.py",
+      "sha256": "65ff0909103638a713c6f836b3f80b07c27c9b2d975226fe35bc7633f26dd804"
+    },
+    {
+      "path": "Lib/idlelib/scrolledlist.py",
+      "sha256": "4c69e4d4a4d334f4eb941f683c7482db67cc11b431af6e255d0af30f5bd76690"
+    },
+    {
+      "path": "Lib/idlelib/search.py",
+      "sha256": "d335b363c13ac46a0db6e836a1f2522c0afabcb143c7cbf5920d66c8642936c6"
+    },
+    {
+      "path": "Lib/idlelib/searchbase.py",
+      "sha256": "abc2c1236d065898c6476a24e21b1c17ca9b8f25a22def1c0a70942ae309e8fb"
+    },
+    {
+      "path": "Lib/idlelib/searchengine.py",
+      "sha256": "77feeabc9f5ab4b99a08186a196ec266e1683aa6097e82efd186e399c692935e"
+    },
+    {
+      "path": "Lib/idlelib/sidebar.py",
+      "sha256": "22dc0fbdeb7371b826021f4401cf71f801f0b2618438ae18f1ed75ac2343b36b"
+    },
+    {
+      "path": "Lib/idlelib/squeezer.py",
+      "sha256": "f0cd9c085cf31de1411066074805bb9813e2916142787b06d23d817756a66af6"
+    },
+    {
+      "path": "Lib/idlelib/stackviewer.py",
+      "sha256": "8af445677d9dc0a26f4ee823751cd8c375071413b15551ab691a126541ee5021"
+    },
+    {
+      "path": "Lib/idlelib/statusbar.py",
+      "sha256": "0e02720448e1af6f60311fb8a1e92d992295599e40f43eb9f11e6b9597532c9e"
+    },
+    {
+      "path": "Lib/idlelib/textview.py",
+      "sha256": "478feaf8ad0abc68ccb4c46b9ad5dc4538800b6931b1acd78a37fe73f466b714"
+    },
+    {
+      "path": "Lib/idlelib/TODO.txt",
+      "sha256": "8a650c2d8f4ffc14543d925dac3b0ef38e0e97b4c45bb9f03de11bb1b54c2669"
+    },
+    {
+      "path": "Lib/idlelib/tooltip.py",
+      "sha256": "6197f7d24a19e34aae8c7ba5cd83f2d12621f71ab88b84be271aba0b5872307f"
+    },
+    {
+      "path": "Lib/idlelib/tree.py",
+      "sha256": "d950208e60643d82c636a0fd1817adaca6ec229a518044b1cd597aae492dfaa7"
+    },
+    {
+      "path": "Lib/idlelib/undo.py",
+      "sha256": "966cdbdf0984b3abe6b87b4a9cc816f6d177ffb15420096b742c9e9f0add06b3"
+    },
+    {
+      "path": "Lib/idlelib/util.py",
+      "sha256": "6e3f834837528caf49a8a3de1359dd067660571c2119ab60e15cea69c6585b64"
+    },
+    {
+      "path": "Lib/idlelib/window.py",
+      "sha256": "0574fb054a3c922ad8504f49d8c7e65b36c23f7e4dc223463603534aa15ab870"
+    },
+    {
+      "path": "Lib/idlelib/zoomheight.py",
+      "sha256": "e3a6e578f3fea8a1f834cba273c5722ccab726a394956637eeb02650b7e3b60d"
+    },
+    {
+      "path": "Lib/idlelib/zzdummy.py",
+      "sha256": "cd44c3950f2380fbc654d444d8917cd3a144b88ca523917d522537bfbb41f519"
+    },
+    {
+      "path": "Lib/tkinter/__init__.py",
+      "sha256": "bf7c8cbc8d665e2993019bb6945da6b894b694061f22ee8a0fbc32cd6980034f"
+    },
+    {
+      "path": "Lib/tkinter/__main__.py",
+      "sha256": "a535e36b6f3eb57ee9b7f9633ab082e41ca0bb8c3dd701521240757468ef5151"
+    },
+    {
+      "path": "Lib/tkinter/colorchooser.py",
+      "sha256": "b27b9d8597a786e1f4dcd8f6ec23ee1a67f79c0b6f98e4bb3b98c585074c1d47"
+    },
+    {
+      "path": "Lib/tkinter/commondialog.py",
+      "sha256": "1e08be20450c36ed19f299a09fe273ce769d8a3e2e1406b5ef54a032756bc3fc"
+    },
+    {
+      "path": "Lib/tkinter/constants.py",
+      "sha256": "0ffd883463f20255fbd458d8abd15a6842190f2f5cc182416cb9a15ffb1e1052"
+    },
+    {
+      "path": "Lib/tkinter/dialog.py",
+      "sha256": "ffc15c82611f483a2a240115803e3732a894e9902057d1a9639101f510c0c00d"
+    },
+    {
+      "path": "Lib/tkinter/dnd.py",
+      "sha256": "ec28874fbdf05b2e53d8785bfd86579ce3a90d600a80af4890e7d39df4bee90a"
+    },
+    {
+      "path": "Lib/tkinter/filedialog.py",
+      "sha256": "296c216a2bb76d3415605c1d523daee4937d240e01f2dc201b0f0732017c8c6e"
+    },
+    {
+      "path": "Lib/tkinter/font.py",
+      "sha256": "14b393d3562aee2640cb9f9f9c4cb5cf9befc998eacb7fb8225822faa7a3c9bd"
+    },
+    {
+      "path": "Lib/tkinter/messagebox.py",
+      "sha256": "2bc1200ebbff41c321249def874538f9f4b5972a278b6e32ec8c53475affceae"
+    },
+    {
+      "path": "Lib/tkinter/scrolledtext.py",
+      "sha256": "5c8cc027d899e3f2665b27644a627e7fc72a31b693ca776606e0c0ddaf8b0469"
+    },
+    {
+      "path": "Lib/tkinter/simpledialog.py",
+      "sha256": "957610c218936afb78767e0ec41ef4003b731cb2729145b7fef86197e0c82763"
+    },
+    {
+      "path": "Lib/tkinter/ttk.py",
+      "sha256": "ff977569fefd7206435f51eedebc8bd2792a06dcc1f5cc5c514e2b8b6995c871"
+    },
+    {
+      "path": "Lib/turtle.py",
+      "sha256": "941ca8f5b0e0356f4515adce82e29802a7c8cbb52146cff69ae375f9a207b740"
+    },
+    {
+      "path": "Lib/turtledemo/__init__.py",
+      "sha256": "1f97ea361e2359a1338cc38a2d0fb9ab55899d4e4184ffa008fb227f0a44cd8c"
+    },
+    {
+      "path": "Lib/turtledemo/__main__.py",
+      "sha256": "c21c89c0c9506b4eeaf2350448835137cc5f9892097c32bb8e612ddf4ec45b48"
+    },
+    {
+      "path": "Lib/turtledemo/bytedesign.py",
+      "sha256": "ac50b88771db8f72db16a0d8e79e28e9182a6fd8897f6504275f6dd06a4efff6"
+    },
+    {
+      "path": "Lib/turtledemo/chaos.py",
+      "sha256": "83c76f02a5c4535bf937023c2a970ffa1e40c4f4d5e256f1cd55a93e71601871"
+    },
+    {
+      "path": "Lib/turtledemo/clock.py",
+      "sha256": "6c71a1134a3851c9d533277a7cd51b553b01fca9a550627292da3b75c7865715"
+    },
+    {
+      "path": "Lib/turtledemo/colormixer.py",
+      "sha256": "f5687ed69d424b1324a2875d257a41c2924ab3948d0b0563bbf54618368dd91d"
+    },
+    {
+      "path": "Lib/turtledemo/forest.py",
+      "sha256": "3f9fc6d12b307edc217a4cbd7210927fca1854d57599576e8899940f11942eba"
+    },
+    {
+      "path": "Lib/turtledemo/fractalcurves.py",
+      "sha256": "a9ad811c5833c9bf5214cac02f7178e82308a5ef7df1459e8ca578a8d17c2515"
+    },
+    {
+      "path": "Lib/turtledemo/lindenmayer.py",
+      "sha256": "08680d4fced8799d8a1b5de405811f304fe558a87ba7c14b9f6428e552cf6ffb"
+    },
+    {
+      "path": "Lib/turtledemo/minimal_hanoi.py",
+      "sha256": "39abd0eb6dd07c483243b7cfd57f15e3831e3746cc8b961a5b467d42038bc2a1"
+    },
+    {
+      "path": "Lib/turtledemo/nim.py",
+      "sha256": "db6ef996f4193bd45362d687309069ad8cf692d13ddcef97a15825d7219a8ed4"
+    },
+    {
+      "path": "Lib/turtledemo/paint.py",
+      "sha256": "d05c98d058588936e299afdeecd9b8688aa1b5020da23ce908172a1d434298be"
+    },
+    {
+      "path": "Lib/turtledemo/peace.py",
+      "sha256": "1f9157c99b8d06377b6683445b722ae6bc4f5e2425576346650dedbb66ccdeb7"
+    },
+    {
+      "path": "Lib/turtledemo/penrose.py",
+      "sha256": "52f0445d62d63e322e95cd18f9cef4ec7f799db93d91ad73681669600eb3b359"
+    },
+    {
+      "path": "Lib/turtledemo/planet_and_moon.py",
+      "sha256": "e81da8f1c365cd33a1367d01c717042e5db47acf0a7aa2116b54455ef1a8a0e9"
+    },
+    {
+      "path": "Lib/turtledemo/rosette.py",
+      "sha256": "0faff0ffbcbf4b818ab27940e69a8757022cd5fee901096d5767b258f625c7ae"
+    },
+    {
+      "path": "Lib/turtledemo/round_dance.py",
+      "sha256": "c5db80d68719d1e2f89e456e2cd15c2525f380a19006d71553d9cccfb0dea8b4"
+    },
+    {
+      "path": "Lib/turtledemo/sorting_animate.py",
+      "sha256": "7fada20e40b74148c064ccb384120239a2fd07801c4765be084ae8df30ec10c2"
+    },
+    {
+      "path": "Lib/turtledemo/tree.py",
+      "sha256": "437ebafb263dbc97538e74a4820081b28a9aebc9c14bec088d233e50e5a0aff3"
+    },
+    {
+      "path": "Lib/turtledemo/turtle.cfg",
+      "sha256": "837255b74c11f1066c66658fbdf5b2e9e5290c0f1a76239031488a8a80e4da6f"
+    },
+    {
+      "path": "Lib/turtledemo/two_canvases.py",
+      "sha256": "1b5d4a756057b601135e537394734a0597dcdb728b4a5177942a576842ccd9ea"
+    },
+    {
+      "path": "Lib/turtledemo/yinyang.py",
+      "sha256": "d6264eaeb66f56e8318e34d1cf529a107bc2216bd6631c3b15db3c08cce9629a"
+    },
+    {
+      "path": "tcl/dde1.4/pkgIndex.tcl",
+      "sha256": "b78b9f22e85407d5e21fd1eb95932751fb9891437ebe5ee53457b4716b05ab1c"
+    },
+    {
+      "path": "tcl/dde1.4/tcl9dde14.dll",
+      "sha256": "026cbe1fdca1d3f1b70f1107f0234369112fe450a82bea4441f006922bac6308"
+    },
+    {
+      "path": "tcl/libtcl9.0.4.zip",
+      "sha256": "8201f2d61a95fd725d6eac46a57813389f5096967a00969663160020d848104a"
+    },
+    {
+      "path": "tcl/libtk9.0.4.zip",
+      "sha256": "d99bc63cfa4f6c93f98808ec54f17be706b67e315968c1c9d82cf974828a8b70"
+    },
+    {
+      "path": "tcl/nmake/nmakehlp.c",
+      "sha256": "aa002b70c79ec70497a6f6b0e7a88f213142e890d032f50860ab8703283c5996"
+    },
+    {
+      "path": "tcl/nmake/rules.vc",
+      "sha256": "32bb077a2a9cc720bc6c8c8dabd85de1c3b839de3cdcc5e3dadd2562b9eaa6d5"
+    },
+    {
+      "path": "tcl/nmake/targets.vc",
+      "sha256": "1b82aa7e13b466d9196b73852455b06c675a3ef903ae07006b72fef9998ae808"
+    },
+    {
+      "path": "tcl/nmake/tcl.nmake",
+      "sha256": "7b3fd97db6fc9fb4d905e39594f305a455a7d50e88abb2259b74d653c2117853"
+    },
+    {
+      "path": "tcl/nmake/x86_64-w64-mingw32-nmakehlp.exe",
+      "sha256": "9864a474f6b37a6567554e3c6211befaf4dcfc84bc1ce1dd92115651711f62dc"
+    },
+    {
+      "path": "tcl/registry1.3/pkgIndex.tcl",
+      "sha256": "298c0db67de352b65a4d5bdd81d245fc51df2a8a9770c4f410ce64f1009b9b53"
+    },
+    {
+      "path": "tcl/registry1.3/tcl9registry13.dll",
+      "sha256": "3f01c45eb1be612f0240e3a26de0c24219169b4d037158771d0f3d7e1da65be3"
+    },
+    {
+      "path": "tcl/tcl90.lib",
+      "sha256": "444ce6b713a74b2e779a1dcf188ca6a5f061b09900f97d05ad746b02e721d99c"
+    },
+    {
+      "path": "tcl/tcl9tk90.lib",
+      "sha256": "7220e327aea26b9ac68bb267b5f0042b8fa7b985df4d231fe9ae5524c00017c1"
+    },
+    {
+      "path": "tcl/tclConfig.sh",
+      "sha256": "6fd871a66befd83737e9191ed2e1984e1af35441bf6232cfdc529fc1f889b572"
+    },
+    {
+      "path": "tcl/tclooConfig.sh",
+      "sha256": "24618be42a4e0e5a977a1731ff071ffa81b403ce424b420466ec28590958b6e5"
+    },
+    {
+      "path": "tcl/tclstub.lib",
+      "sha256": "53f08644e8595e8c9ab4d45bd117c064fcefe9fce5431b8b7b6665089cd65f6d"
+    },
+    {
+      "path": "tcl/tk9.0/demos/anilabel.tcl",
+      "sha256": "5bcbac47331f760e4c55ae93ca68a16d79acdb7b551185d5e0c642931e05942b"
+    },
+    {
+      "path": "tcl/tk9.0/demos/aniwave.tcl",
+      "sha256": "ed33a03040bea1ddd70ce9ae546184d552652d542ad2a84d3583a7bf00461fe4"
+    },
+    {
+      "path": "tcl/tk9.0/demos/arrow.tcl",
+      "sha256": "2271a72b18ffc73fe1dfc837172fc7b0d3129d987a5e5d126050508faeb78910"
+    },
+    {
+      "path": "tcl/tk9.0/demos/bind.tcl",
+      "sha256": "e51a91ecf4b3ca3643621b450beaf456951e7f50b17d4bcdace6da088232b915"
+    },
+    {
+      "path": "tcl/tk9.0/demos/bitmap.tcl",
+      "sha256": "02833a2ac3f7a76fa160b79219f3fbfb498110fed6b37093cd26dab9ac08f53f"
+    },
+    {
+      "path": "tcl/tk9.0/demos/browse",
+      "sha256": "2311493fe4bddfdf5f5065adcd1979d4c9f8913217a7136ab83787ab8e3381fb"
+    },
+    {
+      "path": "tcl/tk9.0/demos/button.tcl",
+      "sha256": "a39a5437ddf713e4e10fdc2afb4b4e6352fdeb1c38db3c94ed6708a63666354b"
+    },
+    {
+      "path": "tcl/tk9.0/demos/check.tcl",
+      "sha256": "c7840c2e35c1cbca71f289f77ddd227df7445bc87d4e022bc7dc429567f1a491"
+    },
+    {
+      "path": "tcl/tk9.0/demos/clrpick.tcl",
+      "sha256": "8db7f3d96e83e080e84de2708788174a93e108c38bbf385c824691d4f4d5d2ad"
+    },
+    {
+      "path": "tcl/tk9.0/demos/colors.tcl",
+      "sha256": "99d06451ede74ceb23947844aabf72dff088be51b07f717c90fabc77a5699101"
+    },
+    {
+      "path": "tcl/tk9.0/demos/combo.tcl",
+      "sha256": "81be578b6691c4a4aee0a070dff26fb4b9932e6ca02ec2efece8dd890f13d2e7"
+    },
+    {
+      "path": "tcl/tk9.0/demos/cscroll.tcl",
+      "sha256": "ffd421c74c991cca3b5618c54546fc9702319a18dadf4b47164de254c7ba2fdc"
+    },
+    {
+      "path": "tcl/tk9.0/demos/ctext.tcl",
+      "sha256": "d2f72c5a4e6810c0203ebf76db3e34c0fae17d3c1092d43e8428f0e7e10e563d"
+    },
+    {
+      "path": "tcl/tk9.0/demos/dialog1.tcl",
+      "sha256": "61c48d3c23d6a2a3c0c5229ae9838884f77fa7c2514f53634791210f3a13a97f"
+    },
+    {
+      "path": "tcl/tk9.0/demos/dialog2.tcl",
+      "sha256": "247082a303e8d699011d6126361a842dcf53164ae9699d2fda0492d691d96c53"
+    },
+    {
+      "path": "tcl/tk9.0/demos/en.msg",
+      "sha256": "271995ba0db14623925ab135c8e4cd728688af502f01e9fc0bbe5acb25fd0a3d"
+    },
+    {
+      "path": "tcl/tk9.0/demos/entry1.tcl",
+      "sha256": "d8942e14c681f5ed1360ccfa32ff24dac26c20a7c97e5793c02747ba7643c27f"
+    },
+    {
+      "path": "tcl/tk9.0/demos/entry2.tcl",
+      "sha256": "000ddd2ed474a6fb61abe99906a794f239e86edf90a5a571ed6fc94840615d6f"
+    },
+    {
+      "path": "tcl/tk9.0/demos/entry3.tcl",
+      "sha256": "dffd3a477fac590ab1a93bf889dfa9be2a4d41fb1f71d15dcabcc567178fbc11"
+    },
+    {
+      "path": "tcl/tk9.0/demos/filebox.tcl",
+      "sha256": "011af1d97ff3acd8fc6443818806dd209ed0018a1967ff9bda1af3e4be413c95"
+    },
+    {
+      "path": "tcl/tk9.0/demos/floor.tcl",
+      "sha256": "958ab12240266e601cb1cff2965c1cafb106b7858f690ee3ed16e5efc20ece9b"
+    },
+    {
+      "path": "tcl/tk9.0/demos/fontchoose.tcl",
+      "sha256": "57c128863c0df7018d234885606311dbb7b32975edf31e79991a48177095649f"
+    },
+    {
+      "path": "tcl/tk9.0/demos/form.tcl",
+      "sha256": "9ed5dd89a9cda45ff42ec753564f4c06d581f9c3e2c0f9362c749429c877437e"
+    },
+    {
+      "path": "tcl/tk9.0/demos/goldberg.tcl",
+      "sha256": "4bc83ed307cc6f083770f2d990a673c7b46b19b3387053ba9ee0905eddafde68"
+    },
+    {
+      "path": "tcl/tk9.0/demos/hello",
+      "sha256": "2883940d9ce965f55ba56b13b329a29f95faba8c0a70746354eb20e5db2107f3"
+    },
+    {
+      "path": "tcl/tk9.0/demos/hscale.tcl",
+      "sha256": "b8aa32d9557df43d6c6a41fb70ac536c9f3114325c2c1c3cb15a0a4344cb20df"
+    },
+    {
+      "path": "tcl/tk9.0/demos/icon.tcl",
+      "sha256": "cc37a4b141430d8b1c013cd1b7e11bd3b211d80c553d770f4d66297558a65c08"
+    },
+    {
+      "path": "tcl/tk9.0/demos/image1.tcl",
+      "sha256": "7f6d8ff238a324a2adab51201bce38a9fbd1932c3409753265ffcb107a3fbea9"
+    },
+    {
+      "path": "tcl/tk9.0/demos/image2.tcl",
+      "sha256": "c35ebb5ce1bd0ddcd4b31ee3014ef6526d329980cf507f0a39558b6e3cf6ae22"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/earth.gif",
+      "sha256": "bf29c94949f125a04fee6bdf93ba8f358f26e9e39aa7a4977466834b3133fcb7"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/earthmenu.png",
+      "sha256": "9bf8d96016039d7fdb2ffc506743724636a70ed5925199aab64ca20820963bde"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/earthris.gif",
+      "sha256": "c2da473e55d8317bd1f983638adb729bff1461de590d76f99d8b3430c71e0f6e"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/flagdown.xbm",
+      "sha256": "70ab05927c40337b1d9a8fc15edc220ba4482d8c886f26b0f5c306071e06851d"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/flagup.xbm",
+      "sha256": "3d3d30b674eef51449465d387700bf8608931db54f67a93e015b9a4042f1e29c"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/gray25.xbm",
+      "sha256": "b637798957ed022067685e95c95e8c5e12c27b3443de3a8e5aa3ee0bb583bc28"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/letters.xbm",
+      "sha256": "e82e3b9655519682ace59d217a004141dea420b5acb8eca08682066895855740"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/noletter.xbm",
+      "sha256": "c6af489117974f9c43b681e340e0a25b7f0f97b7f615e8cb3062c26a3fb7b40e"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/ouster.png",
+      "sha256": "a2fe354dfcb09b9eeb488128f4ac0b498766faf4a8becf65bbcd779bdb9c4c8f"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/pattern.xbm",
+      "sha256": "c5da801fa4ada674d951e154a4531a17f3201cee4af025800d3ccf98de860cad"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/plowed_field.png",
+      "sha256": "67e8204cf6ba5ddd5caf2f5645c81899c072fb21cf9ace5e046c1edf070605d3"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/starry_night.png",
+      "sha256": "797615691ee20c7f36cdea09526ae5da621616353cf420f7cc933a136c1c166b"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/Tcl.svg",
+      "sha256": "6250a7a3a3bc038171d4c4eeef7b1f4d1a69fa85eb310432aac3ed826deb672c"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/tcllogo.gif",
+      "sha256": "72f6b34d3c8f424ff0a290a793fcfbf34fd5630a916cd02e0a5dda0144b5957f"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/teapot.ppm",
+      "sha256": "786f29b88771e439187dd2e86ad4d255dd185e0c1ea3f8c37d21770fd1df253a"
+    },
+    {
+      "path": "tcl/tk9.0/demos/images/Tk_feather.png",
+      "sha256": "fa45c3924e613bc92b366ce0a0699c0d411525727d69f6485ffd7d58b1a7a00b"
+    },
+    {
+      "path": "tcl/tk9.0/demos/items.tcl",
+      "sha256": "e602d92b0065eeffed65fe1467ef562ebd7b0e585eafba59d8165391e01f9d7f"
+    },
+    {
+      "path": "tcl/tk9.0/demos/ixset",
+      "sha256": "3300ae66b5f56c37eadbd9b29d5d3c060488b890efe653a20e8f85b2cd2fdeb1"
+    },
+    {
+      "path": "tcl/tk9.0/demos/knightstour.tcl",
+      "sha256": "1fb2b5244aa11925d40b042f82a1fcbbcb07ce5aadeec21e62a5836679f07da1"
+    },
+    {
+      "path": "tcl/tk9.0/demos/label.tcl",
+      "sha256": "fc3178a849201f9f39b8b108a0979f05e76fabd3d463610a6fdfe47deeaa73ca"
+    },
+    {
+      "path": "tcl/tk9.0/demos/labelframe.tcl",
+      "sha256": "f417abc0f4bd433a83637a98719c56ebbc74a9823e970a869277d634796023b2"
+    },
+    {
+      "path": "tcl/tk9.0/demos/license.terms",
+      "sha256": "0d1e4405f6273f091732764ed89b57066be63ce64869be6c71ea337dc4f2f9b5"
+    },
+    {
+      "path": "tcl/tk9.0/demos/mac_styles.tcl",
+      "sha256": "de79a3542478092068228442890dd27086df29f2406aa7338737ac5ca6d94e64"
+    },
+    {
+      "path": "tcl/tk9.0/demos/mac_tabs.tcl",
+      "sha256": "73b12d55644d7d811cf239ffdc197d22efc1056a96b392752012a4fe2378bddf"
+    },
+    {
+      "path": "tcl/tk9.0/demos/mac_wm.tcl",
+      "sha256": "a8f879617fd892a09149ae359d225b019fb2f13500f76bec81e06e09efbb7bd8"
+    },
+    {
+      "path": "tcl/tk9.0/demos/mclist.tcl",
+      "sha256": "cbf4caa68e781d023ac81f8dabbbb181c6c38ebd3f7874908acd03527c3bb98c"
+    },
+    {
+      "path": "tcl/tk9.0/demos/menu.tcl",
+      "sha256": "3abdd41605d066fe578ecf5fefe43d836b05611fb744ddee6c553502e2786f7a"
+    },
+    {
+      "path": "tcl/tk9.0/demos/menubu.tcl",
+      "sha256": "23dd3c003f551d7a366393d140951a179b8445e9816eb6ecff82b2b9a85b36de"
+    },
+    {
+      "path": "tcl/tk9.0/demos/msgbox.tcl",
+      "sha256": "9d6af5b766b79ed88e40cbd3defcfb8ea0366b06998ae78112df4aebe9059055"
+    },
+    {
+      "path": "tcl/tk9.0/demos/nl.msg",
+      "sha256": "85fd0e42a753fcc6d44f8c48f4ed5748d2d01c7e775f02017037c49a5a086373"
+    },
+    {
+      "path": "tcl/tk9.0/demos/paned1.tcl",
+      "sha256": "cade77aad39e545c1ebe4e65e9781ec4a9fd5e00a2f6c8ad191ee72f49fdab23"
+    },
+    {
+      "path": "tcl/tk9.0/demos/paned2.tcl",
+      "sha256": "6c78d8ea9c28511416578201a99d3c25b036d7b7741cd6933228187447974404"
+    },
+    {
+      "path": "tcl/tk9.0/demos/pendulum.tcl",
+      "sha256": "141a13261f94359f7da88ab7573c020048a0bd0e9e1a39abd87e922b40201b60"
+    },
+    {
+      "path": "tcl/tk9.0/demos/plot.tcl",
+      "sha256": "f0b590ac09a59a1a3fef487317c260333ab9fe088713efb2f01bd1375d83420c"
+    },
+    {
+      "path": "tcl/tk9.0/demos/print.tcl",
+      "sha256": "d4935a6fda39a079cf33b60eebe6a6db51c6f63149502aa3937db3ece81f99be"
+    },
+    {
+      "path": "tcl/tk9.0/demos/puzzle.tcl",
+      "sha256": "b025c9b9058d26444cd3bac7f9212554736b94efe4bd917fbf41bee6cf568d92"
+    },
+    {
+      "path": "tcl/tk9.0/demos/radio.tcl",
+      "sha256": "b755e13cb765d9a5b0a6c8b3977093ca663a778232930da39ef0cac89602c5c8"
+    },
+    {
+      "path": "tcl/tk9.0/demos/README",
+      "sha256": "ba3178afafccb3ccccbd9b0bfa311973bd79c1d143f2ea14a3af1c6a82f7ccec"
+    },
+    {
+      "path": "tcl/tk9.0/demos/rmt",
+      "sha256": "37ecc38d5d0ac834dc7cfe0fed786c6b620768b59fcb51f4421e483f3bd3839d"
+    },
+    {
+      "path": "tcl/tk9.0/demos/rolodex",
+      "sha256": "bac6090d760065e9b925de31a7cbde6a2bf8289486c85cf33f1d27b9e9b04bbb"
+    },
+    {
+      "path": "tcl/tk9.0/demos/ruler.tcl",
+      "sha256": "d174bafb0925934019a3adc96185d490db7a4fd98cb904eac707786bcc933751"
+    },
+    {
+      "path": "tcl/tk9.0/demos/sayings.tcl",
+      "sha256": "6eefef5b38043411363180618c44b1ed4f5d4382f72acc7c2203644859f42dca"
+    },
+    {
+      "path": "tcl/tk9.0/demos/search.tcl",
+      "sha256": "dafb942600635a622cdc9c9af0c2a04d57be8bc52b360af998b85046d80c8bce"
+    },
+    {
+      "path": "tcl/tk9.0/demos/spin.tcl",
+      "sha256": "280697b1cf461decacc847c3ffb74fd801e172dd0bf4b92748c998bd34779f40"
+    },
+    {
+      "path": "tcl/tk9.0/demos/square",
+      "sha256": "f67840b5d4f20e67ed97f644b18c3ef29b7ecca23ffd5d496666c924e428864b"
+    },
+    {
+      "path": "tcl/tk9.0/demos/states.tcl",
+      "sha256": "3df1ff12f6b09140f7ea65b251c7b90faf2a78b4d4dda98c890a8b13b475038f"
+    },
+    {
+      "path": "tcl/tk9.0/demos/style.tcl",
+      "sha256": "1eb1304ccecbdd4ba4b1aaa7feb63d90fc19421356ad1fd2b85253a3a72c3aff"
+    },
+    {
+      "path": "tcl/tk9.0/demos/systray.tcl",
+      "sha256": "97ea7fb16292596d740b25fb25b00e33b1dca8a1fff20864fc16c9d2fee00f54"
+    },
+    {
+      "path": "tcl/tk9.0/demos/tclIndex",
+      "sha256": "2d8957de84a8d4f056d99c67abac76fe1cf2617a0a8d1ef67df084ae90c5273c"
+    },
+    {
+      "path": "tcl/tk9.0/demos/tcolor",
+      "sha256": "51f41d68ebdf0600a87bc375a2bc5888d6c455135e72a9c15164a8e448907ed4"
+    },
+    {
+      "path": "tcl/tk9.0/demos/text.tcl",
+      "sha256": "20e86794be107b483c4e18f3aa235b4849f8f473e04f2966240b99998af8478a"
+    },
+    {
+      "path": "tcl/tk9.0/demos/textpeer.tcl",
+      "sha256": "3715cf7ed0df9159fe29e593e8d450444e3a87a0b275334c1462a0a5e9edcc35"
+    },
+    {
+      "path": "tcl/tk9.0/demos/timer",
+      "sha256": "5fe7bf8be8654aacf73095b3f66cfd811dd41ceee17f88740581dfa62b81cc3e"
+    },
+    {
+      "path": "tcl/tk9.0/demos/toolbar.tcl",
+      "sha256": "09df07492ba499f4ef5366058858e1bfdd63a6a064c57033384936a1dd6dea54"
+    },
+    {
+      "path": "tcl/tk9.0/demos/tree.tcl",
+      "sha256": "ef28999b5f64abc89ea752ceb44e079d0f0d37bf328a00d77d0ce680b02056b6"
+    },
+    {
+      "path": "tcl/tk9.0/demos/ttkbut.tcl",
+      "sha256": "e4ef416602b771d8212a797ecc8532acb53ec24fbe3989ae5a1ac550037db700"
+    },
+    {
+      "path": "tcl/tk9.0/demos/ttkmenu.tcl",
+      "sha256": "9ba7354d6e7dab1c451b0efcd02a6b8fa1fa3487376fb63e3e764a0efa0c3a4d"
+    },
+    {
+      "path": "tcl/tk9.0/demos/ttknote.tcl",
+      "sha256": "df9530e939faf7b73a2e83d2664c1a842a6f2cc795f7c266d9d05a5dd32cedb6"
+    },
+    {
+      "path": "tcl/tk9.0/demos/ttkpane.tcl",
+      "sha256": "323ad400b8b63d587c3e4aaefd08cb5a2919002c4e872fa1340b8a3d5d03f06a"
+    },
+    {
+      "path": "tcl/tk9.0/demos/ttkprogress.tcl",
+      "sha256": "6df33a1a293ed75e631012349f94f2ca69fc76f5f5bc70e2fe0669a512afa76e"
+    },
+    {
+      "path": "tcl/tk9.0/demos/ttkscale.tcl",
+      "sha256": "b59f4db9563c522e99d79a7154bfae4a396fb44238111b2eaa1dc20fe14f10c1"
+    },
+    {
+      "path": "tcl/tk9.0/demos/ttkspin.tcl",
+      "sha256": "f249c85433bc17458fb2ef5a656a5b69feb08cedd3f2f288205f8829b19098b8"
+    },
+    {
+      "path": "tcl/tk9.0/demos/twind.tcl",
+      "sha256": "199cfa30d2e7dacf4cc3035248a8a1f78859c22b1873043c67e806417091c275"
+    },
+    {
+      "path": "tcl/tk9.0/demos/unicodeout.tcl",
+      "sha256": "d3fc17b63e232516e247072761a9069c1ecf28bbf406b0bc38b1852b8c235441"
+    },
+    {
+      "path": "tcl/tk9.0/demos/vscale.tcl",
+      "sha256": "0080e0e20eda0f774a9cd8e8efef583d2d8a4977455f06ca8699d1372161bd1f"
+    },
+    {
+      "path": "tcl/tk9.0/demos/widget",
+      "sha256": "0030e192324c9619a837acb3dcd7ddc1e940817d985f2576520ca0cfc37c3177"
+    },
+    {
+      "path": "tcl/tk9.0/demos/windowicons.tcl",
+      "sha256": "a23573e9b5d62fc9ce2cec13c936091e1b01f7dd6db9315bc3ad46b3bb96b3f9"
+    },
+    {
+      "path": "tcl/tk9.0/pkgIndex.tcl",
+      "sha256": "7aa232d165a824780181af6742c47efcfb20379366676e56dd4e30a0a1016cd7"
+    },
+    {
+      "path": "tcl/tkstub.lib",
+      "sha256": "1c2343085045500facfe9d28c871df15b5578953d036f54cee5bbaea7911d9b8"
+    },
+    {
+      "path": "tcl/tommath.lib",
+      "sha256": "2796c17694496963242ef9567d53191ee83eef5744ae8b221448c097340539a6"
+    },
+    {
+      "path": "tcl/zdll.lib",
+      "sha256": "e71f07778ec2a395cb1b09ba8cf5eac9970a062dc45041cec8946e7b15ccf987"
+    }
+  ]
+}

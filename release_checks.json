@@ -1,0 +1,139 @@
+{
+  "version": "0.3.0",
+  "status": "local_review_candidate_publication_blocked",
+  "checks": [
+    {
+      "name": "Existing comparison navigation without repeated preparation",
+      "status": "PASS",
+      "evidence": "Real men/women offline predictions match baseline; unchanged comparison opens in 0.0662/0.1006 seconds with no additional worker or history entry; all displayed metrics/report/export content preserved",
+      "required": true
+    },
+    {
+      "name": "Help menu stable during native polling",
+      "status": "PASS",
+      "evidence": "New regression tests fail before the fix and pass afterwards; actual packaged native menus in ready/busy states each run 20 scheduled ticks with zero redundant configurations",
+      "required": true
+    },
+    {
+      "name": "baseline restoration and reproducible export",
+      "status": "PASS",
+      "evidence": "87 source files and 15 data files restored by manifests; all 30 engine/helper exports reproduced",
+      "required": true
+    },
+    {
+      "name": "regression and input safety",
+      "status": "PASS",
+      "evidence": "104 data-equipped/native unittest cases, no skips; includes Help menu and comparison navigation safeguards",
+      "required": true
+    },
+    {
+      "name": "structured preparation and model parity",
+      "status": "PASS",
+      "evidence": "Eight frozen-ZIP real predictions; both routes, forward/reverse/historical/single-worker, baseline probability tolerance 1e-12 and unchanged raw metrics",
+      "required": true
+    },
+    {
+      "name": "feature parity and leakage",
+      "status": "PASS",
+      "evidence": "10800 comparisons across 20 fights/270 features; date filtering and full rebuild validators",
+      "required": true
+    },
+    {
+      "name": "statistics only and early progress",
+      "status": "PASS",
+      "evidence": "Real men/women comparisons without prediction-fit stages or probability fields; preview before fitting; cancellation retains comparison",
+      "required": true
+    },
+    {
+      "name": "history and reuse safety",
+      "status": "PASS",
+      "evidence": "Exact reuse, stale context/settings/identities/runtime tests; bounded files/storage; corrupt/schema/IO handling; history while running; Clear/Delete/Recalculate",
+      "required": true
+    },
+    {
+      "name": "native exports and report completeness",
+      "status": "PASS",
+      "evidence": "Native TXT Save/Cancel/declined overwrite and corrected HTML action; filtered-view complete UTF-8 exports, escaped standalone HTML, offline browser render and print",
+      "required": true
+    },
+    {
+      "name": "maintenance and recovery",
+      "status": "PASS",
+      "evidence": "Bounded live all-target check, full rebuild, all 15 original hashes restored; actual network/malformed failures; additions/disk/rebuild/interrupted commits as fixtures",
+      "required": true
+    },
+    {
+      "name": "runtime closure and dependencies",
+      "status": "PASS",
+      "evidence": "Pinned runtime/Tk and 18 verified wheel inputs; 299 native AMD64 imports resolve",
+      "required": true
+    },
+    {
+      "name": "local layout and accessibility",
+      "status": "PASS",
+      "evidence": "Three tabs/text sizes/resizing/focus at simulated 100/125/150/200 Tk scales; native actual 125%",
+      "required": true
+    },
+    {
+      "name": "performance profiling",
+      "status": "PASS",
+      "evidence": "Controlled sequential timings and single-pass validation profile; >10% apparent memory regression investigated with OS peak counters",
+      "required": true
+    },
+    {
+      "name": "delivery ZIP real model verification",
+      "status": "PASS",
+      "evidence": "Fresh delivery extraction; eight actual GUI/worker predictions, baseline parity, offline, Unicode path, bundled runtime isolation",
+      "required": true
+    },
+    {
+      "name": "delivery inventory and native launch",
+      "status": "PASS",
+      "evidence": "Exact implementation/data/runtime hashes across tested and final archives; CRCs, allowlists, checksums; conflicting environment and alternate working directory native launch",
+      "required": true
+    },
+    {
+      "name": "dataset redistribution permission",
+      "status": "BLOCKED",
+      "evidence": "No documented redistribution basis; user reports no permission",
+      "required": true
+    },
+    {
+      "name": "clean Windows 10 x64 without installed tools",
+      "status": "BLOCKED",
+      "evidence": "No clean VM or separate clean machine available",
+      "required": true
+    },
+    {
+      "name": "clean Windows 11 x64 without installed tools",
+      "status": "BLOCKED",
+      "evidence": "No clean VM or separate clean machine available",
+      "required": true
+    },
+    {
+      "name": "actual Windows 100 150 200 percent scaling",
+      "status": "BLOCKED",
+      "evidence": "Only actual 125% available; Tk simulations do not substitute",
+      "required": true
+    },
+    {
+      "name": "configured public repository and pinned dataset download",
+      "status": "BLOCKED",
+      "evidence": "Publication identity/download not configured while rights unresolved",
+      "required": true
+    },
+    {
+      "name": "published download smoke test",
+      "status": "PENDING",
+      "evidence": "Requires authorized publication and an actual public download",
+      "required": true,
+      "phase": "after_publish"
+    },
+    {
+      "name": "remote source CI and macOS Linux execution",
+      "status": "UNVERIFIED",
+      "evidence": "Workflow included; not run on remote services/platforms here",
+      "required": false
+    }
+  ]
+}
