@@ -118,8 +118,8 @@
     },
     {
       "name": "configured public repository and pinned dataset download",
-      "status": "PENDING",
-      "evidence": "Public repository confirmed as kry4ek/ufc-matchup-analyzer; version-pinned release assets and actual download checks pending publication",
+      "status": "BLOCKED",
+      "evidence": "Public repository confirmed; separate dataset asset intentionally omitted by owner request. Source users copy matching CSVs from the Windows ZIP; automatic dataset URL remains unset.",
       "required": true
     },
     {
@@ -138,7 +138,7 @@
   ],
   "publication_decision": {
     "rights_clearance": "unresolved",
-    "scope": "full portable app and matching dataset archive",
+    "scope": "full portable app; separate dataset archive omitted by owner request",
     "request": "Owner requested publication despite possibility of GitHub takedown",
     "standard_gate_passed": false,
     "owner": "kry4ek",

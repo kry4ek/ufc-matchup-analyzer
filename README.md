@@ -2,7 +2,7 @@
 
 A small Windows app for analyzing one men's or women's UFC matchup. Enter the division, date and fighters, then get a detailed side-by-side comparison, win probabilities and data-quality information. Analysis runs locally using fight-history datasets.
 
-**Experimental Windows portable candidate:** the complete app is provided as a separate ZIP under [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases). Download **ufc-matchup-analyzer-v0.3.0-windows.zip** for the app, runtime and all required datasets. GitHub's automatic source downloads and a Git clone contain source code only; source users also need the matching dataset archive.
+**Experimental Windows portable candidate:** the complete app is provided as a separate ZIP under [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases). Download **ufc-matchup-analyzer-v0.3.0-windows.zip** for the app, runtime and all required datasets. GitHub's automatic source downloads and a Git clone contain source code only. There is no separate public dataset ZIP; source users obtain the matching data from the portable package.
 
 Dataset redistribution rights remain unresolved. The owner has requested publication despite that uncertainty; this decision does not establish a data license. Clean Windows 10/11 and actual 100%, 150% and 200% display-scaling checks remain outstanding. This is a prerelease candidate, not a fully verified stable release. See [dataset provenance](DATA_NOTICE.md) and [release verification](RELEASE_VERIFICATION.md).
 
@@ -17,10 +17,10 @@ The ZIP includes Python, all runtime libraries, the interface and all 15 require
 
 ## Run from source
 
-Source operation requires **64-bit Python 3.14.7**, the locked libraries in `requirements.lock`, a writable folder, and every data file listed in `dataset_manifest.json`. Download **ufc-matchup-analyzer-datasets-v0.3.0.zip** from the same release. The project's MIT code license does not grant rights to third-party data; the redistribution review remains unresolved. The commands below use that matching archive:
+Source operation requires **64-bit Python 3.14.7**, the locked libraries in `requirements.lock`, a writable folder, and every data file listed in `dataset_manifest.json`. Extract the Windows ZIP, then copy the listed dataset files from **UFC Matchup Analyzer/app/** into the corresponding paths in a fresh source checkout. Copy only the data; the source checkout already contains its code. The project's MIT code license does not grant rights to third-party data; the redistribution review remains unresolved.
 
 ```bat
-setup.bat --dataset-archive "C:\Downloads\ufc-matchup-analyzer-datasets-v0.3.0.zip"
+setup.bat
 .venv\Scripts\python.exe analyzer_gui.py
 ```
 

@@ -2,7 +2,7 @@
   "version": "0.3.0",
   "source": "UFCStats; derived features from retained engines",
   "redistribution_status": "review_required",
-  "release_repository": "kry4ek/ufc-matchup-analyzer",
+  "release_repository": null,
   "files": [
     {
       "path": "mens_ufc_model/data/raw/ufcstats_men/events.csv",

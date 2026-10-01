@@ -130,3 +130,19 @@ Archive inventories, member hashes, CRCs, freshly extracted native launch and
 published-download checks are recorded separately in the attached verification
 report. No unavailable clean-machine or display-scale check is counted as a
 pass.
+
+
+The owner subsequently requested omission of the separate dataset ZIP. The
+CSV files remain inside the Windows package; the source manifest's automatic
+dataset-download repository is unset. Source users copy the version-matched
+CSV paths from the portable app into a fresh checkout. No dataset ZIP will be
+attached to the public release, and public checksums inventory only the two
+published ZIPs. The standard automatic-data-download gate remains unsatisfied.
+
+The initial GitHub Actions run rejected YAML line 14 before any job ran. The
+pip command containing `--only-binary=:all:` is now quoted as a YAML string.
+Its replacement remote run is tracked separately; the initial run is not a
+test pass. A fresh Windows ZIP native-launch check passed in **37.07 seconds**
+with bundled Python/Tk, conflicting environment settings, no Python on PATH,
+an alternate working directory and a Unicode extraction folder. Its startup
+report showed no error dialogs and datasets through September 26, 2026.

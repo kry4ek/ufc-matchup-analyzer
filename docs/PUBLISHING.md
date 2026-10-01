@@ -10,8 +10,12 @@ The release includes:
 
 - `ufc-matchup-analyzer-v0.3.0-windows.zip`: the complete Windows x64 app.
 - `ufc-matchup-analyzer-source-v0.3.0.zip`: curated source, without data/runtime.
-- `ufc-matchup-analyzer-datasets-v0.3.0.zip`: matching source-user snapshot.
 - `SHA256SUMS.txt`, `archive_manifest.json` and the verification report.
+
+The owner requested omission of the separate dataset ZIP. Its CSV files remain
+inside the Windows ZIP, outside Git history. Leave the manifest's
+`release_repository` unset so setup does not fetch a nonexistent dataset asset;
+source users copy the version-matched CSVs from the portable package.
 
 Use a draft release while uploading and checking all assets. Publish it only after the source/ZIP inventories, hashes, dependency/secret scans and local package checks finish successfully. Record actual published-download checks after publication; never substitute earlier local evidence for a download test.
 
@@ -30,6 +34,6 @@ From a data-equipped source checkout:
 
 `--check-publication` continues to fail for the current experimental candidate; owner acceptance does not turn it into a verified stable release.
 
-Review Git status, the allowlist, export hashes and archive checksums. Push only curated source and attach the archives to a versioned release. Source setup uses the manifest's repository and exact dataset version, never a changing latest-data URL. Download the published portable ZIP, verify its checksum, extract and launch it using its own runtime. Run both documented examples offline, and verify the matching dataset download from a source-only setup.
+Review Git status, the allowlist, export hashes and archive checksums. Push only curated source and attach the archives to a versioned release. Download the published portable ZIP, verify its checksum, extract and launch it using its own runtime. Run both documented examples offline, and verify source setup with matching CSV files copied from the app package. The unconfigured automatic dataset-download part of the standard gate remains unsatisfied because a separate public data asset was intentionally omitted.
 
 The curated repository has fresh history, separate from the research checkout. Future snapshots need their own versions, hashes and verification evidence.

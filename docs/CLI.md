@@ -1,13 +1,13 @@
 # CLI and manual source setup
 
-The portable Windows candidate needs no setup. These commands are for source users. Git history and automatic source downloads exclude datasets. Download the matching **ufc-matchup-analyzer-datasets-v0.3.0.zip** from [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases/tag/v0.3.0); cloning the repository alone is insufficient. `dataset_manifest.json` lists every prerequisite. Dataset redistribution rights remain unresolved, as explained in [DATA_NOTICE.md](../DATA_NOTICE.md).
+The portable Windows candidate needs no setup. These commands are for source users. Git history and automatic source downloads exclude datasets. There is no separate public dataset ZIP. Extract the Windows app ZIP from [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases/tag/v0.3.0), then copy every file listed in `dataset_manifest.json` from **UFC Matchup Analyzer/app/** into the corresponding paths in a fresh source checkout. Do not replace your source code or existing datasets. Cloning alone is insufficient. Dataset redistribution rights remain unresolved, as explained in [DATA_NOTICE.md](../DATA_NOTICE.md).
 
 ## Windows
 
-Install 64-bit Python 3.14.7 and obtain the matching data archive, then run:
+Install 64-bit Python 3.14.7 and copy the matching data as described above, then run:
 
 ```bat
-setup.bat --dataset-archive "C:\Downloads\ufc-matchup-analyzer-datasets-v0.3.0.zip"
+setup.bat
 run.bat doctor
 run.bat predict men --fighter-a "Islam Makhachev" --fighter-b "Justin Gaethje" --division "Lightweight" --fight-date 2026-10-10 --out predictions\men.json
 run.bat predict women --fighter-a "Valentina Shevchenko" --fighter-b "Manon Fiorot" --division "Flyweight" --fight-date 2026-10-10 --workers 1 --out predictions\women.json
@@ -35,12 +35,12 @@ GUI and CLI share an operation lock. Logs live under `.runtime`. Prediction supp
 
 ## macOS/Linux — execution unverified
 
-Install Python 3.14 and Tcl/Tk for the GUI. Obtain the matching data archive; its redistribution restriction still applies.
+Install Python 3.14 and Tcl/Tk for the GUI. Copy the matching CSV files from the portable ZIP as described above; its redistribution review still applies. Unzipping that package for its data does not require running the Windows executable.
 
 ```sh
 python3.14 -m venv .venv
 .venv/bin/python -m pip install --only-binary=:all: -r requirements.lock
-.venv/bin/python setup.py --dataset-archive /path/to/ufc-matchup-analyzer-datasets-v0.3.0.zip
+.venv/bin/python setup.py
 .venv/bin/python ufc_matchup_analyzer.py doctor
 .venv/bin/python ufc_matchup_analyzer.py predict men --fighter-a "Islam Makhachev" --fighter-b "Justin Gaethje" --division Lightweight --fight-date 2026-10-10 --workers 1
 .venv/bin/python ufc_matchup_analyzer.py predict women --fighter-a "Valentina Shevchenko" --fighter-b "Manon Fiorot" --division Flyweight --fight-date 2026-10-10 --workers 1

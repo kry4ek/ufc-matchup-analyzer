@@ -13,7 +13,7 @@ $env:ANALYZER_SOURCE_ONLY = '1'
 .venv\Scripts\python.exe tools\audit_release.py --source-only
 ```
 
-This mode uses fixtures and explicitly skips data-dependent checks. The local dataset-free Windows run discovered 104 tests: 101 passed and 3 were skipped. It is not a complete model/portable-release validation. Remove the source-only flag (`Remove-Item Env:ANALYZER_SOURCE_ONLY`) before running the full data-equipped suite below. Setup and prediction require all matching data prerequisites listed in `dataset_manifest.json`; the versioned dataset archive is a separate Release asset and its rights review remains unresolved.
+This mode uses fixtures and explicitly skips data-dependent checks. The local dataset-free Windows run discovered 104 tests: 101 passed and 3 were skipped. It is not a complete model/portable-release validation. Remove the source-only flag (`Remove-Item Env:ANALYZER_SOURCE_ONLY`) before running the full data-equipped suite below. Setup and prediction require all matching data prerequisites listed in `dataset_manifest.json`; copy those CSV files from the version-matched portable package into a fresh checkout. There is no separate public dataset ZIP, and the rights review remains unresolved.
 
 ```bat
 .venv\Scripts\python.exe -m unittest discover -s tests -v
