@@ -1,6 +1,6 @@
 # CLI and manual source setup
 
-The local portable Windows candidate needs no setup. These commands are for source users. The public source preview excludes all required datasets and has no public dataset download. Prediction/setup commands below require a matching snapshot you are entitled to use; cloning the repository alone is insufficient. `dataset_manifest.json` lists every prerequisite.
+The portable Windows candidate needs no setup. These commands are for source users. Git history and automatic source downloads exclude datasets. Download the matching **ufc-matchup-analyzer-datasets-v0.3.0.zip** from [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases/tag/v0.3.0); cloning the repository alone is insufficient. `dataset_manifest.json` lists every prerequisite. Dataset redistribution rights remain unresolved, as explained in [DATA_NOTICE.md](../DATA_NOTICE.md).
 
 ## Windows
 

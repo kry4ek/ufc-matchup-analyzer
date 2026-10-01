@@ -2,33 +2,29 @@
 
 A small Windows app for analyzing one men's or women's UFC matchup. Enter the division, date and fighters, then get a detailed side-by-side comparison, win probabilities and data-quality information. Analysis runs locally using fight-history datasets.
 
-**Source-only development preview:** this repository contains the code, documentation, model workflows and tests. It does **not** contain the prediction datasets, bundled Python runtime or portable Windows download. A new clone cannot run predictions until all matching data prerequisites are supplied. There is no public dataset download or supported from-scratch bootstrap yet.
+**Experimental Windows portable candidate:** the complete app is provided as a separate ZIP under [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases). Download **ufc-matchup-analyzer-v0.3.0-windows.zip** for the app, runtime and all required datasets. GitHub's automatic source downloads and a Git clone contain source code only; source users also need the matching dataset archive.
 
-Dataset redistribution rights are unresolved. The local bundled app and dataset archive are not being published. The portable candidate also has outstanding clean-machine and actual display-scaling checks. See [dataset provenance](DATA_NOTICE.md) and [release verification](RELEASE_VERIFICATION.md); publishing source does not clear those release gates.
+Dataset redistribution rights remain unresolved. The owner has requested publication despite that uncertainty; this decision does not establish a data license. Clean Windows 10/11 and actual 100%, 150% and 200% display-scaling checks remain outstanding. This is a prerelease candidate, not a fully verified stable release. See [dataset provenance](DATA_NOTICE.md) and [release verification](RELEASE_VERIFICATION.md).
+
+## Download and start the Windows app
+
+1. Open [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases/tag/v0.3.0) and download **ufc-matchup-analyzer-v0.3.0-windows.zip**.
+2. Right-click the ZIP and choose **Extract All**. Use a writable folder, such as Documents.
+3. Open the extracted **UFC Matchup Analyzer** folder.
+4. Double-click **UFC Matchup Analyzer.exe**.
+
+The ZIP includes Python, all runtime libraries, the interface and all 15 required datasets. No separate installation, administrator access, terminal, Git, GPU, account or API key is needed. Predictions work without internet; dataset updates need internet. Keep the `app` and `runtime` folders beside the executable and move the complete folder when relocating it. The candidate targets **Windows 10/11 x64**, subject to the verification limitations above.
 
 ## Run from source
 
-Source operation requires **64-bit Python 3.14.7**, the locked libraries in `requirements.lock`, a writable folder, and every data file listed in `dataset_manifest.json`. The project's MIT code license does not grant rights to third-party data. The commands below apply only if you already have a matching dataset archive you are entitled to use:
+Source operation requires **64-bit Python 3.14.7**, the locked libraries in `requirements.lock`, a writable folder, and every data file listed in `dataset_manifest.json`. Download **ufc-matchup-analyzer-datasets-v0.3.0.zip** from the same release. The project's MIT code license does not grant rights to third-party data; the redistribution review remains unresolved. The commands below use that matching archive:
 
 ```bat
 setup.bat --dataset-archive "C:\Downloads\ufc-matchup-analyzer-datasets-v0.3.0.zip"
 .venv\Scripts\python.exe analyzer_gui.py
 ```
 
-Setup creates one local environment and checks dependencies and data. It does not supply or grant permission to obtain the missing snapshot. See [CLI and manual setup](docs/CLI.md) for prediction, comparison, maintenance and macOS/Linux instructions. Dataset-free contributor checks are described in [contributing](CONTRIBUTING.md); these are source checks rather than complete model validation.
-
-## Start the local portable Windows candidate
-
-These instructions describe the privately prepared candidate. The ZIP is not available as a public GitHub release:
-
-1. Obtain your local **ufc-matchup-analyzer-v0.3.0-windows.zip**.
-2. Right-click the ZIP and choose **Extract All**. Use a writable folder, such as Documents.
-3. Open the extracted **UFC Matchup Analyzer** folder.
-4. Double-click **UFC Matchup Analyzer.exe**.
-
-That is the complete setup. The ZIP includes Python, all runtime libraries, the interface and all 15 required datasets. No separate installation, administrator access, terminal, Git, GPU, account or API key is needed. Predictions work without internet. Keep the `app` and `runtime` folders beside the executable; move the complete folder when relocating it.
-
-The initial portable release targets **Windows 10/11 x64**, subject to the checks in the verification report. GitHub's automatically generated Source code download is for developers and does **not** include the runtime or datasets.
+Setup creates one local environment and checks dependencies and data. See [CLI and manual setup](docs/CLI.md) for prediction, comparison, maintenance and macOS/Linux instructions. Dataset-free contributor checks are described in [contributing](CONTRIBUTING.md); these are source checks rather than complete model validation.
 
 ## Analyze a matchup
 

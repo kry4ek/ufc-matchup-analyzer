@@ -53,4 +53,4 @@ Use `tools\check_native_html_save.py --fixture verification\men\men-forward.json
 
 Run `python -m unittest discover -s tests -v` and the men's sampled feature-parity tool. The CI workflow runs source safety checks with Python 3.14.7 on Windows, macOS and Linux; missing graphical displays/data are explicitly skipped in source-only CI. Those jobs do not establish portable or model readiness.
 
-Also verify clean Windows 10/11 machines without Python/development tools. A developer-machine success is not clean-machine evidence. Record OS, versions, commands, timings, memory and unverified checks. Dataset rights and every required release gate must be cleared before public upload; see [publishing](PUBLISHING.md).
+Also verify clean Windows 10/11 machines without Python/development tools. A developer-machine success is not clean-machine evidence. Record OS, versions, commands, timings, memory and unverified checks. The standard fully verified release gate requires documented dataset rights and every required check. The owner-requested experimental publication is recorded separately and does not mark the gate as passed; see [publishing](PUBLISHING.md).

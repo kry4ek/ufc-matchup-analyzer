@@ -54,8 +54,10 @@ the chosen date and later fights; profile measurements may reflect corrections.
 Dataset updates do not change the selected algorithms; a new app release
 supplies algorithm changes.
 
-LOCAL REVIEW CANDIDATE: dataset redistribution rights are not cleared.
-Do not publish this bundled-data package until that release blocker is resolved.
+EXPERIMENTAL PRERELEASE: dataset redistribution rights remain unresolved.
+Clean Windows 10/11 and actual 100%, 150% and 200% display-scale checks are
+outstanding. Publication was requested by the owner despite unresolved rights;
+this does not grant a data license or mark those checks as passed.
 
 Full instructions: app/README.md
 Verification and known limitations: app/RELEASE_VERIFICATION.md

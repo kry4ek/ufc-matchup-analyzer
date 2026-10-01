@@ -1,6 +1,6 @@
 {
   "version": "0.3.0",
-  "status": "local_review_candidate_publication_blocked",
+  "status": "experimental_prerelease_standard_gate_not_passed",
   "checks": [
     {
       "name": "Existing comparison navigation without repeated preparation",
@@ -118,8 +118,8 @@
     },
     {
       "name": "configured public repository and pinned dataset download",
-      "status": "BLOCKED",
-      "evidence": "Publication identity/download not configured while rights unresolved",
+      "status": "PENDING",
+      "evidence": "Public repository confirmed as kry4ek/ufc-matchup-analyzer; version-pinned release assets and actual download checks pending publication",
       "required": true
     },
     {
@@ -135,5 +135,13 @@
       "evidence": "Workflow included; not run on remote services/platforms here",
       "required": false
     }
-  ]
+  ],
+  "publication_decision": {
+    "rights_clearance": "unresolved",
+    "scope": "full portable app and matching dataset archive",
+    "request": "Owner requested publication despite possibility of GitHub takedown",
+    "standard_gate_passed": false,
+    "owner": "kry4ek",
+    "date": "2026-10-01"
+  }
 }

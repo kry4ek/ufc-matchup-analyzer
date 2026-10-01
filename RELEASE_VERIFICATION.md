@@ -1,6 +1,6 @@
 # Release verification: v0.3.0 portable Windows local candidate
 
-**Implemented and locally verified; the bundled portable release remains blocked.** Dataset redistribution permission, clean Windows 10/11 machines and actual 100/150/200% display-scale checks are unavailable. The owner has requested a source-only development preview: uploading code/documentation/tests does not include the datasets/runtime or clear these gates. The tests below were performed locally before that upload. [release_checks.json](release_checks.json) records every gate; [verification_evidence.json](verification_evidence.json) contains sanitized measurements and evidence scope.
+**Implemented and locally verified; the standard fully verified release gate has not passed.** Dataset redistribution rights, clean Windows 10/11 machines and actual 100/150/200% display-scale checks remain unresolved or unavailable. On October 1, 2026, the owner requested publication of the full portable app despite the possibility of a GitHub takedown. It is being prepared as an experimental prerelease with these limitations disclosed. This decision does not clear dataset rights, waive test evidence, or turn an unavailable check into a pass. [release_checks.json](release_checks.json) records every gate; [verification_evidence.json](verification_evidence.json) contains sanitized measurements and evidence scope.
 
 ## Delivered behavior
 
@@ -83,13 +83,13 @@ From a freshly extracted portable folder, use its interpreter for tools in the s
 
 ## Remaining release blockers
 
-- Dataset redistribution basis is unresolved; neither bundled datasets nor matching dataset archives may be published.
+- Dataset redistribution basis is unresolved. The owner requested an experimental public candidate; the decision is recorded in DATA_NOTICE.md and does not establish permission.
 - Clean Windows 10 and Windows 11 x64 without Python/Git/development tools have not been available.
 - Actual Windows 100%, 150% and 200% display-scale checks remain unavailable; Tk simulations do not replace them.
 - Public repository/pinned dataset URL and actual published-download checks are pending authorized publication. The unsigned launcher's SmartScreen reputation is unverified.
 - The included Windows/macOS/Linux source CI workflow has not been run remotely; macOS/Linux source execution is separately unverified.
 
-No required unavailable check is counted as passed. The delivered ZIP is a **local review candidate**, preserving download → extract → open folder → double-click EXE.
+No required unavailable check is counted as passed. The delivered ZIP is an **experimental prerelease candidate**, preserving download → extract → open folder → double-click EXE.
 
 ## Help menu fix — October 1, 2026
 
@@ -108,3 +108,25 @@ The source passes **104 tests, no skips, in 12.868 seconds**; the final GUI subs
 Fresh offline GUI/worker predictions on disposable portable copies passed for both engines and matched baseline probabilities within 1e-12, with identical overlapping raw metrics. Men: 0.8229788712684363, prediction 160.79 seconds under concurrent test load, existing comparison **0.0662 seconds**. Women: 0.485904994646593, prediction 130.52 seconds, existing comparison **0.1006 seconds**. Each button check confirms no new worker, unchanged report/metric/timestamp values and no extra history entry; actual clipboard and TXT export checks passed. These navigation measurements include selecting the tab and processing UI events; they are observed timings, not a guaranteed latency. Models, runtime and datasets are unchanged. Existing publication, clean-machine and actual display-scale blockers remain unchanged.
 
 Evidence: work/comparison-navigation-tests.log, work/comparison-navigation-final-ui.log, work/comparison-navigation-men/report.json and work/comparison-navigation-women/report.json. Portable verification helpers now check navigation instead of expecting a second cached computation for an already displayed result.
+
+
+## Experimental publication preparation - October 1, 2026
+
+The owner requested a public portable candidate and accepted the possibility of
+a GitHub takedown. The destination repository is
+`kry4ek/ufc-matchup-analyzer`; the release is labelled experimental/prerelease.
+Dataset rights remain `review_required`, and clean Windows 10/11 and actual
+100/150/200% scaling remain unavailable. The standard publication gate has not
+passed. This decision is recorded separately from test statuses.
+
+Fresh pre-upload checks: **104 data-equipped/native regression tests passed,
+no skips, 13.489 seconds**. The full source/data/dependency audit passed: 67
+Python files, 98 public files and 18 dependency checks, with no errors. No
+engine, GUI, runtime, launcher or dataset calculation files were changed for
+publication. Earlier real model/parity evidence therefore remains retained
+evidence; those model runs are not described as new upload-day runs.
+
+Archive inventories, member hashes, CRCs, freshly extracted native launch and
+published-download checks are recorded separately in the attached verification
+report. No unavailable clean-machine or display-scale check is counted as a
+pass.
