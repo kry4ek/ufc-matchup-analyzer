@@ -88,9 +88,9 @@
     },
     {
       "name": "Remote source CI",
-      "status": "PENDING",
+      "status": "PASS",
       "required": false,
-      "evidence": "Configured three-platform workflow will run on the authorized source push"
+      "evidence": "https://github.com/kry4ek/ufc-matchup-analyzer/actions/runs/38129389323; Windows/Linux/macOS source-only checks pass on implementation commit 7f9ee1ce02886b50778f3e9f3293af95ead0daf0"
     }
   ],
   "publication_decision": {

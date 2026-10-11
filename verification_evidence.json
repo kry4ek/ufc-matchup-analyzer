@@ -434,8 +434,28 @@
     "scope": "Earlier feature parity and platform/publication history; not new v0.4 executions"
   },
   "remote_ci": {
-    "status": "PENDING",
-    "scope": "Source-only Windows/macOS/Linux workflow will run on the repository push; check GitHub Actions for the intended commit."
+    "status": "PASS",
+    "commit": "7f9ee1ce02886b50778f3e9f3293af95ead0daf0",
+    "run_id": 38129389323,
+    "url": "https://github.com/kry4ek/ufc-matchup-analyzer/actions/runs/38129389323",
+    "scope": "Source-only CI on Windows, Linux and macOS; separate from data-equipped Windows checks.",
+    "jobs": [
+      {
+        "name": "safety (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "safety (windows-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "safety (macos-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
   },
   "feature_parity": {
     "status": "PASS",

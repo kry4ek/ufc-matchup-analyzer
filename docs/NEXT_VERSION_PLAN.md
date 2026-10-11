@@ -2,7 +2,7 @@
 
 Proposed release: v0.4.0 experimental Windows release
 Prepared: 11 October 2026
-Status: implemented and locally verified; source CI runs on GitHub
+Status: implemented and verified; source pushed to GitHub; three-platform source CI passed
 
 ## Implementation evidence
 
