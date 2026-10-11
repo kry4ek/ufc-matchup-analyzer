@@ -498,5 +498,20 @@
   "diagnostics_redaction": {
     "status": "PASS",
     "scope": "Full native regression rerun after adding Bearer, Basic and JSON authorization-header redaction checks"
+  },
+  "published_release": {
+    "version": "0.4.0",
+    "url": "https://github.com/kry4ek/ufc-matchup-analyzer/releases/tag/v0.4.0",
+    "source_commit": "93184afd9b8ecde9a5c759f58db1e63578f8b214",
+    "prerelease": true,
+    "source_ci": {
+      "status": "PASS",
+      "commit": "93184afd9b8ecde9a5c759f58db1e63578f8b214",
+      "run_id": 38144662396,
+      "url": "https://github.com/kry4ek/ufc-matchup-analyzer/actions/runs/38144662396"
+    },
+    "download_and_native_predictions_verification": "https://github.com/kry4ek/ufc-matchup-analyzer/releases/download/v0.4.0/POST_PUBLICATION_VERIFICATION.json",
+    "status": "PASS",
+    "standard_gate_passed": false
   }
 }

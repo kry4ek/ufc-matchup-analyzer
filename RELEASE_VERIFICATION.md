@@ -1,4 +1,4 @@
-# Release verification: v0.4.0 experimental Windows candidate
+# Release verification: v0.4.0 experimental Windows release
 
 Implemented and verified locally on October 11, 2026. The four requested improvements are complete: consistent completed draw/NC capture in both update routes, actionable maintenance errors with retained diagnostics, measured phase progress and captured-fight details, and frozen recent UFC bouts throughout live and saved reports. Algorithms, feature definitions, calibration and engine-specific Elo policies are unchanged.
 
@@ -17,6 +17,10 @@ Implemented and verified locally on October 11, 2026. The four requested improve
 Final archive inventory, member hashes and CRCs pass; a fresh extraction launches through its native EXE with the bundled runtime. Required datasets remain the original 2026-09-26 snapshot (206,791,890 bytes); verification updates ran on a disposable portable copy and restored all original hashes. The deliverable excludes runtime state, preferences, histories and transaction files. Exact ZIP sizes and SHA-256 checksums are supplied beside the archives.
 
 The owner explicitly authorized publication of the v0.4.0 portable app on October 11, 2026. It remains an experimental prerelease; publication does not clear the standard release gate or replace an existing installation automatically. The v0.3 download remains available separately. Dataset rights, clean Windows 10/11 machines, actual other display scales and automatic dataset download retain their prior limitations. [Remote source CI](https://github.com/kry4ek/ufc-matchup-analyzer/actions/runs/38129389323) passed on Windows, Linux and macOS for implementation commit `7f9ee1c`. These source-only checks remain separate from data-equipped Windows verification. The follow-up evidence commit changes documentation only. See [release checks](release_checks.json), [structured evidence](verification_evidence.json) and [changes](docs/CHANGELOG.md).
+
+## Published v0.4 download verification
+
+The [v0.4.0 prerelease](https://github.com/kry4ek/ufc-matchup-analyzer/releases/tag/v0.4.0) is public. All six original release assets were downloaded anonymously and matched uploaded SHA-256 hashes. The actual downloaded Windows ZIP passed CRC and all 3,600 packaged-file hash checks, launched through its native EXE, and recomputed both documented men and women matchups offline through the GUI and worker. Both matched frozen baseline probabilities and raw metrics; recent-fights previews and final reports agreed and excluded same-date/future bouts. [Post-publication evidence](https://github.com/kry4ek/ufc-matchup-analyzer/releases/download/v0.4.0/POST_PUBLICATION_VERIFICATION.json) records the results. The exact release source commit `93184afd9b8ecde9a5c759f58db1e63578f8b214` passed [Windows, Linux and macOS source CI](https://github.com/kry4ek/ufc-matchup-analyzer/actions/runs/38144662396). This paragraph was added after publication; the immutable ZIPs retain their preparation-time evidence, and the release evidence asset records the subsequent public-download checks.
 
 ## Earlier v0.3 verification and publication history
 
