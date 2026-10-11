@@ -131,10 +131,10 @@ class MaintenanceErrorContracts(unittest.TestCase):
 
     def test_diagnostic_copy_is_bounded_and_redacted(self):
         with tempfile.TemporaryDirectory() as temp:
-            path=Path(temp)/'log';path.write_text('x'*10000+'\n'+str(Path('C:/Users')/'SomeAccount'/'private.log')+'\ntoken=privatevalue\nhttps://user:password@example.com',encoding='utf-8')
+            path=Path(temp)/'log';path.write_text('x'*10000+'\n'+str(Path('C:/Users')/'SomeAccount'/'private.log')+'\ntoken=privatevalue\nhttps://user:password@example.com\nAuthorization: Bearer bearer-value\nProxy-Authorization=Basic basic-value\n{"Authorization": "Bearer json-value"}',encoding='utf-8')
             text=diagnostic_text(dict(code='failed',diagnostics_path=str(path)),'0.4.0')
             self.assertLess(len(text),6200)
-            for value in ('SomeAccount','privatevalue','user:password'):self.assertNotIn(value,text)
+            for value in ('SomeAccount','privatevalue','user:password','bearer-value','basic-value','json-value'):self.assertNotIn(value,text)
 
 class ProgressContracts(unittest.TestCase):
     def test_partial_unicode_bad_and_oversized_records(self):

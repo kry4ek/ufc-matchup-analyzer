@@ -11,7 +11,7 @@
   "regression": {
     "status": "PASS",
     "tests": 128,
-    "seconds": 33.386,
+    "seconds": 26.04,
     "failures": 0,
     "errors": 0,
     "skips": 0,
@@ -494,5 +494,9 @@
     "status": "PASS",
     "verification_log": "work/v04-final-archive-verification.txt",
     "scope": "Exact ZIP inventory, member hashes, CRCs and archive checksums. Final checksum files are alongside the ZIPs."
+  },
+  "diagnostics_redaction": {
+    "status": "PASS",
+    "scope": "Full native regression rerun after adding Bearer, Basic and JSON authorization-header redaction checks"
   }
 }

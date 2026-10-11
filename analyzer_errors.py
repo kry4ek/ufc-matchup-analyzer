@@ -51,6 +51,7 @@ def diagnostic_text(error, version):
         lines.append('Diagnostic excerpt unavailable.')
     text = '\n'.join(lines)
     text = re.sub(r'(?i)(?:[A-Z]:[\\/](?:Users|Documents and Settings)[\\/])[^\\/\s]+', r'[drive]:\\Users\\[account]', text)
+    text = re.sub(r'(?i)((?:proxy-)?authorization)[\"\']?(\s*[:=]\s*)[^\r\n]+', r'\1\2[redacted]', text)
     text = re.sub(r'(?i)(authorization|api[_-]?key|password|token|secret)(\s*[:=]\s*)[^\s,;]+', r'\1\2[redacted]', text)
     text = re.sub(r'(https?://)[^\s/@]+:[^\s/@]+@', r'\1[redacted]@', text)
     return text
