@@ -1,15 +1,15 @@
 # Publishing source and portable releases
 
-The public repository is `kry4ek/ufc-matchup-analyzer`. Keep datasets, bundled runtime, environments, local state and generated results outside source Git history. The explicit source allowlist includes code, documentation, tests, licenses, manifests and screenshots. Portable, source and dataset ZIPs are separate GitHub Release assets.
+The public repository is `kry4ek/ufc-matchup-analyzer`. Keep datasets, bundled runtime, environments, local state and generated results outside source Git history. The explicit source allowlist includes code, documentation, tests, licenses, manifests and screenshots. The complete Windows app and source ZIPs are GitHub Release assets. The separate dataset ZIP remains local and is omitted from public assets.
 
 ## Current experimental publication
 
-On October 1, 2026, the owner requested publication of the full portable app and accepted the possibility of GitHub taking it down. The candidate is a **prerelease**, with unresolved dataset redistribution rights and unavailable clean-machine/display-scale checks disclosed in the README and release notes. This decision is separate from the verification gate. Keep dataset `redistribution_status` as `review_required` and keep failed/unavailable checks visible. Do not claim that permission was obtained or that the standard gate passed. See [DATA_NOTICE.md](../DATA_NOTICE.md) and [release verification](../RELEASE_VERIFICATION.md).
+The owner authorized experimental publication of v0.3.0 on October 1, 2026 and explicitly requested publication of the new v0.4.0 portable app on October 11, 2026. The candidate is a **prerelease**, with unresolved dataset redistribution rights and unavailable clean-machine/display-scale checks disclosed in the README and release notes. This decision is separate from the verification gate. Keep dataset `redistribution_status` as `review_required` and keep failed/unavailable checks visible. Do not claim that permission was obtained or that the standard gate passed. See [DATA_NOTICE.md](../DATA_NOTICE.md) and [release verification](../RELEASE_VERIFICATION.md).
 
 The release includes:
 
-- `ufc-matchup-analyzer-v0.3.0-windows.zip`: the complete Windows x64 app.
-- `ufc-matchup-analyzer-source-v0.3.0.zip`: curated source, without data/runtime.
+- `ufc-matchup-analyzer-v0.4.0-windows.zip`: the complete Windows x64 app.
+- `ufc-matchup-analyzer-source-v0.4.0.zip`: curated source, without data/runtime.
 - `SHA256SUMS.txt`, `archive_manifest.json` and the verification report.
 
 The owner requested omission of the separate dataset ZIP. Its CSV files remain

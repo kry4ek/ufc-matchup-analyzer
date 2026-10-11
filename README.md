@@ -2,19 +2,19 @@
 
 A small Windows app for analyzing one men's or women's UFC matchup. Enter the division, date and fighters, then get a detailed side-by-side comparison, win probabilities and data-quality information. Analysis runs locally using fight-history datasets.
 
-The v0.4.0 local candidate adds consistent draw/no-contest updates, actionable maintenance errors, measured progress with captured-fight details, and a **Recent fights** tab. The existing download instructions below refer to v0.3.0; publishing v0.4.0 is a separate release action.
+Version **0.4.0** adds consistent draw/no-contest updates, actionable maintenance errors, measured progress with captured-fight details, and a **Recent fights** tab.
 
 Recent fights lists each fighter's last five recorded UFC bouts strictly before the selected fight date, across all divisions. It includes draws and no-contests, and keeps the same history in saved analyses and TXT/HTML exports. Older saved analyses remain readable and ask you to recalculate if their recent bouts were not saved.
 
 ![Recent UFC bouts in a saved analysis](docs/images/recent-fights.png)
 
-**Experimental Windows portable candidate:** the complete app is provided as a separate ZIP under [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases). Download **ufc-matchup-analyzer-v0.3.0-windows.zip** for the app, runtime and all required datasets. GitHub's automatic source downloads and a Git clone contain source code only. There is no separate public dataset ZIP; source users obtain the matching data from the portable package.
+**Experimental Windows portable candidate:** the complete app is provided as a separate ZIP under [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases). Download **ufc-matchup-analyzer-v0.4.0-windows.zip** for the app, runtime and all required datasets. GitHub's automatic source downloads and a Git clone contain source code only. There is no separate public dataset ZIP; source users obtain the matching data from the portable package.
 
 Dataset redistribution rights remain unresolved. The owner has requested publication despite that uncertainty; this decision does not establish a data license. Clean Windows 10/11 and actual 100%, 150% and 200% display-scaling checks remain outstanding. This is a prerelease candidate, not a fully verified stable release. See [dataset provenance](DATA_NOTICE.md) and [release verification](RELEASE_VERIFICATION.md).
 
 ## Download and start the Windows app
 
-1. Open [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases/tag/v0.3.0) and download **ufc-matchup-analyzer-v0.3.0-windows.zip**.
+1. Open [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases/tag/v0.4.0) and download **ufc-matchup-analyzer-v0.4.0-windows.zip**.
 2. Right-click the ZIP and choose **Extract All**. Use a writable folder, such as Documents.
 3. Open the extracted **UFC Matchup Analyzer** folder.
 4. Double-click **UFC Matchup Analyzer.exe**.

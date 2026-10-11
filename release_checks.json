@@ -1,6 +1,6 @@
 {
   "version": "0.4.0",
-  "status": "experimental_local_candidate_standard_gate_not_passed",
+  "status": "experimental_prerelease_standard_gate_not_passed",
   "checks": [
     {
       "name": "Full native regression",
@@ -91,12 +91,20 @@
       "status": "PASS",
       "required": false,
       "evidence": "https://github.com/kry4ek/ufc-matchup-analyzer/actions/runs/38129389323; Windows/Linux/macOS source-only checks pass on implementation commit 7f9ee1ce02886b50778f3e9f3293af95ead0daf0"
+    },
+    {
+      "name": "Published v0.4 portable download",
+      "status": "PENDING",
+      "required": true,
+      "phase": "after_publish",
+      "evidence": "Verify actual public download hash, fresh extraction, native launch and both offline examples after publication"
     }
   ],
   "publication_decision": {
     "date": "2026-10-11",
-    "scope": "Source repository update authorized; v0.4 portable ZIP remains a local candidate",
+    "scope": "Owner explicitly authorized publishing the v0.4.0 full portable Windows app and source archive; separate dataset asset remains omitted",
     "rights_clearance": "unresolved",
-    "standard_gate_passed": false
+    "standard_gate_passed": false,
+    "request": "Finish the job and publish the new portable app on GitHub"
   }
 }

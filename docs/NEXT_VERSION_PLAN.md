@@ -8,7 +8,7 @@ Status: implemented and verified; source pushed to GitHub; three-platform source
 
 The four improvements are implemented in v0.4.0. Fresh verification passed 128 native regression tests, a mixed decisive/draw/NC update and full rebuild for both targets, a real 22-men/4-women update with repeat and restore, the actual maintenance error dialog's Retry action, offline predictions for both models and a historical case, and 10,800 feature-parity comparisons. Native comparisons, cancelled previews, TXT/HTML exports, recent-fights layouts and fresh portable launch also pass.
 
-The portable ZIP remains a local experimental candidate. The owner subsequently requested an update to the GitHub source repository; that request does not publish a v0.4 release asset or replace an installation. See [release verification](../RELEASE_VERIFICATION.md), [structured evidence](../verification_evidence.json) and [changes](CHANGELOG.md) for completed checks and scope. The approved design and acceptance criteria below are retained for reference.
+The owner subsequently requested an update to the GitHub source repository and explicitly authorized publication of the v0.4.0 portable app. This remains an experimental prerelease and does not replace an existing installation automatically. See [release verification](../RELEASE_VERIFICATION.md), [structured evidence](../verification_evidence.json) and [changes](CHANGELOG.md) for completed checks and scope. The approved design and acceptance criteria below are retained for reference.
 
 ## Release outcome
 

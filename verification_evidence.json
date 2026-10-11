@@ -1,7 +1,7 @@
 {
   "version": "0.4.0",
   "date": "2026-10-11",
-  "scope": "Fresh local portable v0.4 verification. Source repository update authorized; no v0.4 GitHub release published.",
+  "scope": "Fresh data-equipped portable v0.4 verification; owner-authorized experimental GitHub publication. Published-download checks are recorded separately after publication.",
   "environment": {
     "os": "Windows 10 Pro x64 build 19045",
     "python": "3.14.7 x64",
