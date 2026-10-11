@@ -37,6 +37,17 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple
 from urllib.parse import urljoin
 
 import numpy as np
+# Optional structured progress for staged and standalone maintenance.
+import os as _maintenance_os
+import sys as _maintenance_sys
+if _maintenance_os.environ.get("UFC_APP_HELPERS"):
+    _maintenance_sys.path.insert(0, _maintenance_os.environ["UFC_APP_HELPERS"])
+try:
+    from analyzer_protocol import progress as maintenance_progress, source_failure
+except ImportError:
+    def maintenance_progress(*args, **kwargs): pass
+    def source_failure(exc): pass
+
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -248,7 +259,7 @@ def fetch_soup(session: requests.Session, url: str, timeout: float, sleep: float
         except Exception as exc:
             last_exc = exc
         time.sleep(max(sleep, 0.5) * attempt)
-    raise RuntimeError(f"Failed to fetch {url}: {last_exc}")
+    raise requests.exceptions.RequestException(f"Failed to fetch {url}: {last_exc}") from last_exc
 
 
 class SkippedFight(Exception):
@@ -270,6 +281,18 @@ def marker_value(marker: Any) -> str:
 def is_blank_marker(marker: Any) -> bool:
     marker = marker_value(marker)
     return marker in {"", "--", "---", "NAN", "NONE", "NULL"}
+
+
+def completed_result_pair(markers: Iterable[Any]) -> str:
+    """Classify only consistent, resolved pairs; never invent a binary target."""
+    pair = [marker_value(marker) for marker in markers]
+    if sorted(pair) == ["L", "W"]:
+        return "win_loss"
+    if pair == ["D", "D"]:
+        return "draw"
+    if len(pair) == 2 and all(marker in {"NC", "N/C"} for marker in pair):
+        return "nc"
+    return ""
 
 
 def validate_completed_people(
@@ -296,13 +319,17 @@ def validate_completed_people(
     if len(people) != 2 or not people[0].get("fighter") or not people[1].get("fighter"):
         raise SkippedFight("skipped_unresolved_result", "could not parse both fighters", details)
 
+    profile_ids = [extract_id_from_url(p.get('profile_url') or '') for p in people]
+    if pd.isna(event_date) or normalize_name(people[0]['fighter']) == normalize_name(people[1]['fighter']) or (all(profile_ids) and profile_ids[0] == profile_ids[1]):
+        raise SkippedFight('skipped_unresolved_result', 'invalid date or fighter identities', details)
+
     if any(is_blank_marker(m) for m in markers):
         raise SkippedFight("skipped_unresolved_result", "blank result marker", details)
 
     if any(m not in {"W", "L", "D", "NC", "N/C"} for m in markers):
         raise SkippedFight("skipped_unresolved_result", f"unsupported result markers: {markers}", details)
 
-    if markers.count("W") != 1 or markers.count("L") != 1:
+    if not completed_result_pair(markers):
         raise SkippedFight("skipped_no_winner_loser", f"no single W/L result pair: {markers}", details)
 
 
@@ -639,7 +666,7 @@ def parse_fight_page(
 
     people = parse_people(soup)
     if len(people) != 2 or not people[0]["fighter"] or not people[1]["fighter"]:
-        raise RuntimeError(f"Could not parse fighters for {fight_url}")
+        raise ValueError(f"Could not parse fighters for {fight_url}")
     validate_completed_people(people, event, today=today, allow_future_events=allow_future_events)
 
     meta = parse_fight_meta(soup)
@@ -893,6 +920,10 @@ def build_new_training_rows(predictor, advanced_df: pd.DataFrame, updated_stats:
         if len(g) != 2:
             print(f"WARNING: fight_id {fight_id} has {len(g)} rows; skipping advanced append")
             continue
+        if completed_result_pair(g["result_marker"]) != "win_loss":
+            # Retain draw/NC statistics for future prefight history, but do not
+            # append missing labels to the binary model training datasets.
+            continue
         g = g.sort_values("fighter").copy()
         r1 = g.iloc[0]
         r2 = g.iloc[1]
@@ -1095,7 +1126,10 @@ def audit_new_rows_for_apply(
         add_issue("missing_won", "new rows have no won column", new_stats.index)
     else:
         won = pd.to_numeric(new_stats["won"], errors="coerce")
-        add_issue("nan_won", "new rows have NaN won", won[won.isna()].index)
+        non_binary = new_stats["result_marker"].map(marker_value).isin({"D", "NC", "N/C"}) if "result_marker" in new_stats.columns else pd.Series(False, index=new_stats.index)
+        add_issue("nan_won", "win/loss rows have NaN won", won[won.isna() & ~non_binary].index)
+        add_issue("unsupported_won", "win/loss rows have targets outside 0/1", won[won.notna() & ~won.isin([0, 1]) & ~non_binary].index)
+        add_issue("non_binary_won", "draw/NC rows must have no binary target", won[won.notna() & non_binary].index)
 
     if "fight_id" not in new_stats.columns:
         add_issue("missing_fight_id", "new rows have no fight_id column", new_stats.index)
@@ -1116,8 +1150,15 @@ def audit_new_rows_for_apply(
 
             if "result_marker" in group.columns:
                 markers = [marker_value(x) for x in group["result_marker"].tolist()]
-                if markers.count("W") != 1 or markers.count("L") != 1:
-                    add_issue("missing_winner_loser", f"fight_id {fight_id} does not have one W and one L marker", group.index)
+                pair = completed_result_pair(markers)
+                if not pair:
+                    add_issue("missing_winner_loser", f"fight_id {fight_id} has inconsistent or unresolved result markers", group.index)
+                elif "result" in group.columns and "won" in group.columns:
+                    for idx, row in group.iterrows():
+                        expected_result, expected_won = result_from_marker(row["result_marker"])
+                        actual_won = pd.to_numeric(row["won"], errors="coerce")
+                        if clean_text(row["result"]).lower() != expected_result or (pd.isna(expected_won) != pd.isna(actual_won)) or (pd.notna(expected_won) and actual_won != expected_won):
+                            add_issue("inconsistent_result", f"fight_id {fight_id} has result/target values that disagree with its markers", [idx])
             elif "won" in group.columns:
                 won_values = pd.to_numeric(group["won"], errors="coerce").dropna().tolist()
                 if sorted(won_values) != [0.0, 1.0]:
@@ -1550,21 +1591,28 @@ def main() -> None:
 
     fights_processed = 0
     events_inspected = 0
-    for event in new_events:
+    maintenance_progress('download', 'Women: checking completed events', phase='events', completed=0, total=len(new_events), unit='events', force=True)
+    event_index = -1
+    for event_index, event in enumerate(new_events):
+        maintenance_progress('download', 'Women: checking event '+str(event_index+1)+' of '+str(len(new_events))+' — '+event['event_name'], phase='events', completed=event_index, total=len(new_events), unit='events', force=True)
         print(f"\nEvent: {event['event_date'].date()} | {event['event_name']}")
         try:
             event_soup = fetch_soup(session, event["event_url"], timeout=args.timeout, sleep=args.sleep)
             fight_links = parse_fight_links_from_event(event_soup)
+            if not fight_links:
+                raise ValueError('The event page contains no parseable fight links')
             events_inspected += 1
         except Exception as exc:
             print(f"  ERROR fetching event: {exc}")
-            event_manifest.append({**event, "status": "event_fetch_error", "error": str(exc)})
+            event_manifest.append({**event, "status": "event_fetch_error", "error": str(exc), "error_code": "source_malformed" if isinstance(exc, ValueError) else "source_fetch_failed", "event_name": event["event_name"], "event_id": event.get("event_id", "")})
             continue
 
         event_manifest.append({**event, "status": "ok", "fight_links_found": len(fight_links)})
         print(f"  fight links found: {len(fight_links)}")
 
-        for fight_url in fight_links:
+        bout_index = -1
+        for bout_index, fight_url in enumerate(fight_links):
+            maintenance_progress('download', 'Women: inspecting bout '+str(bout_index+1)+' of '+str(len(fight_links))+' — '+event['event_name'], phase='bouts:'+str(event.get('event_id',event['event_name'])), completed=bout_index, total=len(fight_links), unit='bouts')
             fight_id = extract_id_from_url(fight_url)
             if fight_id in existing_fight_ids:
                 fight_manifest.append({"fight_id": fight_id, "fight_url": fight_url, "status": "already_exists"})
@@ -1597,6 +1645,9 @@ def main() -> None:
                         "division": rows[0]["division"],
                         "fighter_1": rows[0]["fighter"],
                         "fighter_2": rows[1]["fighter"],
+                        "outcome": completed_result_pair([r['result_marker'] for r in rows]),
+                        "training_eligible": completed_result_pair([r['result_marker'] for r in rows]) == 'win_loss',
+                        "event_id": event.get('event_id',''),
                     }
                 )
             except SkippedFight as exc:
@@ -1613,10 +1664,12 @@ def main() -> None:
                 print(f"  - {exc.status}: {rec.get('fighter_1', '')} vs {rec.get('fighter_2', '')} ({exc.reason})")
             except Exception as exc:
                 print(f"  ERROR fight {fight_id}: {exc}")
-                fight_manifest.append({"fight_id": fight_id, "fight_url": fight_url, "status": "fight_fetch_error", "error": str(exc)})
+                fight_manifest.append({"fight_id": fight_id, "fight_url": fight_url, "status": "fight_fetch_error", "error": str(exc), "error_code": "source_malformed" if isinstance(exc, ValueError) else "source_fetch_failed", "event_name": event["event_name"], "event_id": event.get("event_id", "")})
+        maintenance_progress('download', 'Women: event inspection finished', phase='bouts:'+str(event.get('event_id',event['event_name'])), completed=bout_index+1, total=len(fight_links), unit='bouts', force=True)
         if args.max_fights is not None and fights_processed >= args.max_fights:
             break
 
+    maintenance_progress('download', 'Women: event checks finished', phase='events', completed=event_index+1, total=len(new_events), unit='events', force=True)
     new_stats = pd.DataFrame(all_new_fight_rows) if all_new_fight_rows else pd.DataFrame(columns=existing_stats.columns)
     if not new_stats.empty:
         for col in existing_stats.columns:
@@ -1829,4 +1882,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as exc:
+        source_failure(exc)
+        raise

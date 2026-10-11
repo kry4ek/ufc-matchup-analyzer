@@ -7,6 +7,17 @@ import sys
 from pathlib import Path
 from typing import Any
 
+# Optional structured progress for staged and standalone maintenance.
+import os as _maintenance_os
+import sys as _maintenance_sys
+if _maintenance_os.environ.get("UFC_APP_HELPERS"):
+    _maintenance_sys.path.insert(0, _maintenance_os.environ["UFC_APP_HELPERS"])
+try:
+    from analyzer_protocol import progress as maintenance_progress, source_failure
+except ImportError:
+    def maintenance_progress(*args, **kwargs): pass
+    def source_failure(exc): pass
+
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -233,7 +244,10 @@ def mirrored_integrity_summary(training: pd.DataFrame, allow_mirrored: bool) -> 
     bad_diff = 0
     missing_pair = 0
 
-    for _, group in training.groupby("fight_id", dropna=False):
+    _validation_total = training['fight_id'].nunique(dropna=False)
+    maintenance_progress('validating', 'Validating mirrored training fights', phase='mirrored_fights', completed=0, total=_validation_total, unit='fights', force=True)
+    for _validation_index, (_, group) in enumerate(training.groupby("fight_id", dropna=False)):
+        maintenance_progress('validating', 'Validating mirrored training fights', phase='mirrored_fights', completed=_validation_index, total=_validation_total, unit='fights')
         if len(group) != 2:
             unexpected += 1
             missing_pair += 1
@@ -271,6 +285,8 @@ def mirrored_integrity_summary(training: pd.DataFrame, allow_mirrored: bool) -> 
                 unexpected += 1
                 bad_diff += 1
                 break
+
+    maintenance_progress('validating', 'Mirrored training fights checked', phase='mirrored_fights', completed=_validation_total, total=_validation_total, unit='fights', force=True)
 
     summary.update(
         {

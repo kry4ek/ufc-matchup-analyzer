@@ -93,6 +93,16 @@ def main():
             timing=wait()
             assert app.result is not previous,(label,dialogs)
             payload=dict(app.result)
+            recent=payload['recent_fights'];assert recent['history_cutoff']==date
+            preview_events=[json.loads(line) for line in app.controller.events_path.read_text(encoding='utf-8').splitlines() if json.loads(line).get('type')=='comparison_ready']
+            assert preview_events and preview_events[0]['payload']['recent_fights']==recent
+            for side in ('fighter_a','fighter_b'):
+                rows=recent[side]
+                assert len(rows)<=5 and len({r['fight_id'] for r in rows})==len(rows)
+                assert all(r['event_date']<date for r in rows)
+                assert rows==sorted(rows,key=lambda r:(r['event_date'],r['fight_id']),reverse=True)
+                assert len(app.recent_trees[side].get_children())==len(rows)
+            assert 'RECENT UFC FIGHTS' in app.result_text
             assert not payload.get('reused'), 'Regression checks must compute fresh results'
             if args.baseline:
                 baseline_path=args.baseline if label=='forward' else args.baseline.parent/(sex+'-'+label+'.json')

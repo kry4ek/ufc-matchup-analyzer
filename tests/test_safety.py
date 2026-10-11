@@ -100,7 +100,7 @@ class TransactionTests(unittest.TestCase):
             support.atomic_json(audit/'new_rows_safety_audit.json',{})
             with self.assertRaises(RuntimeError):maintenance.validate_update_audits(root)
             support.atomic_json(audit/'new_rows_safety_audit.json',dict(unsafe_rows_count=0))
-            for status in ['event_fetch_error','fight_fetch_error','skipped_future_event','skipped_unresolved_result']:
+            for status in ['event_fetch_error','fight_fetch_error','skipped_future_event','skipped_unresolved_result','skipped_no_winner_loser']:
                 (audit/'events_inspected.csv').write_text('status\n'+status+'\n')
                 with self.subTest(status=status),self.assertRaises(RuntimeError):maintenance.validate_update_audits(root)
     def test_dry_run_no_changes(self):
@@ -169,10 +169,10 @@ class UpdaterAuditTests(unittest.TestCase):
         for sex,file in [('men','mens_ufc_model/update_ufc_mens_dataset_incremental.py'),('women','womens_ufc_model/update_ufc_womens_dataset_incremental.py')]:
             spec=importlib.util.spec_from_file_location('audit_'+sex,ROOT/file);module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);cls.modules[sex]=module
     def rows(self):
-        return self.pd.DataFrame([dict(fight_id='new',fighter_id='a',fighter_name='A',fighter='A',event_date='2020-01-01',result='win',won=1,result_marker='W'),dict(fight_id='new',fighter_id='b',fighter_name='B',fighter='B',event_date='2020-01-01',result='loss',won=0,result_marker='L')])
+        return self.pd.DataFrame([dict(fight_id='new',fighter_id='a',opponent_id='b',fighter_name='A',fighter='A',event_date='2020-01-01',result='win',won=1,result_marker='W'),dict(fight_id='new',fighter_id='b',opponent_id='a',fighter_name='B',fighter='B',event_date='2020-01-01',result='loss',won=0,result_marker='L')])
     def audit(self,sex,rows,existing=set()):
         args=[rows,existing,self.pd.Timestamp('2026-09-30'),False]
-        if sex=='men':args.insert(0,self.pd.DataFrame([dict(fight_id='new',result='win_loss')]))
+        if sex=='men':args.insert(0,self.pd.DataFrame([dict(fight_id='new',result='win_loss',fighter_red_id='a',fighter_blue_id='b',winner_id='a',loser_id='b',event_date='2020-01-01')]))
         return self.modules[sex].audit_new_rows_for_apply(*args)
     def test_valid_new_and_no_changes(self):
         for sex in self.modules:
@@ -187,6 +187,38 @@ class UpdaterAuditTests(unittest.TestCase):
                 if case=='unresolved':rows['result']='';rows['won']=float('nan');rows['result_marker']=''
                 if case=='one-sided':rows=rows.iloc[:1]
                 with self.subTest(sex=sex,case=case):self.assertGreater(self.audit(sex,rows,existing)['unsafe_rows_count'],0)
+    def test_women_completed_non_binary_results_are_safe(self):
+        module=self.modules['women'];event=dict(event_name='Completed event',event_date='2020-01-01')
+        for markers,result in [(['D','D'],'draw'),(['NC','NC'],'nc'),(['N/C','NC'],'nc')]:
+            rows=self.rows();rows['result_marker']=markers;rows['result']=result;rows['won']=float('nan')
+            with self.subTest(markers=markers):
+                module.validate_completed_people(rows.to_dict('records'),event,self.pd.Timestamp('2026-09-30'),False)
+                self.assertEqual(self.audit('women',rows)['unsafe_rows_count'],0)
+                # Non-binary bouts never reach the prediction feature builder.
+                predictor=mock.Mock()
+                predictor.clean_numeric_columns.return_value=rows
+                training=self.pd.DataFrame(columns=['fight_id','event_date','fighter_a_won'])
+                self.assertTrue(module.build_new_training_rows(predictor,training,rows,None,rows).empty)
+                predictor.build_prediction_row.assert_not_called()
+                rows['won']=[1,0]
+                self.assertGreater(self.audit('women',rows)['unsafe_rows_count'],0)
+    def test_women_inconsistent_result_pairs_remain_blocked(self):
+        module=self.modules['women'];event=dict(event_name='Completed event',event_date='2020-01-01')
+        for markers in [['W','W'],['L','L'],['D','L'],['D','NC'],['NC',''],['W','']]:
+            rows=self.rows();rows['result_marker']=markers
+            with self.subTest(markers=markers):
+                with self.assertRaises(module.SkippedFight):module.validate_completed_people(rows.to_dict('records'),event,self.pd.Timestamp('2026-09-30'),False)
+                self.assertGreater(self.audit('women',rows)['unsafe_rows_count'],0)
+        rows=self.rows();rows['won']=[0,1]
+        self.assertGreater(self.audit('women',rows)['unsafe_rows_count'],0)
+    def test_women_non_binary_rows_still_require_complete_past_fights(self):
+        for case in ['future','duplicate','one-sided','blank-result']:
+            rows=self.rows();rows['result_marker']='D';rows['result']='draw';rows['won']=float('nan');existing=set()
+            if case=='future':rows['event_date']='2099-01-01'
+            if case=='duplicate':existing={'new'}
+            if case=='one-sided':rows=rows.iloc[:1]
+            if case=='blank-result':rows['result']=''
+            with self.subTest(case=case):self.assertGreater(self.audit('women',rows,existing)['unsafe_rows_count'],0)
     def test_event_parser_fixture(self):
         from bs4 import BeautifulSoup
         html='<table><tr><td><a href="http://ufcstats.com/event-details/abcd">UFC Example</a></td><td>September 26, 2026</td><td>Example City</td></tr></table>'

@@ -82,5 +82,21 @@ def format_html(payload):
             html.append('<tr>'+''.join('<td>'+escape(str(v))+'</td>' for v in (row['label'],row['a'],row['b'],row['difference']))+'</tr>')
             if row['support_notes']:html.append('<tr><td colspan="4" class="note">'+escape('; '.join(row['support_notes']))+'</td></tr>')
         html.append('</tbody></table>')
+    from analyzer_fight_history import display_row, OLD_HISTORY_MESSAGE
+    history = payload.get('recent_fights')
+    html.append('<h2>Recent UFC fights</h2>')
+    if not history:html.append('<p>'+escape(OLD_HISTORY_MESSAGE)+'</p>')
+    else:
+        html.append('<p>Last five recorded UFC bouts before '+escape(history['history_cutoff'])+'</p>')
+        for side in ('fighter_a','fighter_b'):
+            html.append('<h3>'+escape(payload[side])+'</h3>')
+            rows = history.get(side,[])
+            if not rows:html.append('<p>No eligible recorded UFC fights before this date.</p>')
+            else:
+                html.append('<table><thead><tr>'+''.join('<th>'+label+'</th>' for label in ('Date','Opponent','Result','Division','Method','Event','Round','Time'))+'</tr></thead><tbody>')
+                for row in rows:
+                    values=display_row(row)+tuple(str(row.get(k) or 'N/A') for k in ('event_name','round','time'))
+                    html.append('<tr>'+''.join('<td>'+escape(v)+'</td>' for v in values)+'</tr>')
+                html.append('</tbody></table>')
     html += ['<h2>Complete report and model notes</h2><pre>'+escape(format_result(payload))+'</pre></body></html>']
     return '\n'.join(html)

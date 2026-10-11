@@ -1,0 +1,386 @@
+{
+  "mens_ufc_model/update_ufc_mens_dataset_incremental.py": {
+    "base_sha256": "767182e1ed5f6b94209d009e7eb1c2177a3be0e60e1c7a4a1f1516cadf94755b",
+    "result_sha256": "cb1211a417072d627bc54a74e428d60243d3e4cb10d698fafdd867045e987e21",
+    "edits": [
+      {
+        "start": 25,
+        "end": 25,
+        "old": "",
+        "new": "# Optional structured progress for staged and standalone maintenance.\nimport os as _maintenance_os\nimport sys as _maintenance_sys\nif _maintenance_os.environ.get(\"UFC_APP_HELPERS\"):\n    _maintenance_sys.path.insert(0, _maintenance_os.environ[\"UFC_APP_HELPERS\"])\ntry:\n    from analyzer_protocol import progress as maintenance_progress, source_failure\nexcept ImportError:\n    def maintenance_progress(*args, **kwargs): pass\n    def source_failure(exc): pass\n\n"
+      },
+      {
+        "start": 581,
+        "end": 583,
+        "old": "    if markers.count(\"W\") != 1 or markers.count(\"L\") != 1:\n        raise SkippedFight(\"skipped_no_winner_loser\", f\"no single W/L result pair: {markers}\", details)\n",
+        "new": "    source_ids = [id_from_url(str(fight_meta.get(f'fighter_{side}_profile_url') or '')) for side in (1,2)]\n    duplicate_identity = source_ids[0] == source_ids[1] if all(source_ids) else fighters[0] == fighters[1]\n    if pd.isna(event_date) or duplicate_identity:\n        raise SkippedFight(\"skipped_unresolved_result\", \"invalid date or fighter identities\", details)\n    if not completed_result_pair(markers):\n        raise SkippedFight(\"skipped_no_winner_loser\", f\"inconsistent completed result pair: {markers}\", details)\n\n\ndef completed_result_pair(markers):\n    values = [marker_value(value) for value in markers]\n    if sorted(values) == [\"L\", \"W\"]: return \"win_loss\"\n    if values == [\"D\", \"D\"]: return \"draw\"\n    if values == [\"NC\", \"NC\"]: return \"no_contest\"\n    return \"\"\n\n\ndef validate_parsed_result(fight_meta, fight_row, stat_rows, today, allow_future_events=False):\n    expected = completed_result_pair([fight_meta.get(\"fighter_1_result_marker\"), fight_meta.get(\"fighter_2_result_marker\")])\n    if not expected or fight_row.get(\"result\") != expected:\n        raise SkippedFight(\"skipped_unresolved_result\", \"parsed outcome disagrees with source markers\")\n    audit = audit_new_rows_for_apply(pd.DataFrame([fight_row]), pd.DataFrame(stat_rows), set(), today, allow_future_events)\n    if audit[\"unsafe_rows_count\"]:\n        raise SkippedFight(\"skipped_unresolved_result\", \"inconsistent parsed fighter rows\", {\"audit_issues\": str(audit[\"issues\"])})\n    marker_results = {\"W\": \"win\", \"L\": \"loss\", \"D\": \"draw\", \"NC\": \"no_contest\"}\n    for side in (1, 2):\n        name = clean_text(fight_meta.get(f\"fighter_{side}\"))\n        identifier = id_from_url(str(fight_meta.get(f'fighter_{side}_profile_url') or ''))\n        row = next((r for r in stat_rows if str(r.get('fighter_id')) == identifier), None) if identifier else next((r for r in stat_rows if clean_text(r.get(\"fighter_name\")) == name), None)\n        if row is None or row.get(\"result\") != marker_results[marker_value(fight_meta.get(f\"fighter_{side}_result_marker\"))]:\n            raise SkippedFight(\"skipped_unresolved_result\", \"fighter outcome disagrees with source markers\")\n"
+      },
+      {
+        "start": 647,
+        "end": 649,
+        "old": "            \"new rows contain result values outside win/loss\",\n            new_stats[~result.isin({\"win\", \"loss\"})].index,\n",
+        "new": "            \"new rows contain unsupported outcomes\",\n            new_stats[~result.isin({\"win\", \"loss\", \"draw\", \"no_contest\"})].index,\n"
+      },
+      {
+        "start": 655,
+        "end": 656,
+        "old": "        add_issue(\"nan_winner_target\", \"new rows have NaN won target\", won[won.isna()].index)\n",
+        "new": "        binary = new_stats.get(\"result\", pd.Series(\"\", index=new_stats.index)).isin([\"win\", \"loss\"])\n        add_issue(\"nan_winner_target\", \"decisive rows have missing won target\", new_stats[binary & won.isna()].index)\n        add_issue(\"nonbinary_winner_target\", \"draw/NC rows must have a blank target\", new_stats[~binary & ~blankish_series(new_stats[\"won\"])].index)\n"
+      },
+      {
+        "start": 672,
+        "end": 672,
+        "old": "",
+        "new": "            bad_shape = bad_shape or any(column not in group for column in ('fighter_id','fighter_name','opponent_id'))\n"
+      },
+      {
+        "start": 674,
+        "end": 675,
+        "old": "                bad_shape = bad_shape or fighter_ids.eq(\"\").any() or fighter_ids.nunique() != 2\n",
+        "new": "                bad_shape = bad_shape or blankish_series(group['fighter_id']).any() or fighter_ids.nunique() != 2\n"
+      },
+      {
+        "start": 677,
+        "end": 678,
+        "old": "                bad_shape = bad_shape or fighter_names.eq(\"\").any() or fighter_names.nunique() != 2\n",
+        "new": "                bad_shape = bad_shape or blankish_series(group['fighter_name']).any()\n"
+      },
+      {
+        "start": 680,
+        "end": 684,
+        "old": "            if \"won\" in group.columns:\n                won_values = pd.to_numeric(group[\"won\"], errors=\"coerce\").dropna().tolist()\n                if sorted(won_values) != [0.0, 1.0]:\n                    add_issue(\"missing_winner_loser\", f\"fight_id {fight_id} does not have one winner and one loser\", group.index)\n",
+        "new": "            results = group.get(\"result\", pd.Series(dtype=str)).tolist()\n            outcome = \"win_loss\" if sorted(results) == [\"loss\", \"win\"] else \"draw\" if results == [\"draw\", \"draw\"] else \"no_contest\" if results == [\"no_contest\", \"no_contest\"] else \"\"\n            if not outcome:\n                add_issue(\"inconsistent_result\", f\"fight_id {fight_id} has contradictory outcomes\", group.index)\n            for idx, row in group.iterrows():\n                value = pd.to_numeric(row.get(\"won\"), errors=\"coerce\")\n                expected = 1 if row.get(\"result\") == \"win\" else 0 if row.get(\"result\") == \"loss\" else None\n                if expected is not None and (pd.isna(value) or value != expected):\n                    add_issue(\"inconsistent_target\", \"target disagrees with fighter result\", [idx])\n                if \"opponent_id\" in group and \"fighter_id\" in group:\n                    other = set(group[\"fighter_id\"].astype(str)) - {str(row.get(\"fighter_id\"))}\n                    if other != {str(row.get(\"opponent_id\"))}:\n                        add_issue(\"inconsistent_identity\", \"opponent identity disagrees with fighter pair\", [idx])\n            matches = new_fights[new_fights.get(\"fight_id\", pd.Series(dtype=str)).astype(str) == str(fight_id)]\n            if len(matches) != 1 or matches.iloc[0].get(\"result\") != outcome:\n                add_issue(\"inconsistent_fight_result\", \"fight metadata disagrees with fighter outcomes\", group.index)\n            elif outcome:\n                fight = matches.iloc[0]\n                if any(column not in fight for column in ('winner_id','loser_id','fighter_red_id','fighter_blue_id','event_date')):\n                    add_issue('incomplete_fight_metadata','fight row is missing date or identity fields',group.index)\n                elif set(group.get('fighter_id',pd.Series(dtype=str)).astype(str)) != {str(fight['fighter_red_id']),str(fight['fighter_blue_id'])} or set(group.get('event_date',pd.Series(dtype=str)).astype(str).str[:10]) != {str(fight['event_date'])[:10]}:\n                    add_issue('inconsistent_fight_metadata','fight and fighter-stat identities or dates disagree',group.index)\n                for label, result_name in ((\"winner_id\", \"win\"), (\"loser_id\", \"loss\")):\n                    if label in fight:\n                        expected_ids = set(group.loc[group[\"result\"] == result_name, \"fighter_id\"].astype(str)) if outcome == \"win_loss\" and \"fighter_id\" in group else set()\n                        actual = str(fight[label]) if pd.notna(fight[label]) and clean_text(fight[label]) else \"\"\n                        if (expected_ids and actual not in expected_ids) or (not expected_ids and actual):\n                            add_issue(\"inconsistent_winner_loser\", \"winner/loser identity disagrees with outcome\", group.index)\n"
+      },
+      {
+        "start": 687,
+        "end": 688,
+        "old": "        bad_fight_rows = new_fights[~fight_result.isin({\"win_loss\"})]\n",
+        "new": "        bad_fight_rows = new_fights[~fight_result.isin({\"win_loss\", \"draw\", \"no_contest\"})]\n"
+      },
+      {
+        "start": 708,
+        "end": 708,
+        "old": "",
+        "new": "    stat_ids=set(new_stats.get('fight_id',pd.Series(dtype=str)).astype(str))\n    orphan_fights=len(set(new_fights.get('fight_id',pd.Series(dtype=str)).astype(str))-stat_ids)\n    if orphan_fights:issues.append(dict(code='missing_stat_rows',description='Fight metadata has no fighter-stat pair',row_count=orphan_fights,fight_count=orphan_fights))\n"
+      },
+      {
+        "start": 709,
+        "end": 711,
+        "old": "        \"unsafe_rows_count\": int(len(unsafe_indices)),\n        \"unsafe_fight_count\": int(unsafe_fights),\n",
+        "new": "        \"unsafe_rows_count\": int(len(unsafe_indices))+orphan_fights,\n        \"unsafe_fight_count\": int(unsafe_fights)+orphan_fights,\n"
+      },
+      {
+        "start": 1054,
+        "end": 1055,
+        "old": "    for event in new_events:\n",
+        "new": "    maintenance_progress('download', 'Men: checking completed events', phase='events', completed=0, total=len(new_events), unit='events', force=True)\n    event_index = -1\n    for event_index, event in enumerate(new_events):\n        maintenance_progress('download', 'Men: checking event '+str(event_index+1)+' of '+str(len(new_events))+' — '+event['event_name'], phase='events', completed=event_index, total=len(new_events), unit='events', force=True)\n"
+      },
+      {
+        "start": 1058,
+        "end": 1058,
+        "old": "",
+        "new": "            if not fight_metas:\n                raise ValueError('The event page contains no parseable fight links')\n"
+      },
+      {
+        "start": 1068,
+        "end": 1069,
+        "old": "            event_manifest.append({**event_row(event), \"status\": \"event_fetch_error\", \"error\": one_line(exc)})\n",
+        "new": "            event_manifest.append({**event_row(event), \"status\": \"event_fetch_error\", \"error\": one_line(exc), \"error_code\": \"source_malformed\" if isinstance(exc, ValueError) else \"source_fetch_failed\"})\n"
+      },
+      {
+        "start": 1072,
+        "end": 1073,
+        "old": "        for fight_meta in fight_metas:\n",
+        "new": "        bout_index = -1\n        for bout_index, fight_meta in enumerate(fight_metas):\n            maintenance_progress('download', 'Men: inspecting bout '+str(bout_index+1)+' of '+str(len(fight_metas))+' — '+event['event_name'], phase='bouts:'+str(event.get('event_id',event['event_name'])), completed=bout_index, total=len(fight_metas), unit='bouts')\n"
+      },
+      {
+        "start": 1108,
+        "end": 1112,
+        "old": "                if fight_row.get(\"result\") != \"win_loss\" or not fight_row.get(\"winner_id\") or not fight_row.get(\"loser_id\"):\n                    raise SkippedFight(\"skipped_no_winner_loser\", \"parsed fight did not produce one winner and one loser\", base)\n                if len(stat_rows) != 2:\n                    raise SkippedFight(\"skipped_unresolved_result\", \"parsed fight did not produce two fighter stat rows\", base)\n",
+        "new": "                validate_parsed_result(fight_meta, fight_row, stat_rows, today, bool(args.allow_future_events))\n"
+      },
+      {
+        "start": 1128,
+        "end": 1128,
+        "old": "",
+        "new": "                        \"outcome\": fight_row.get(\"result\", \"\"),\n                        \"training_eligible\": fight_row.get(\"result\") == \"win_loss\",\n"
+      },
+      {
+        "start": 1137,
+        "end": 1138,
+        "old": "                fight_manifest.append({**base, \"status\": \"fight_fetch_error\", \"error\": one_line(exc)})\n",
+        "new": "                fight_manifest.append({**base, \"status\": \"fight_fetch_error\", \"error\": one_line(exc), \"error_code\": \"source_malformed\" if isinstance(exc, ValueError) else \"source_fetch_failed\"})\n"
+      },
+      {
+        "start": 1140,
+        "end": 1140,
+        "old": "",
+        "new": "        maintenance_progress('download', 'Men: event inspection finished', phase='bouts:'+str(event.get('event_id',event['event_name'])), completed=bout_index+1, total=len(fight_metas), unit='bouts', force=True)\n"
+      },
+      {
+        "start": 1143,
+        "end": 1143,
+        "old": "",
+        "new": "    maintenance_progress('download', 'Men: event checks finished', phase='events', completed=event_index+1, total=len(new_events), unit='events', force=True)\n"
+      },
+      {
+        "start": 1423,
+        "end": 1423,
+        "old": "",
+        "new": "    except Exception as exc:\n        source_failure(exc)\n        raise\n"
+      }
+    ]
+  },
+  "womens_ufc_model/update_ufc_womens_dataset_incremental.py": {
+    "base_sha256": "cb8a104579a5f5a1af08228ef7f5163410b514b49e1b5e80dc71be0cda3d5724",
+    "result_sha256": "8e59599305982379ee28ac9783b43910719bc0815f92c34f38ed602282541115",
+    "edits": [
+      {
+        "start": 39,
+        "end": 39,
+        "old": "",
+        "new": "# Optional structured progress for staged and standalone maintenance.\nimport os as _maintenance_os\nimport sys as _maintenance_sys\nif _maintenance_os.environ.get(\"UFC_APP_HELPERS\"):\n    _maintenance_sys.path.insert(0, _maintenance_os.environ[\"UFC_APP_HELPERS\"])\ntry:\n    from analyzer_protocol import progress as maintenance_progress, source_failure\nexcept ImportError:\n    def maintenance_progress(*args, **kwargs): pass\n    def source_failure(exc): pass\n\n"
+      },
+      {
+        "start": 250,
+        "end": 251,
+        "old": "    raise RuntimeError(f\"Failed to fetch {url}: {last_exc}\")\n",
+        "new": "    raise requests.exceptions.RequestException(f\"Failed to fetch {url}: {last_exc}\") from last_exc\n"
+      },
+      {
+        "start": 272,
+        "end": 272,
+        "old": "",
+        "new": "\n\ndef completed_result_pair(markers: Iterable[Any]) -> str:\n    \"\"\"Classify only consistent, resolved pairs; never invent a binary target.\"\"\"\n    pair = [marker_value(marker) for marker in markers]\n    if sorted(pair) == [\"L\", \"W\"]:\n        return \"win_loss\"\n    if pair == [\"D\", \"D\"]:\n        return \"draw\"\n    if len(pair) == 2 and all(marker in {\"NC\", \"N/C\"} for marker in pair):\n        return \"nc\"\n    return \"\"\n"
+      },
+      {
+        "start": 298,
+        "end": 298,
+        "old": "",
+        "new": "    profile_ids = [extract_id_from_url(p.get('profile_url') or '') for p in people]\n    if pd.isna(event_date) or normalize_name(people[0]['fighter']) == normalize_name(people[1]['fighter']) or (all(profile_ids) and profile_ids[0] == profile_ids[1]):\n        raise SkippedFight('skipped_unresolved_result', 'invalid date or fighter identities', details)\n\n"
+      },
+      {
+        "start": 304,
+        "end": 305,
+        "old": "    if markers.count(\"W\") != 1 or markers.count(\"L\") != 1:\n",
+        "new": "    if not completed_result_pair(markers):\n"
+      },
+      {
+        "start": 641,
+        "end": 642,
+        "old": "        raise RuntimeError(f\"Could not parse fighters for {fight_url}\")\n",
+        "new": "        raise ValueError(f\"Could not parse fighters for {fight_url}\")\n"
+      },
+      {
+        "start": 895,
+        "end": 895,
+        "old": "",
+        "new": "        if completed_result_pair(g[\"result_marker\"]) != \"win_loss\":\n            # Retain draw/NC statistics for future prefight history, but do not\n            # append missing labels to the binary model training datasets.\n            continue\n"
+      },
+      {
+        "start": 1097,
+        "end": 1098,
+        "old": "        add_issue(\"nan_won\", \"new rows have NaN won\", won[won.isna()].index)\n",
+        "new": "        non_binary = new_stats[\"result_marker\"].map(marker_value).isin({\"D\", \"NC\", \"N/C\"}) if \"result_marker\" in new_stats.columns else pd.Series(False, index=new_stats.index)\n        add_issue(\"nan_won\", \"win/loss rows have NaN won\", won[won.isna() & ~non_binary].index)\n        add_issue(\"unsupported_won\", \"win/loss rows have targets outside 0/1\", won[won.notna() & ~won.isin([0, 1]) & ~non_binary].index)\n        add_issue(\"non_binary_won\", \"draw/NC rows must have no binary target\", won[won.notna() & non_binary].index)\n"
+      },
+      {
+        "start": 1118,
+        "end": 1120,
+        "old": "                if markers.count(\"W\") != 1 or markers.count(\"L\") != 1:\n                    add_issue(\"missing_winner_loser\", f\"fight_id {fight_id} does not have one W and one L marker\", group.index)\n",
+        "new": "                pair = completed_result_pair(markers)\n                if not pair:\n                    add_issue(\"missing_winner_loser\", f\"fight_id {fight_id} has inconsistent or unresolved result markers\", group.index)\n                elif \"result\" in group.columns and \"won\" in group.columns:\n                    for idx, row in group.iterrows():\n                        expected_result, expected_won = result_from_marker(row[\"result_marker\"])\n                        actual_won = pd.to_numeric(row[\"won\"], errors=\"coerce\")\n                        if clean_text(row[\"result\"]).lower() != expected_result or (pd.isna(expected_won) != pd.isna(actual_won)) or (pd.notna(expected_won) and actual_won != expected_won):\n                            add_issue(\"inconsistent_result\", f\"fight_id {fight_id} has result/target values that disagree with its markers\", [idx])\n"
+      },
+      {
+        "start": 1552,
+        "end": 1553,
+        "old": "    for event in new_events:\n",
+        "new": "    maintenance_progress('download', 'Women: checking completed events', phase='events', completed=0, total=len(new_events), unit='events', force=True)\n    event_index = -1\n    for event_index, event in enumerate(new_events):\n        maintenance_progress('download', 'Women: checking event '+str(event_index+1)+' of '+str(len(new_events))+' — '+event['event_name'], phase='events', completed=event_index, total=len(new_events), unit='events', force=True)\n"
+      },
+      {
+        "start": 1557,
+        "end": 1557,
+        "old": "",
+        "new": "            if not fight_links:\n                raise ValueError('The event page contains no parseable fight links')\n"
+      },
+      {
+        "start": 1560,
+        "end": 1561,
+        "old": "            event_manifest.append({**event, \"status\": \"event_fetch_error\", \"error\": str(exc)})\n",
+        "new": "            event_manifest.append({**event, \"status\": \"event_fetch_error\", \"error\": str(exc), \"error_code\": \"source_malformed\" if isinstance(exc, ValueError) else \"source_fetch_failed\", \"event_name\": event[\"event_name\"], \"event_id\": event.get(\"event_id\", \"\")})\n"
+      },
+      {
+        "start": 1566,
+        "end": 1567,
+        "old": "        for fight_url in fight_links:\n",
+        "new": "        bout_index = -1\n        for bout_index, fight_url in enumerate(fight_links):\n            maintenance_progress('download', 'Women: inspecting bout '+str(bout_index+1)+' of '+str(len(fight_links))+' — '+event['event_name'], phase='bouts:'+str(event.get('event_id',event['event_name'])), completed=bout_index, total=len(fight_links), unit='bouts')\n"
+      },
+      {
+        "start": 1599,
+        "end": 1599,
+        "old": "",
+        "new": "                        \"outcome\": completed_result_pair([r['result_marker'] for r in rows]),\n                        \"training_eligible\": completed_result_pair([r['result_marker'] for r in rows]) == 'win_loss',\n                        \"event_id\": event.get('event_id',''),\n"
+      },
+      {
+        "start": 1615,
+        "end": 1616,
+        "old": "                fight_manifest.append({\"fight_id\": fight_id, \"fight_url\": fight_url, \"status\": \"fight_fetch_error\", \"error\": str(exc)})\n",
+        "new": "                fight_manifest.append({\"fight_id\": fight_id, \"fight_url\": fight_url, \"status\": \"fight_fetch_error\", \"error\": str(exc), \"error_code\": \"source_malformed\" if isinstance(exc, ValueError) else \"source_fetch_failed\", \"event_name\": event[\"event_name\"], \"event_id\": event.get(\"event_id\", \"\")})\n        maintenance_progress('download', 'Women: event inspection finished', phase='bouts:'+str(event.get('event_id',event['event_name'])), completed=bout_index+1, total=len(fight_links), unit='bouts', force=True)\n"
+      },
+      {
+        "start": 1619,
+        "end": 1619,
+        "old": "",
+        "new": "    maintenance_progress('download', 'Women: event checks finished', phase='events', completed=event_index+1, total=len(new_events), unit='events', force=True)\n"
+      },
+      {
+        "start": 1831,
+        "end": 1832,
+        "old": "    main()\n",
+        "new": "    try:\n        main()\n    except Exception as exc:\n        source_failure(exc)\n        raise\n"
+      }
+    ]
+  },
+  "mens_ufc_model/src/features/mens_features.py": {
+    "base_sha256": "e6f5afd3a4a0b55822fcd6480d0382cf6ff4d93d093d9c4ef5d2c60b683a646a",
+    "result_sha256": "37db4582030349d3e65f8ceae8267b901ff10ccd59eed860fe9377a869fb7b35",
+    "edits": [
+      {
+        "start": 6,
+        "end": 6,
+        "old": "",
+        "new": "# Optional structured progress for staged and standalone maintenance.\nimport os as _maintenance_os\nimport sys as _maintenance_sys\nif _maintenance_os.environ.get(\"UFC_APP_HELPERS\"):\n    _maintenance_sys.path.insert(0, _maintenance_os.environ[\"UFC_APP_HELPERS\"])\ntry:\n    from analyzer_protocol import progress as maintenance_progress, source_failure\nexcept ImportError:\n    def maintenance_progress(*args, **kwargs): pass\n    def source_failure(exc): pass\n\n"
+      },
+      {
+        "start": 332,
+        "end": 332,
+        "old": "",
+        "new": "    _progress_count = 0\n    maintenance_progress('rebuilding', 'Building base history', phase='base_history', completed=0, total=len(stats), unit='fighter rows', force=True)\n"
+      },
+      {
+        "start": 333,
+        "end": 333,
+        "old": "",
+        "new": "        maintenance_progress('rebuilding', 'Building base history', phase='base_history', completed=_progress_count, total=len(stats), unit='fighter rows')\n        _progress_count += len(date_group)\n"
+      },
+      {
+        "start": 367,
+        "end": 367,
+        "old": "",
+        "new": "\n    maintenance_progress('rebuilding', 'Built base history', phase='base_history', completed=_progress_count, total=len(stats), unit='fighter rows', force=True)\n"
+      }
+    ]
+  },
+  "mens_ufc_model/src/features/build_mens_advanced_features.py": {
+    "base_sha256": "fc3461d4ac7ac3eaed89dfe944c604c959392f0ba3134778f4ff2eb313ab83a3",
+    "result_sha256": "9d37caa9592c28c127243a2019aca1fb197530186b5b9e67df0275e2230040ee",
+    "edits": [
+      {
+        "start": 11,
+        "end": 11,
+        "old": "",
+        "new": "# Optional structured progress for staged and standalone maintenance.\nimport os as _maintenance_os\nimport sys as _maintenance_sys\nif _maintenance_os.environ.get(\"UFC_APP_HELPERS\"):\n    _maintenance_sys.path.insert(0, _maintenance_os.environ[\"UFC_APP_HELPERS\"])\ntry:\n    from analyzer_protocol import progress as maintenance_progress, source_failure\nexcept ImportError:\n    def maintenance_progress(*args, **kwargs): pass\n    def source_failure(exc): pass\n\n"
+      },
+      {
+        "start": 705,
+        "end": 705,
+        "old": "",
+        "new": "    _progress_count = 0\n    maintenance_progress('rebuilding', 'Building advanced history', phase='advanced_history', completed=0, total=len(stats), unit='fighter rows', force=True)\n"
+      },
+      {
+        "start": 706,
+        "end": 706,
+        "old": "",
+        "new": "        maintenance_progress('rebuilding', 'Building advanced history', phase='advanced_history', completed=_progress_count, total=len(stats), unit='fighter rows')\n        _progress_count += len(date_group)\n"
+      },
+      {
+        "start": 732,
+        "end": 732,
+        "old": "",
+        "new": "\n    maintenance_progress('rebuilding', 'Built advanced history', phase='advanced_history', completed=_progress_count, total=len(stats), unit='fighter rows', force=True)\n"
+      }
+    ]
+  },
+  "mens_ufc_model/src/features/build_mens_bayes_smoothing_candidate.py": {
+    "base_sha256": "55b30738cde95043ce53700ff08e4a201c7b7b6c0a4bc10443f171fde54f497e",
+    "result_sha256": "bed421b3007b92373c4a7105153dbdb96ea5e03ffb270a957efa2e3f21f0cf4b",
+    "edits": [
+      {
+        "start": 10,
+        "end": 10,
+        "old": "",
+        "new": "# Optional structured progress for staged and standalone maintenance.\nimport os as _maintenance_os\nimport sys as _maintenance_sys\nif _maintenance_os.environ.get(\"UFC_APP_HELPERS\"):\n    _maintenance_sys.path.insert(0, _maintenance_os.environ[\"UFC_APP_HELPERS\"])\ntry:\n    from analyzer_protocol import progress as maintenance_progress, source_failure\nexcept ImportError:\n    def maintenance_progress(*args, **kwargs): pass\n    def source_failure(exc): pass\n\n"
+      },
+      {
+        "start": 350,
+        "end": 350,
+        "old": "",
+        "new": "        _progress_count = 0\n        maintenance_progress('rebuilding', 'Building Bayesian population history', phase='bayes_population:'+family.family, completed=0, total=len(records), unit='observations', force=True)\n"
+      },
+      {
+        "start": 351,
+        "end": 351,
+        "old": "",
+        "new": "            maintenance_progress('rebuilding', 'Building Bayesian population history', phase='bayes_population:'+family.family, completed=_progress_count, total=len(records), unit='observations')\n            _progress_count += len(group)\n"
+      },
+      {
+        "start": 368,
+        "end": 368,
+        "old": "",
+        "new": "        maintenance_progress('rebuilding', 'Bayesian population history built', phase='bayes_population:'+family.family, completed=_progress_count, total=len(records), unit='observations', force=True)\n"
+      }
+    ]
+  },
+  "mens_ufc_model/src/validation/validate_mens_dataset.py": {
+    "base_sha256": "5fd3bf3e8847392f30f6f4bf05a04473adf15188a121e4618cc0ee8e08850738",
+    "result_sha256": "41398959c80430ed1c134101bf6f16cb72ee59358491be9b3719f183dcb1b263",
+    "edits": [
+      {
+        "start": 8,
+        "end": 8,
+        "old": "",
+        "new": "\n# Optional structured progress for staged and standalone maintenance.\nimport os as _maintenance_os\nimport sys as _maintenance_sys\nif _maintenance_os.environ.get(\"UFC_APP_HELPERS\"):\n    _maintenance_sys.path.insert(0, _maintenance_os.environ[\"UFC_APP_HELPERS\"])\ntry:\n    from analyzer_protocol import progress as maintenance_progress, source_failure\nexcept ImportError:\n    def maintenance_progress(*args, **kwargs): pass\n    def source_failure(exc): pass\n"
+      },
+      {
+        "start": 235,
+        "end": 236,
+        "old": "    for _, group in training.groupby(\"fight_id\", dropna=False):\n",
+        "new": "    _validation_total = training['fight_id'].nunique(dropna=False)\n    maintenance_progress('validating', 'Validating mirrored training fights', phase='mirrored_fights', completed=0, total=_validation_total, unit='fights', force=True)\n    for _validation_index, (_, group) in enumerate(training.groupby(\"fight_id\", dropna=False)):\n        maintenance_progress('validating', 'Validating mirrored training fights', phase='mirrored_fights', completed=_validation_index, total=_validation_total, unit='fights')\n"
+      },
+      {
+        "start": 273,
+        "end": 273,
+        "old": "",
+        "new": "\n    maintenance_progress('validating', 'Mirrored training fights checked', phase='mirrored_fights', completed=_validation_total, total=_validation_total, unit='fights', force=True)\n"
+      }
+    ]
+  },
+  "womens_ufc_model/build_prefight_bayesian_smoothing_v1_REBUILT.py": {
+    "base_sha256": "c563fbb8f6e62141748234ca8169554662f0c6fad36a9cfef60ed6562a154abd",
+    "result_sha256": "46f382ec7556ff5306b8f45b8b0e24fb980e4f35d1c390d42d43e266ccc62998",
+    "edits": [
+      {
+        "start": 40,
+        "end": 40,
+        "old": "",
+        "new": "# Optional structured progress for staged and standalone maintenance.\nimport os as _maintenance_os\nimport sys as _maintenance_sys\nif _maintenance_os.environ.get(\"UFC_APP_HELPERS\"):\n    _maintenance_sys.path.insert(0, _maintenance_os.environ[\"UFC_APP_HELPERS\"])\ntry:\n    from analyzer_protocol import progress as maintenance_progress, source_failure\nexcept ImportError:\n    def maintenance_progress(*args, **kwargs): pass\n    def source_failure(exc): pass\n\n"
+      },
+      {
+        "start": 299,
+        "end": 299,
+        "old": "",
+        "new": "    _progress_count = 0\n    maintenance_progress('rebuilding', 'Building Bayesian population history', phase='bayes_population', completed=0, total=len(records), unit='observations', force=True)\n"
+      },
+      {
+        "start": 300,
+        "end": 300,
+        "old": "",
+        "new": "        maintenance_progress('rebuilding', 'Building Bayesian population history', phase='bayes_population', completed=_progress_count, total=len(records), unit='observations')\n        _progress_count += len(group)\n"
+      },
+      {
+        "start": 317,
+        "end": 317,
+        "old": "",
+        "new": "    maintenance_progress('rebuilding', 'Bayesian population history built', phase='bayes_population', completed=_progress_count, total=len(records), unit='observations', force=True)\n"
+      }
+    ]
+  }
+}

@@ -1,3 +1,27 @@
+# Release verification: v0.4.0 experimental Windows candidate
+
+Implemented and verified locally on October 11, 2026. The four requested improvements are complete: consistent completed draw/NC capture in both update routes, actionable maintenance errors with retained diagnostics, measured phase progress and captured-fight details, and frozen recent UFC bouts throughout live and saved reports. Algorithms, feature definitions, calibration and engine-specific Elo policies are unchanged.
+
+| Fresh v0.4 check | Result and scope |
+|---|---|
+| Regression | **128 tests**, zero failures/errors/skips, 33.386 seconds. Includes native Tk GUI checks. |
+| Mixed outcomes | Actual updaters, full feature rebuilds, validators and promotion for both targets. Each captures 1 decisive fight, 1 draw and 1 NC; only 2 binary training rows are added. Repeat update adds nothing; restore returns all 15 baseline hashes. Network discovery is explicitly controlled for these fixtures. |
+| Live maintenance | Actual online bounded all-target update, captured-fight dialog, measured counters, no-change repeat and restore. Forced real HTTP failure retains diagnostics and datasets; Copy diagnostics and manual Retry start a fresh worker and pass. Detailed summaries/timings are in verification_evidence.json. |
+| Predictions | Forced-fresh offline native men and women predictions plus historical men match their baselines within 1e-12. Probabilities: men 0.8229788712684363, women 0.485904994646593, historical men 0.8432395019728887. Preview/final recent lists agree and exclude same-date/future bouts. |
+| Report states and exports | Real statistics-only comparisons, cancelled prepared preview, disabled history, existing comparison navigation and complete clipboard/TXT/HTML exports. Native TXT and HTML Save dialogs pass. Regression covers old payloads, aliases/IDs, cross-division bouts, fewer than five results, draws/NCs, swapped fighters and edited inputs. |
+| Errors and transactions | Strict source/result/identity/target audits, missing-audit log fallback, transient Retry, low disk space, lock conflict, timeout, failed cleanup and failed rollback/recovery states. Counters are bounded and child events cannot forge request identity or commit status. |
+| Source reproduction | All 30 engine/helper exports exactly reproduced from the retained research source using checked adapters. All 15 baseline datasets and 18 dependency checks pass the release audit. |
+| Feature parity/leakage | Fresh 20-fight sample, 270 features and 10,800 comparisons: zero mismatches or missing features; maximum difference 2.84e-14. Same-date and target-fight leakage checks pass. |
+| Native UI/runtime | CPython 3.14.7 x64, Tcl/Tk 9.0.4; all 299 AMD64 PE imports resolve. Four-tab layout, keyboard focus, narrow/large windows and three text sizes pass simulated 100/125/150/200% Tk scales. Actual Windows scale is 125%. |
+
+Final archive inventory, member hashes and CRCs pass; a fresh extraction launches through its native EXE with the bundled runtime. Required datasets remain the original 2026-09-26 snapshot (206,791,890 bytes); verification updates ran on a disposable portable copy and restored all original hashes. The deliverable excludes runtime state, preferences, histories and transaction files. Exact ZIP sizes and SHA-256 checksums are supplied beside the archives.
+
+This is a local v0.4 candidate and an authorized source-repository update. It does not replace an existing installation or publish a v0.4 GitHub release. The existing v0.3 public download remains available. Dataset rights, clean Windows 10/11 machines, actual other display scales and automatic dataset download retain their prior limitations. Remote source CI runs on the source push and remains separate from data-equipped Windows verification. See [release checks](release_checks.json), [structured evidence](verification_evidence.json) and [changes](docs/CHANGELOG.md).
+
+## Earlier v0.3 verification and publication history
+
+The following is retained historical evidence, not new v0.4 test execution.
+
 # Release verification: v0.3.0 portable Windows local candidate
 
 **Implemented and locally verified; the standard fully verified release gate has not passed.** Dataset redistribution rights, clean Windows 10/11 machines and actual 100/150/200% display-scale checks remain unresolved or unavailable. On October 1, 2026, the owner requested publication of the full portable app despite the possibility of a GitHub takedown. It is being prepared as an experimental prerelease with these limitations disclosed. This decision does not clear dataset rights, waive test evidence, or turn an unavailable check into a pass. [release_checks.json](release_checks.json) records every gate; [verification_evidence.json](verification_evidence.json) contains sanitized measurements and evidence scope.

@@ -28,6 +28,9 @@ Changing inputs does not change a completed result.
 Overview shows probabilities, warnings and key statistics. Fighter comparison
 contains grouped statistics, section selection, filtering and metric definitions.
 Full report contains all text and model notes. A/B follow your fighter order.
+Recent fights shows the last five recorded UFC bouts before the selected date,
+including draws/no-contests and bouts in other divisions. Select a row for event,
+round and time. Saved reports keep this list after dataset updates.
 Use the bottom scrollbar for wide tables. N/A means unavailable; pp means
 percentage points. Copy and Save include the entire report, not just visible rows.
 

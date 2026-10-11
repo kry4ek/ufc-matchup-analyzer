@@ -306,7 +306,8 @@ def format_result(payload):
     if payload.get('history_notice'):additions.append(payload['history_notice'])
     if payload.get('generated_at'):additions.append('Generated: '+payload['generated_at'])
     if payload.get('reused'):additions.append('Reused saved analysis; original generation time shown above. Recalculate to run again.')
-    return text+('\n'+'\n'.join(dict.fromkeys(additions))+'\n' if additions else '')
+    from analyzer_fight_history import format_recent_fights
+    return text+('\n'+'\n'.join(dict.fromkeys(additions))+'\n' if additions else '')+'\n'+format_recent_fights(payload)
 
 def result_filename(payload):
     name = payload['fighter_a'] + ' vs ' + payload['fighter_b']

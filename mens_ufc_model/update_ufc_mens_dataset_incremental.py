@@ -23,6 +23,17 @@ from typing import Any, Iterable
 from urllib.parse import urljoin, urlparse
 
 import numpy as np
+# Optional structured progress for staged and standalone maintenance.
+import os as _maintenance_os
+import sys as _maintenance_sys
+if _maintenance_os.environ.get("UFC_APP_HELPERS"):
+    _maintenance_sys.path.insert(0, _maintenance_os.environ["UFC_APP_HELPERS"])
+try:
+    from analyzer_protocol import progress as maintenance_progress, source_failure
+except ImportError:
+    def maintenance_progress(*args, **kwargs): pass
+    def source_failure(exc): pass
+
 import pandas as pd
 from bs4 import BeautifulSoup
 
@@ -579,8 +590,36 @@ def validate_completed_fight_meta(
     allowed = {"W", "L", "D", "NC"}
     if any(marker not in allowed for marker in markers):
         raise SkippedFight("skipped_unresolved_result", f"unsupported result markers: {markers}", details)
-    if markers.count("W") != 1 or markers.count("L") != 1:
-        raise SkippedFight("skipped_no_winner_loser", f"no single W/L result pair: {markers}", details)
+    source_ids = [id_from_url(str(fight_meta.get(f'fighter_{side}_profile_url') or '')) for side in (1,2)]
+    duplicate_identity = source_ids[0] == source_ids[1] if all(source_ids) else fighters[0] == fighters[1]
+    if pd.isna(event_date) or duplicate_identity:
+        raise SkippedFight("skipped_unresolved_result", "invalid date or fighter identities", details)
+    if not completed_result_pair(markers):
+        raise SkippedFight("skipped_no_winner_loser", f"inconsistent completed result pair: {markers}", details)
+
+
+def completed_result_pair(markers):
+    values = [marker_value(value) for value in markers]
+    if sorted(values) == ["L", "W"]: return "win_loss"
+    if values == ["D", "D"]: return "draw"
+    if values == ["NC", "NC"]: return "no_contest"
+    return ""
+
+
+def validate_parsed_result(fight_meta, fight_row, stat_rows, today, allow_future_events=False):
+    expected = completed_result_pair([fight_meta.get("fighter_1_result_marker"), fight_meta.get("fighter_2_result_marker")])
+    if not expected or fight_row.get("result") != expected:
+        raise SkippedFight("skipped_unresolved_result", "parsed outcome disagrees with source markers")
+    audit = audit_new_rows_for_apply(pd.DataFrame([fight_row]), pd.DataFrame(stat_rows), set(), today, allow_future_events)
+    if audit["unsafe_rows_count"]:
+        raise SkippedFight("skipped_unresolved_result", "inconsistent parsed fighter rows", {"audit_issues": str(audit["issues"])})
+    marker_results = {"W": "win", "L": "loss", "D": "draw", "NC": "no_contest"}
+    for side in (1, 2):
+        name = clean_text(fight_meta.get(f"fighter_{side}"))
+        identifier = id_from_url(str(fight_meta.get(f'fighter_{side}_profile_url') or ''))
+        row = next((r for r in stat_rows if str(r.get('fighter_id')) == identifier), None) if identifier else next((r for r in stat_rows if clean_text(r.get("fighter_name")) == name), None)
+        if row is None or row.get("result") != marker_results[marker_value(fight_meta.get(f"fighter_{side}_result_marker"))]:
+            raise SkippedFight("skipped_unresolved_result", "fighter outcome disagrees with source markers")
 
 
 def fight_manifest_base(fight_meta: dict[str, Any], event: dict[str, Any]) -> dict[str, Any]:
@@ -645,15 +684,17 @@ def audit_new_rows_for_apply(
         result = new_stats["result"].astype(str).map(clean_text).str.lower()
         add_issue(
             "unsupported_result",
-            "new rows contain result values outside win/loss",
-            new_stats[~result.isin({"win", "loss"})].index,
+            "new rows contain unsupported outcomes",
+            new_stats[~result.isin({"win", "loss", "draw", "no_contest"})].index,
         )
 
     if "won" not in new_stats.columns:
         add_issue("missing_won", "new rows have no won column", new_stats.index)
     else:
         won = pd.to_numeric(new_stats["won"], errors="coerce")
-        add_issue("nan_winner_target", "new rows have NaN won target", won[won.isna()].index)
+        binary = new_stats.get("result", pd.Series("", index=new_stats.index)).isin(["win", "loss"])
+        add_issue("nan_winner_target", "decisive rows have missing won target", new_stats[binary & won.isna()].index)
+        add_issue("nonbinary_winner_target", "draw/NC rows must have a blank target", new_stats[~binary & ~blankish_series(new_stats["won"])].index)
         add_issue("unsupported_winner_target", "new rows have won values outside 0/1", won[~won.isin([0, 1])].dropna().index)
 
     if "fight_id" not in new_stats.columns:
@@ -670,22 +711,47 @@ def audit_new_rows_for_apply(
                 add_issue("missing_fight_id", "new rows contain blank fight_id", group.index)
                 continue
             bad_shape = len(group) != 2
+            bad_shape = bad_shape or any(column not in group for column in ('fighter_id','fighter_name','opponent_id'))
             if "fighter_id" in group.columns:
                 fighter_ids = group["fighter_id"].astype(str).map(clean_text)
-                bad_shape = bad_shape or fighter_ids.eq("").any() or fighter_ids.nunique() != 2
+                bad_shape = bad_shape or blankish_series(group['fighter_id']).any() or fighter_ids.nunique() != 2
             if "fighter_name" in group.columns:
                 fighter_names = group["fighter_name"].astype(str).map(clean_text)
-                bad_shape = bad_shape or fighter_names.eq("").any() or fighter_names.nunique() != 2
+                bad_shape = bad_shape or blankish_series(group['fighter_name']).any()
             if bad_shape:
                 add_issue("one_sided_fighter_rows", f"fight_id {fight_id} does not have exactly two fighter rows", group.index)
-            if "won" in group.columns:
-                won_values = pd.to_numeric(group["won"], errors="coerce").dropna().tolist()
-                if sorted(won_values) != [0.0, 1.0]:
-                    add_issue("missing_winner_loser", f"fight_id {fight_id} does not have one winner and one loser", group.index)
+            results = group.get("result", pd.Series(dtype=str)).tolist()
+            outcome = "win_loss" if sorted(results) == ["loss", "win"] else "draw" if results == ["draw", "draw"] else "no_contest" if results == ["no_contest", "no_contest"] else ""
+            if not outcome:
+                add_issue("inconsistent_result", f"fight_id {fight_id} has contradictory outcomes", group.index)
+            for idx, row in group.iterrows():
+                value = pd.to_numeric(row.get("won"), errors="coerce")
+                expected = 1 if row.get("result") == "win" else 0 if row.get("result") == "loss" else None
+                if expected is not None and (pd.isna(value) or value != expected):
+                    add_issue("inconsistent_target", "target disagrees with fighter result", [idx])
+                if "opponent_id" in group and "fighter_id" in group:
+                    other = set(group["fighter_id"].astype(str)) - {str(row.get("fighter_id"))}
+                    if other != {str(row.get("opponent_id"))}:
+                        add_issue("inconsistent_identity", "opponent identity disagrees with fighter pair", [idx])
+            matches = new_fights[new_fights.get("fight_id", pd.Series(dtype=str)).astype(str) == str(fight_id)]
+            if len(matches) != 1 or matches.iloc[0].get("result") != outcome:
+                add_issue("inconsistent_fight_result", "fight metadata disagrees with fighter outcomes", group.index)
+            elif outcome:
+                fight = matches.iloc[0]
+                if any(column not in fight for column in ('winner_id','loser_id','fighter_red_id','fighter_blue_id','event_date')):
+                    add_issue('incomplete_fight_metadata','fight row is missing date or identity fields',group.index)
+                elif set(group.get('fighter_id',pd.Series(dtype=str)).astype(str)) != {str(fight['fighter_red_id']),str(fight['fighter_blue_id'])} or set(group.get('event_date',pd.Series(dtype=str)).astype(str).str[:10]) != {str(fight['event_date'])[:10]}:
+                    add_issue('inconsistent_fight_metadata','fight and fighter-stat identities or dates disagree',group.index)
+                for label, result_name in (("winner_id", "win"), ("loser_id", "loss")):
+                    if label in fight:
+                        expected_ids = set(group.loc[group["result"] == result_name, "fighter_id"].astype(str)) if outcome == "win_loss" and "fighter_id" in group else set()
+                        actual = str(fight[label]) if pd.notna(fight[label]) and clean_text(fight[label]) else ""
+                        if (expected_ids and actual not in expected_ids) or (not expected_ids and actual):
+                            add_issue("inconsistent_winner_loser", "winner/loser identity disagrees with outcome", group.index)
 
     if not new_fights.empty:
         fight_result = new_fights.get("result", pd.Series(dtype=str)).astype(str).map(clean_text).str.lower()
-        bad_fight_rows = new_fights[~fight_result.isin({"win_loss"})]
+        bad_fight_rows = new_fights[~fight_result.isin({"win_loss", "draw", "no_contest"})]
         if not bad_fight_rows.empty and "fight_id" in new_stats.columns:
             bad_ids = set(bad_fight_rows["fight_id"].astype(str))
             add_issue(
@@ -706,9 +772,12 @@ def audit_new_rows_for_apply(
     unsafe_fights = 0
     if unsafe_indices and "fight_id" in new_stats.columns:
         unsafe_fights = int(new_stats.loc[list(unsafe_indices), "fight_id"].dropna().astype(str).nunique())
+    stat_ids=set(new_stats.get('fight_id',pd.Series(dtype=str)).astype(str))
+    orphan_fights=len(set(new_fights.get('fight_id',pd.Series(dtype=str)).astype(str))-stat_ids)
+    if orphan_fights:issues.append(dict(code='missing_stat_rows',description='Fight metadata has no fighter-stat pair',row_count=orphan_fights,fight_count=orphan_fights))
     return {
-        "unsafe_rows_count": int(len(unsafe_indices)),
-        "unsafe_fight_count": int(unsafe_fights),
+        "unsafe_rows_count": int(len(unsafe_indices))+orphan_fights,
+        "unsafe_fight_count": int(unsafe_fights)+orphan_fights,
         "issues": issues,
     }
 
@@ -1052,10 +1121,15 @@ def main() -> int:
     # blank W/L markers on every subsequent run until the stale cache is cleared.
     scraper.refresh_cache = True
 
-    for event in new_events:
+    maintenance_progress('download', 'Men: checking completed events', phase='events', completed=0, total=len(new_events), unit='events', force=True)
+    event_index = -1
+    for event_index, event in enumerate(new_events):
+        maintenance_progress('download', 'Men: checking event '+str(event_index+1)+' of '+str(len(new_events))+' — '+event['event_name'], phase='events', completed=event_index, total=len(new_events), unit='events', force=True)
         print(f"\nEvent: {iso_date(event['event_date'])} | {event['event_name']}")
         try:
             fight_metas = scraper.get_event_fights(event["event_url"])
+            if not fight_metas:
+                raise ValueError('The event page contains no parseable fight links')
             events_inspected += 1
             event_manifest.append(
                 {
@@ -1066,11 +1140,13 @@ def main() -> int:
             )
             print(f"  fight links found: {len(fight_metas)}")
         except Exception as exc:
-            event_manifest.append({**event_row(event), "status": "event_fetch_error", "error": one_line(exc)})
+            event_manifest.append({**event_row(event), "status": "event_fetch_error", "error": one_line(exc), "error_code": "source_malformed" if isinstance(exc, ValueError) else "source_fetch_failed"})
             print(f"  ERROR fetching event: {exc}")
             continue
 
-        for fight_meta in fight_metas:
+        bout_index = -1
+        for bout_index, fight_meta in enumerate(fight_metas):
+            maintenance_progress('download', 'Men: inspecting bout '+str(bout_index+1)+' of '+str(len(fight_metas))+' — '+event['event_name'], phase='bouts:'+str(event.get('event_id',event['event_name'])), completed=bout_index, total=len(fight_metas), unit='bouts')
             fight_id = clean_text(fight_meta.get("fight_id") or id_from_url(str(fight_meta.get("fight_url") or "")))
             base = fight_manifest_base(fight_meta, event)
 
@@ -1106,10 +1182,7 @@ def main() -> int:
                 if not fight_row.get("is_mens_bout"):
                     fight_manifest.append({**base, "status": "not_mens_bout"})
                     continue
-                if fight_row.get("result") != "win_loss" or not fight_row.get("winner_id") or not fight_row.get("loser_id"):
-                    raise SkippedFight("skipped_no_winner_loser", "parsed fight did not produce one winner and one loser", base)
-                if len(stat_rows) != 2:
-                    raise SkippedFight("skipped_unresolved_result", "parsed fight did not produce two fighter stat rows", base)
+                validate_parsed_result(fight_meta, fight_row, stat_rows, today, bool(args.allow_future_events))
 
                 staged_fights.append(fight_row)
                 staged_stats.extend(stat_rows)
@@ -1126,6 +1199,8 @@ def main() -> int:
                         "winner_id": fight_row.get("winner_id", ""),
                         "loser_id": fight_row.get("loser_id", ""),
                         "method": fight_row.get("method", ""),
+                        "outcome": fight_row.get("result", ""),
+                        "training_eligible": fight_row.get("result") == "win_loss",
                     }
                 )
                 print(f"  + men's fight: {base.get('fighter_1')} vs {base.get('fighter_2')} | {base.get('division')}")
@@ -1135,12 +1210,14 @@ def main() -> int:
                 fight_manifest.append(rec)
                 print(f"  - {exc.status}: {base.get('fighter_1', '')} vs {base.get('fighter_2', '')} ({exc.reason})")
             except Exception as exc:
-                fight_manifest.append({**base, "status": "fight_fetch_error", "error": one_line(exc)})
+                fight_manifest.append({**base, "status": "fight_fetch_error", "error": one_line(exc), "error_code": "source_malformed" if isinstance(exc, ValueError) else "source_fetch_failed"})
                 print(f"  ERROR fight {fight_id}: {exc}")
 
+        maintenance_progress('download', 'Men: event inspection finished', phase='bouts:'+str(event.get('event_id',event['event_name'])), completed=bout_index+1, total=len(fight_metas), unit='bouts', force=True)
         if max_fights_reached:
             break
 
+    maintenance_progress('download', 'Men: event checks finished', phase='events', completed=event_index+1, total=len(new_events), unit='events', force=True)
     scraper.refresh_cache = bool(args.refresh_cache)
 
     new_fights = pd.DataFrame(staged_fights)
@@ -1421,3 +1498,6 @@ if __name__ == "__main__":
         raise SystemExit(main())
     except KeyboardInterrupt:
         raise SystemExit(130)
+    except Exception as exc:
+        source_failure(exc)
+        raise

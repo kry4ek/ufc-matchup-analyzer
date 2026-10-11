@@ -94,6 +94,8 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
         except (OSError,ValueError,KeyError) as exc:
             print('Saved result could not be reused: '+str(exc))
     catalog=FighterCatalog(sex,root)
+    from analyzer_fight_history import recent_fights
+    frozen_history=recent_fights(root,sex,(a,aid),(b,bid),args.fight_date)
     coverage={side:catalog.coverage(identity,args.fight_date,match) for side,identity in [('a',(a,aid)),('b',(b,bid))]}
     coverage_warnings=[]
     for side,name in [('a',a),('b',b)]:
@@ -146,7 +148,7 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
                     event_offset+=len(line);event=json.loads(line)
                     kind=event.pop('type')
                     if kind=='comparison_ready':
-                        preview=event['payload'];preview.update(coverage=coverage,coverage_warnings=coverage_warnings,fighter_a_id=aid,fighter_b_id=bid,analyzer_version=VERSION,generated_at=utc_now(),result_state='pending' if operation=='predict' else 'comparison')
+                        preview=event['payload'];preview.update(recent_fights=frozen_history,coverage=coverage,coverage_warnings=coverage_warnings,fighter_a_id=aid,fighter_b_id=bid,analyzer_version=VERSION,generated_at=utc_now(),result_state='pending' if operation=='predict' else 'comparison')
                         emit(event_type=kind,**event)
                     else:emit(**event)
             try:
@@ -179,7 +181,7 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
         payload.setdefault('division',("Women's " if sex=='women' else '')+match)
         payload.setdefault('fight_date',args.fight_date)
         payload['analyzer_version']=VERSION;payload['elapsed_seconds']=round(time.monotonic()-start,2)
-        payload.update(result_state='comparison' if operation=='compare' else 'complete',coverage=coverage,coverage_warnings=coverage_warnings,fighter_a_id=aid,fighter_b_id=bid,generated_at=utc_now(),reused=False,calculation_request=canonical,calculation_fingerprint=__import__('analyzer_history').fingerprint(context))
+        payload.update(recent_fights=frozen_history,result_state='comparison' if operation=='compare' else 'complete',coverage=coverage,coverage_warnings=coverage_warnings,fighter_a_id=aid,fighter_b_id=bid,generated_at=utc_now(),reused=False,calculation_request=canonical,calculation_fingerprint=__import__('analyzer_history').fingerprint(context))
         payload.setdefault('stage_timings_seconds',{})['validation']=round(validation_seconds,3)
         payload['worker_mode']='single' if args.workers==1 else 'automatic'
         payload['peak_process_tree_working_set_mib']=round(peak,1) if peak else None

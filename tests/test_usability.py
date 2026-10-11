@@ -227,7 +227,7 @@ class EnhancedWindowTests(unittest.TestCase):
         self.assertFalse(self.controller.request['use_cache'])
 
     def test_tabs_filter_and_full_copy_remain_complete(self):
-        self.app.display_result(sample());self.assertEqual(len(self.app.notebook.tabs()),3)
+        self.app.display_result(sample());self.assertEqual(len(self.app.notebook.tabs()),4)
         original=self.app.result_text;self.app.filter.set('Elo');self.app.copy();self.window.update()
         self.assertEqual(self.window.clipboard_get(),original)
         self.assertEqual(len(self.app.comparison_tree.get_children()),2)

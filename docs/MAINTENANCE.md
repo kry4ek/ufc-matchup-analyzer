@@ -6,11 +6,19 @@ The footer refreshes dates and fighter suggestions after success. **Help → Reb
 
 The GUI checks free disk space, retains the latest recoverable backup and at most ten recent audit transactions (plus the retained backup's transaction), and bounds job/session logs. Data lives under `app` in the portable folder. Never delete or move it during an operation.
 
+Completed draws and no-contests in both routes retain two distinct fighter-stat rows with empty win/loss targets. Their statistics remain available for later prefight history, while new binary training rows exclude these bouts. Men's CSVs retain `no_contest`; women's retain `nc`. Inconsistent markers, mismatched identities, missing targets on decisive fights, or numeric targets on draws/NCs block installation. Existing Elo policies and model versions are unchanged.
+
+The progress bar describes the current phase. Event and bout inspection, historical feature construction and mirrored-fight validation show actual counts when known. Rebuild steps are numbered. Other work uses an activity indicator and elapsed time; no overall percentage or ETA is estimated. Installation remains non-cancellable.
+
+Maintenance errors name the affected event/fighters when available, explain the next step and report whether datasets were unchanged, restored, installed or require recovery. **Retry** is available for suitable transient failures after the worker has stopped. **View details** opens retained transaction diagnostics; **Copy diagnostics** copies selected identifiers and a bounded log excerpt with account paths and credential fields redacted. Review copied diagnostics before sharing.
+
 The following CLI workflow is for source users. Use `run.bat` on Windows; macOS/Linux source execution remains unverified.
 
 ## Status, backups and saved analyses
 
 **Help → Dataset status and update details** opens a selectable status view. It distinguishes data-through dates, the last successful online update check and the last successful data change. An unchanged update advances the check time without claiming new data. A rebuild does not count as an online check. Restoration records a data change. Successful-operation details persist when the app closes.
+
+The view includes captured decisive bouts, draws, no-contests and binary training rows added. **View updated fights** lists captured bouts and training eligibility for the latest update with changes. The detailed list is retained with its transaction and recoverable backup. If an older audit has been pruned, the view explains its unavailability. Captured fights, fighter-stat rows and mirrored training rows are separate counts. CLI dry-runs report proposed binary rows and never claim installation.
 
 Restore is disabled when there is no recoverable backup. Successful update, rebuild or restoration refreshes dated fighter coverage, suggestions and saved-result compatibility. Old analyses remain viewable; only entries whose actual dataset and calculation fingerprints match can be reused. Maintenance never edits a displayed report. You can copy/save it while maintenance runs.
 

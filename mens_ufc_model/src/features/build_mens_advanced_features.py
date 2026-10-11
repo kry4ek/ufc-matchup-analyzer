@@ -9,6 +9,17 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+# Optional structured progress for staged and standalone maintenance.
+import os as _maintenance_os
+import sys as _maintenance_sys
+if _maintenance_os.environ.get("UFC_APP_HELPERS"):
+    _maintenance_sys.path.insert(0, _maintenance_os.environ["UFC_APP_HELPERS"])
+try:
+    from analyzer_protocol import progress as maintenance_progress, source_failure
+except ImportError:
+    def maintenance_progress(*args, **kwargs): pass
+    def source_failure(exc): pass
+
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -703,7 +714,11 @@ def build_advanced_snapshots(stats: pd.DataFrame, fights: pd.DataFrame) -> tuple
     snapshots: list[dict[str, Any]] = []
     invalid_rate_rows = 0
 
+    _progress_count = 0
+    maintenance_progress('rebuilding', 'Building advanced history', phase='advanced_history', completed=0, total=len(stats), unit='fighter rows', force=True)
     for event_date, date_group in stats.groupby("event_date", sort=True, dropna=False):
+        maintenance_progress('rebuilding', 'Building advanced history', phase='advanced_history', completed=_progress_count, total=len(stats), unit='fighter rows')
+        _progress_count += len(date_group)
         date_snapshots: dict[tuple[str, str], dict[str, Any]] = {}
         for _, row in date_group.iterrows():
             fighter_id = _clean_id(row.get("fighter_id"))
@@ -730,6 +745,8 @@ def build_advanced_snapshots(stats: pd.DataFrame, fights: pd.DataFrame) -> tuple
                 opponent_win_pct_before=_num(opponent_snap.get("ufc_win_pct_before"), default=np.nan),
             )
             _update_rate_totals(row, global_totals, division_totals)
+
+    maintenance_progress('rebuilding', 'Built advanced history', phase='advanced_history', completed=_progress_count, total=len(stats), unit='fighter rows', force=True)
 
     snapshots_df = pd.DataFrame(snapshots)
     audit = {

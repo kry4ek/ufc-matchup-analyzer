@@ -1,147 +1,102 @@
 {
-  "version": "0.3.0",
-  "status": "experimental_prerelease_standard_gate_not_passed",
+  "version": "0.4.0",
+  "status": "experimental_local_candidate_standard_gate_not_passed",
   "checks": [
     {
-      "name": "Existing comparison navigation without repeated preparation",
+      "name": "Full native regression",
       "status": "PASS",
-      "evidence": "Real men/women offline predictions match baseline; unchanged comparison opens in 0.0662/0.1006 seconds with no additional worker or history entry; all displayed metrics/report/export content preserved",
-      "required": true
+      "required": true,
+      "evidence": "128 tests, no skips; work/v04-tests.log"
     },
     {
-      "name": "Help menu stable during native polling",
+      "name": "Mixed outcomes through actual full rebuild and recovery",
       "status": "PASS",
-      "evidence": "New regression tests fail before the fix and pass afterwards; actual packaged native menus in ready/busy states each run 20 scheduled ticks with zero redundant configurations",
-      "required": true
+      "required": true,
+      "evidence": "Both targets: 3 captured fights, 1 decisive, 1 draw, 1 NC, 2 binary training rows; repeat no changes; 15 original hashes restored"
     },
     {
-      "name": "baseline restoration and reproducible export",
+      "name": "Live update and manual retry",
       "status": "PASS",
-      "evidence": "87 source files and 15 data files restored by manifests; all 30 engine/helper exports reproduced",
-      "required": true
+      "required": true,
+      "evidence": "work/v04-live-maintenance.json: actual network, captured summary, repeat, restore, forced HTTP failure and real dialog Retry"
     },
     {
-      "name": "regression and input safety",
+      "name": "Real model and historical parity",
       "status": "PASS",
-      "evidence": "104 data-equipped/native unittest cases, no skips; includes Help menu and comparison navigation safeguards",
-      "required": true
+      "required": true,
+      "evidence": "Fresh offline men, women and historical men GUI/worker predictions match baseline within 1e-12; frozen recent lists shared with previews"
     },
     {
-      "name": "structured preparation and model parity",
+      "name": "Recent reports, statistics only, cancellation and exports",
       "status": "PASS",
-      "evidence": "Eight frozen-ZIP real predictions; both routes, forward/reverse/historical/single-worker, baseline probability tolerance 1e-12 and unchanged raw metrics",
-      "required": true
+      "required": true,
+      "evidence": "Native comparisons and cancelled preview preserve recent history; native TXT/HTML Save dialogs; full regression covers old and saved reports"
     },
     {
-      "name": "feature parity and leakage",
+      "name": "Progress, diagnostics and failure safety",
       "status": "PASS",
-      "evidence": "10800 comparisons across 20 fights/270 features; date filtering and full rebuild validators",
-      "required": true
+      "required": true,
+      "evidence": "Bounded JSON relay, actual counts, malformed records, final drain, rollback failures, retained paths and GUI actions tested"
     },
     {
-      "name": "statistics only and early progress",
+      "name": "Reproducible export and source/data/dependency audit",
       "status": "PASS",
-      "evidence": "Real men/women comparisons without prediction-fit stages or probability fields; preview before fitting; cancellation retains comparison",
-      "required": true
+      "required": true,
+      "evidence": "30 exact engine exports; 15 dataset hashes; 18 locked dependencies; work/v04-audit.json"
     },
     {
-      "name": "history and reuse safety",
+      "name": "Native runtime closure and layout",
       "status": "PASS",
-      "evidence": "Exact reuse, stale context/settings/identities/runtime tests; bounded files/storage; corrupt/schema/IO handling; history while running; Clear/Delete/Recalculate",
-      "required": true
+      "required": true,
+      "evidence": "299 AMD64 imports; four tabs and all font sizes; Tk scaling simulations at 100/125/150/200, actual OS 125%"
     },
     {
-      "name": "native exports and report completeness",
+      "name": "Fresh feature parity and leakage",
       "status": "PASS",
-      "evidence": "Native TXT Save/Cancel/declined overwrite and corrected HTML action; filtered-view complete UTF-8 exports, escaped standalone HTML, offline browser render and print",
-      "required": true
+      "required": true,
+      "evidence": "20 fights, 270 features, 10800 comparisons, zero mismatches; same-date and target-fight leakage checks pass"
     },
     {
-      "name": "maintenance and recovery",
+      "name": "Fresh ZIP extraction and native launcher",
       "status": "PASS",
-      "evidence": "Bounded live all-target check, full rebuild, all 15 original hashes restored; actual network/malformed failures; additions/disk/rebuild/interrupted commits as fixtures",
-      "required": true
-    },
-    {
-      "name": "runtime closure and dependencies",
-      "status": "PASS",
-      "evidence": "Pinned runtime/Tk and 18 verified wheel inputs; 299 native AMD64 imports resolve",
-      "required": true
-    },
-    {
-      "name": "local layout and accessibility",
-      "status": "PASS",
-      "evidence": "Three tabs/text sizes/resizing/focus at simulated 100/125/150/200 Tk scales; native actual 125%",
-      "required": true
-    },
-    {
-      "name": "performance profiling",
-      "status": "PASS",
-      "evidence": "Controlled sequential timings and single-pass validation profile; >10% apparent memory regression investigated with OS peak counters",
-      "required": true
-    },
-    {
-      "name": "delivery ZIP real model verification",
-      "status": "PASS",
-      "evidence": "Fresh delivery extraction; eight actual GUI/worker predictions, baseline parity, offline, Unicode path, bundled runtime isolation",
-      "required": true
-    },
-    {
-      "name": "delivery inventory and native launch",
-      "status": "PASS",
-      "evidence": "Exact implementation/data/runtime hashes across tested and final archives; CRCs, allowlists, checksums; conflicting environment and alternate working directory native launch",
-      "required": true
+      "required": true,
+      "evidence": "work/v04-final-archive-verification.txt; work/v04-final-launch.json"
     },
     {
       "name": "dataset redistribution permission",
       "status": "BLOCKED",
-      "evidence": "No documented redistribution basis; user reports no permission",
-      "required": true
-    },
-    {
-      "name": "clean Windows 10 x64 without installed tools",
-      "status": "BLOCKED",
-      "evidence": "No clean VM or separate clean machine available",
-      "required": true
-    },
-    {
-      "name": "clean Windows 11 x64 without installed tools",
-      "status": "BLOCKED",
-      "evidence": "No clean VM or separate clean machine available",
-      "required": true
-    },
-    {
-      "name": "actual Windows 100 150 200 percent scaling",
-      "status": "BLOCKED",
-      "evidence": "Only actual 125% available; Tk simulations do not substitute",
-      "required": true
-    },
-    {
-      "name": "configured public repository and pinned dataset download",
-      "status": "BLOCKED",
-      "evidence": "Public repository confirmed; separate dataset asset intentionally omitted by owner request. Source users copy matching CSVs from the Windows ZIP; automatic dataset URL remains unset.",
-      "required": true
-    },
-    {
-      "name": "published download smoke test",
-      "status": "PENDING",
-      "evidence": "Requires authorized publication and an actual public download",
       "required": true,
-      "phase": "after_publish"
+      "evidence": "Existing review_required status remains unresolved"
     },
     {
-      "name": "remote source CI and macOS Linux execution",
-      "status": "UNVERIFIED",
-      "evidence": "Workflow included; not run on remote services/platforms here",
-      "required": false
+      "name": "clean Windows 10/11 machines",
+      "status": "BLOCKED",
+      "required": true,
+      "evidence": "No separate clean machines available"
+    },
+    {
+      "name": "actual Windows 100/150/200 percent scaling",
+      "status": "BLOCKED",
+      "required": true,
+      "evidence": "Only actual 125% available; Tk simulation is separate"
+    },
+    {
+      "name": "automatic pinned dataset download",
+      "status": "BLOCKED",
+      "required": true,
+      "evidence": "No separate public dataset asset; automatic URL remains unset"
+    },
+    {
+      "name": "Remote source CI",
+      "status": "PENDING",
+      "required": false,
+      "evidence": "Configured three-platform workflow will run on the authorized source push"
     }
   ],
   "publication_decision": {
+    "date": "2026-10-11",
+    "scope": "Source repository update authorized; v0.4 portable ZIP remains a local candidate",
     "rights_clearance": "unresolved",
-    "scope": "full portable app; separate dataset archive omitted by owner request",
-    "request": "Owner requested publication despite possibility of GitHub takedown",
-    "standard_gate_passed": false,
-    "owner": "kry4ek",
-    "date": "2026-10-01"
+    "standard_gate_passed": false
   }
 }

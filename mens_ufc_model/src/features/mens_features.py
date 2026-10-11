@@ -4,6 +4,17 @@ from collections import defaultdict, deque
 from typing import Any
 
 import numpy as np
+# Optional structured progress for staged and standalone maintenance.
+import os as _maintenance_os
+import sys as _maintenance_sys
+if _maintenance_os.environ.get("UFC_APP_HELPERS"):
+    _maintenance_sys.path.insert(0, _maintenance_os.environ["UFC_APP_HELPERS"])
+try:
+    from analyzer_protocol import progress as maintenance_progress, source_failure
+except ImportError:
+    def maintenance_progress(*args, **kwargs): pass
+    def source_failure(exc): pass
+
 import pandas as pd
 
 from src.common.utils import safe_div
@@ -330,7 +341,11 @@ def build_prefight_snapshots(
     histories = defaultdict(_zero_history)
     snapshots: list[dict[str, Any]] = []
 
+    _progress_count = 0
+    maintenance_progress('rebuilding', 'Building base history', phase='base_history', completed=0, total=len(stats), unit='fighter rows', force=True)
     for event_date, date_group in stats.groupby("event_date", sort=True, dropna=False):
+        maintenance_progress('rebuilding', 'Building base history', phase='base_history', completed=_progress_count, total=len(stats), unit='fighter rows')
+        _progress_count += len(date_group)
         event_date = pd.to_datetime(event_date, errors="coerce")
         # Build every snapshot for this event date before any same-date history update.
         for _, row in date_group.iterrows():
@@ -365,6 +380,8 @@ def build_prefight_snapshots(
 
         for _, row in date_group.iterrows():
             _update_history(histories[_clean_id(row.get("fighter_id"))], row)
+
+    maintenance_progress('rebuilding', 'Built base history', phase='base_history', completed=_progress_count, total=len(stats), unit='fighter rows', force=True)
 
     out = pd.DataFrame(snapshots)
     if "history_max_event_date_before" in out.columns:

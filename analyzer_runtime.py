@@ -13,6 +13,8 @@ import time
 import uuid
 
 from analyzer_support import ROOT,atomic_json
+from analyzer_errors import MaintenanceError
+from analyzer_protocol import EventReader, validated_progress
 
 
 class Cancelled(RuntimeError):
@@ -107,7 +109,7 @@ def operation_lock(root=ROOT, operation='analysis'):
                 import fcntl
                 fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except OSError as exc:
-            raise RuntimeError('Another analysis or dataset operation is running in this app folder. Wait for it to finish.') from exc
+            raise MaintenanceError('operation_locked', 'Another operation is running', 'Another analysis or dataset operation is running in this app folder.', 'Wait for it to finish, then try again.', retryable=True) from exc
         locked = True
         _held[identity] = stream
         stream.seek(1)
@@ -223,11 +225,23 @@ def check_cancel(cancel=None):
         raise Cancelled('Cancelled. Your installed datasets were not changed.')
 
 
-def run_logged_process(command, cwd, log, cancel=None, timeout=1800):
+def run_logged_process(command, cwd, log, cancel=None, timeout=1800, progress=None):
     log = Path(log)
     log.parent.mkdir(parents=True, exist_ok=True)
     env = runtime_environment()
     env['LOKY_MAX_CPU_COUNT']='1'
+    events = log.with_suffix('.events.jsonl')
+    events.unlink(missing_ok=True)
+    env['UFC_ENGINE_EVENTS'] = str(events.resolve())
+    env['UFC_APP_HELPERS'] = str(Path(cwd).parent.resolve())
+    error_path = log.with_suffix('.error.json')
+    error_path.unlink(missing_ok=True)
+    env['UFC_ENGINE_ERROR'] = str(error_path.resolve())
+    reader = EventReader(events)
+    def drain():
+        for event in reader.read():
+            record = validated_progress(event)
+            if record and progress: progress(**record)
     check_cancel(cancel)
     with log.open('w', encoding='utf-8') as stream:
         process = subprocess.Popen(command, cwd=cwd, env=env, stdout=stream, stderr=subprocess.STDOUT, **subprocess_options())
@@ -236,11 +250,19 @@ def run_logged_process(command, cwd, log, cancel=None, timeout=1800):
         try:
             while process.poll() is None:
                 check_cancel(cancel)
+                drain()
                 if time.monotonic() - started > timeout:
-                    raise RuntimeError('This step took too long. Check your connection or open the diagnostic log: ' + str(log))
+                    raise MaintenanceError('subprocess_timeout', 'This step took too long', 'The current dataset step exceeded its time limit.', 'Check your connection and open details before retrying.', retryable=True, diagnostics_path=str(log))
                 time.sleep(.15)
+            drain()
             if process.returncode:
-                raise RuntimeError(f'Operation failed (exit {process.returncode}). Diagnostic log: {log}')
+                if error_path.exists():
+                    try:
+                        error = MaintenanceError(**json.loads(error_path.read_text(encoding='utf-8')))
+                    except (ValueError,TypeError):pass
+                    else:
+                        error.diagnostics_path=str(log);raise error
+                raise MaintenanceError('subprocess_failed', 'A dataset step could not finish', f'The dataset process stopped (exit {process.returncode}).', diagnostics_path=str(log))
         except BaseException:
             tree.terminate()
             raise

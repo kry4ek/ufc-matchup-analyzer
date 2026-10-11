@@ -42,6 +42,10 @@ def main():
             assert not any(s in ('training','cross_validation','prediction') for s in stages),stages
             assert sum(len(s['rows']) for s in report_sections(value))>70
             assert all(value['fighter_'+side+'_comparison']['history_max_event_date_before']<value['fight_date'] for side in ('a','b'))
+            recent=value['recent_fights'];assert recent['history_cutoff']==value['fight_date']
+            assert all(row['event_date']<value['fight_date'] for side in ('fighter_a','fighter_b') for row in recent[side])
+            assert 'RECENT UFC FIGHTS' in app.result_text
+            assert all(len(app.recent_trees[side].get_children())==len(recent[side]) for side in ('fighter_a','fighter_b'))
             record(sex+' statistics-only without prediction fitting',seconds=seconds,first_comparison_seconds=value['time_to_comparison_seconds'],stages=stages)
             count=len(app.history.entries());previous_job=app.controller.job_id;displayed=app.result
             app.compare();seconds=wait()
@@ -67,8 +71,9 @@ def main():
         while app.preview is None and time.monotonic()-started<90:
             window.update();time.sleep(.04)
         assert app.preview is not None and app.result['result_state']=='pending'
-        preview=report_sections(app.result);assert app.controller.cancellable;app.cancel();wait(90)
+        preview=report_sections(app.result);recent=app.result['recent_fights'];assert app.controller.cancellable;app.cancel();wait(90)
         assert app.result['result_state']=='cancelled' and report_sections(app.result)==preview
+        assert app.result['recent_fights']==recent and 'RECENT UFC FIGHTS' in app.result_text
         assert len(app.history.entries())==count and not app.controller.busy
         record('real comparison preview before training, then cancellation',seconds=round(time.monotonic()-started,3))
         # Disable history without deleting existing completed entries.

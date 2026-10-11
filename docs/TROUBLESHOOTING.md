@@ -28,6 +28,10 @@
 
 **Network error:** check internet, VPN/proxy restrictions and source availability, then retry. Existing data is preserved. Dataset updates do not download a new app or runtime.
 
+**A fight result needs checking:** draws and no-contests are supported. This message means the source markers, fighter identities or parsed results do not agree. Use **View details** for the retained bout audit. The app blocks the entire update rather than manufacturing a winner; retry after the source is corrected. **Copy diagnostics** provides a bounded excerpt with account paths and credential fields redacted.
+
+**Recent fights missing from an older report:** older saved analyses did not capture this list. Choose Recalculate to create a new analysis with recent history. Opening the old analysis keeps its original data. A new report with fewer than five eligible bouts shows only the recorded history before its selected date.
+
 **Disk space:** free space on the app's drive. Staging/backups need extra copies; the app reports its calculated minimum. Keep at least 1 GB free for this snapshot.
 
 **Interrupted update:** reopen the app. It checks journals and restores a consistent state before enabling analysis. Wait if another operation is running. Failed recovery remains visible and blocks analysis; preserve its logs.

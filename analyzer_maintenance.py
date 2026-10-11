@@ -1,8 +1,10 @@
 """Staged, journaled data maintenance. Never write to the research workspace."""
 from __future__ import annotations
 import contextlib, datetime as dt, json, os, pathlib, shutil, subprocess, sys, uuid
+import traceback
+from analyzer_errors import MaintenanceError
 from analyzer_support import ROOT, atomic_json, data_health, dataset_state, digest, safe_path
-from analyzer_runtime import check_cancel, operation_lock, python_executable, run_logged_process,cleanup_stale_temp_aliases
+from analyzer_runtime import Cancelled, check_cancel, operation_lock, python_executable, run_logged_process,cleanup_stale_temp_aliases
 
 ENGINE={'men':'mens_ufc_model','women':'womens_ufc_model'}
 
@@ -10,13 +12,15 @@ def run_logged(cmd,cwd,log):
     print('Running '+pathlib.Path(cmd[1]).name+' …',flush=True)
     run_logged_process(cmd,cwd,log)
 
-def rebuild_engine(stage,sex,logs,runner=run_logged):
+def rebuild_engine(stage,sex,logs,runner=run_logged,progress=None):
     cwd=stage/ENGINE[sex]
     if sex=='men':
         steps=[['src/data/build_mens_training_dataset.py'],['src/features/add_mens_elo_features.py'],['src/features/build_mens_advanced_features.py'],['src/features/build_mens_bayes_smoothing_candidate.py']]
     else:
         steps=[['build_prefight_bayesian_smoothing_v1_REBUILT.py','build','--training-rows','output_advanced_features_sig_fixed/ufc_womens_model_training_rows_advanced_sig_fixed.csv','--fighter-stats','output_td_repaired/ufc_womens_fighter_fight_stats_td_control_repaired.csv','--out-dir','output_bayesian_prefight_smoothing_sig_fixed_v1']]
-    for i,args in enumerate(steps):runner([python_executable(),*args],cwd,logs/f'{sex}-rebuild-{i}.log')
+    for i,args in enumerate(steps):
+        if progress:progress(stage='rebuilding',target=sex,phase='rebuild_steps',message=f'{sex.title()}: rebuilding features — step {i+1} of {len(steps)}',step_index=i+1,step_count=len(steps),cancellable=True)
+        runner([python_executable(),*args],cwd,logs/f'{sex}-rebuild-{i}.log')
 
 def process_alive(pid):
     if not isinstance(pid,int) or pid<=0:return False
@@ -40,7 +44,7 @@ def maintenance_lock(root,transaction):
     path=root/'.runtime/maintenance.lock';path.parent.mkdir(parents=True,exist_ok=True)
     try:
         with path.open('x',encoding='utf-8') as stream:json.dump(dict(pid=os.getpid(),transaction=transaction),stream)
-    except FileExistsError as exc:raise RuntimeError('Maintenance is already active or interrupted. Use doctor and recover.') from exc
+    except FileExistsError as exc:raise MaintenanceError('operation_locked','Maintenance needs checking','Maintenance is active or an earlier update was interrupted.','Use Help → Check installation to recover before retrying.') from exc
     try:yield
     finally:path.unlink(missing_ok=True)
 
@@ -52,6 +56,15 @@ def rollback(root,txn,journal):
             temp=target.with_name(target.name+'.recovering');shutil.copy2(saved,temp);os.replace(temp,target)
         else:target.unlink(missing_ok=True)
     journal['status']='rolled_back';atomic_json(txn/'journal.json',journal)
+
+def recover_transaction(root,txn,journal):
+    try:rollback(root,txn,journal)
+    except (OSError,RuntimeError) as exc:
+        journal['status']='recovery_required'
+        with contextlib.suppress(OSError):atomic_json(txn/'journal.json',journal)
+        path=txn/'recovery.log'
+        with contextlib.suppress(OSError):path.write_text(traceback.format_exc(),encoding='utf-8')
+        raise MaintenanceError('recovery_failed','Dataset recovery needs attention','The previous datasets could not be fully restored.','Keep the transaction backup and open details. Use Help → Check installation after resolving the file access problem.',operation='recover',transaction_id=journal['id'],installation_state='recovery_required',diagnostics_path=str(path) if path.exists() else '') from exc
 
 def promote(root,stage,txn,journal,files):
     journal['status']='committing';atomic_json(txn/'journal.json',journal)
@@ -95,17 +108,49 @@ def validate_engine(stage,sex,logs,runner=run_logged):
 def validate_update_audits(cwd):
     import csv
     audits=list((cwd/'_update_manifests').rglob('new_rows_safety_audit.json'))
-    if not audits:raise RuntimeError('Updater did not produce a safety audit')
+    if not audits:raise MaintenanceError('source_malformed','The source capture is incomplete','The updater did not produce a safety audit.')
     for path in audits:
         audit=json.loads(path.read_text(encoding='utf-8'))
-        if 'unsafe_rows_count' not in audit:raise RuntimeError('Malformed safety audit')
-        if audit['unsafe_rows_count']:raise RuntimeError('Unsafe staged rows; update blocked')
+        if 'unsafe_rows_count' not in audit:raise MaintenanceError('source_malformed','The safety audit is incomplete','The safety audit has no row-safety result.',audit_relative_path=path.relative_to(cwd/'_update_manifests').as_posix())
+        if audit['unsafe_rows_count']:raise MaintenanceError('validation_failed','Captured rows need checking','Unsafe staged rows: the safety audit found inconsistent source rows.',audit_relative_path=path.relative_to(cwd/'_update_manifests').as_posix())
     for path in (cwd/'_update_manifests').rglob('*_inspected.csv'):
         with path.open(encoding='utf-8-sig',newline='') as stream:
             for row in csv.DictReader(stream):
                 status=row.get('status','').lower()
                 if 'error' in status or status in ('skipped_future_event','skipped_unresolved_result','skipped_no_winner_loser'):
-                    raise RuntimeError('Incomplete or unsafe source capture: '+status+'. See '+str(path))
+                    fetch = row.get('error_code','source_fetch_failed') == 'source_fetch_failed' and status in ('event_fetch_error','fight_fetch_error')
+                    raise MaintenanceError('source_fetch_failed' if fetch else 'invalid_source_result',
+                        'Could not download fight details' if fetch else 'A fight result needs checking',
+                        'The source capture is incomplete.' if fetch else 'The recorded result or fighter pair is incomplete or contradictory.',
+                        'Check your internet connection and try again.' if fetch else 'Open details to inspect the affected bout. Retry after the source result has been corrected.',
+                        retryable=fetch,event_id=row.get('event_id',''),fight_id=row.get('fight_id',''),event_name=row.get('event_name',''),
+                        fighter_a=row.get('fighter_1',''),fighter_b=row.get('fighter_2',''),
+                        audit_relative_path=path.relative_to(cwd/'_update_manifests').as_posix())
+
+def captured_fights(cwd):
+    import csv
+    rows = []
+    events = 0
+    for path in sorted((cwd/'_update_manifests').rglob('events_inspected.csv')):
+        with path.open(encoding='utf-8-sig',newline='') as stream:events += sum(1 for _ in csv.DictReader(stream))
+    for path in sorted((cwd/'_update_manifests').rglob('fights_inspected.csv')):
+        with path.open(encoding='utf-8-sig',newline='') as stream:
+            for row in csv.DictReader(stream):
+                if row.get('status') != 'scraped':continue
+                rows.append({k:row.get(k,'') for k in ('fight_id','event_date','event_name','fighter_1','fighter_2','division','outcome','training_eligible')})
+    unique = {r['fight_id']:r for r in rows}
+    rows = sorted(unique.values(),key=lambda r:(r['event_date'],r['fight_id']),reverse=True)
+    counts = dict(events_inspected=events,captured_fights=len(rows),decisive_fights=sum(r['outcome']=='win_loss' for r in rows),draws=sum(r['outcome']=='draw' for r in rows),no_contests=sum(r['outcome'] in ('nc','no_contest') for r in rows))
+    counts['proposed_binary_training_rows'] = counts['decisive_fights']*2
+    return rows, counts
+
+def training_count(engine, sex):
+    import csv
+    rel = 'data/processed/mens_training_rows_v3_bayes_smoothing_candidate.csv' if sex=='men' else 'output_bayesian_prefight_smoothing_sig_fixed_v1/ufc_womens_model_training_rows_advanced_plus_bayes_prefight_smoothing_v1.csv'
+    path = engine/rel
+    if not path.exists():return 0
+    with path.open(encoding='utf-8-sig',newline='') as stream:
+        return sum(row.get('fighter_a_won') in ('0','1','0.0','1.0') for row in csv.DictReader(stream))
 
 def data_files(engine):
     return {p.relative_to(engine).as_posix():digest(p) for p in engine.rglob('*') if p.is_file() and p.suffix in ('.csv','.json') and (p.relative_to(engine).parts[0]=='data' or p.relative_to(engine).parts[0].startswith('output'))}
@@ -126,45 +171,67 @@ def _maintenance(root=ROOT,kind='update',target='all',apply=False,max_events=Non
     check_cancel(cancel)
     expected=sum(p.stat().st_size for sex in targets for p in (root/ENGINE[sex]).rglob('*') if p.is_file() and not any(part in ('.venv','__pycache__','cache','_update_manifests') or part.startswith('_backup') for part in p.parts))
     required=expected*3+64*1024*1024
-    if shutil.disk_usage(root).free<required:raise RuntimeError(f'Not enough free space for a safe update. Free at least {required/1048576:.0f} MB on this drive and try again.')
+    if shutil.disk_usage(root).free<required:raise MaintenanceError('insufficient_space','Not enough free disk space',f'Not enough free space: a safe update needs at least {required/1048576:.0f} MB free on this drive.','Free space on the app drive, then try again.',operation=kind)
     if runner is run_logged:
         def runner(cmd,cwd,log):
-            run_logged_process(cmd,cwd,log,cancel)
+            def child_progress(**event):
+                event['target']=sex
+                emit(**event)
+            run_logged_process(cmd,cwd,log,cancel,progress=child_progress)
     transaction=dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%S')+'-'+uuid.uuid4().hex[:8]
     txn=root/'.runtime/transactions'/transaction;stage=txn/'stage';logs=txn/'logs'
     journal=dict(id=transaction,kind=kind,targets=targets,status='staging',promotions=[],pid=os.getpid(),summary={})
     with maintenance_lock(root,transaction):
         emit(stage='staging',message='Preparing private dataset copies',cancellable=True)
         stage.mkdir(parents=True);atomic_json(txn/'journal.json',journal)
+        current_stage='staging';sex='';primary=None
         try:
             shutil.copy2(root/'dataset_manifest.json',stage/'dataset_manifest.json')
+            for helper in ('analyzer_protocol.py','analyzer_errors.py'):
+                source=root/helper
+                if not source.exists():source=pathlib.Path(__file__).parent/helper
+                shutil.copy2(source,stage/helper)
             for sex in targets:
                 shutil.copytree(root/ENGINE[sex],stage/ENGINE[sex],ignore=shutil.ignore_patterns('.venv','__pycache__','cache','_backup*','_update_manifests'))
             for sex in targets:
                 check_cancel(cancel)
                 cwd=stage/ENGINE[sex]
-                before=data_files(cwd);count=fight_count(cwd,sex)
+                before=data_files(cwd);count=fight_count(cwd,sex);before_training=training_count(cwd,sex)
                 if kind=='update':
-                    emit(stage='download',message='Checking completed '+sex+' fights',cancellable=True)
+                    current_stage='download'
+                    emit(stage='download',target=sex,message='Checking completed '+sex+' fights',cancellable=True)
                     script='update_ufc_mens_dataset_incremental.py' if sex=='men' else 'update_ufc_womens_dataset_incremental.py'
                     args=[python_executable(),script,'--audit','--manifest-dir','_update_manifests/run']
                     if sex=='women':args+=['--profiles','output_quality_fixed/ufc_womens_fighter_profiles.csv']
                     if max_events is not None:args+=['--max-events',str(max_events)]
                     if from_date:args+=['--from-date',from_date]
                     if apply:args+=['--apply']
-                    runner(args,cwd,logs/f'{sex}-update.log')
+                    try:runner(args,cwd,logs/f'{sex}-update.log')
+                    except MaintenanceError:
+                        # A rejected capture may exit nonzero after writing its
+                        # bout audit. Preserve that more specific explanation.
+                        if list((cwd/'_update_manifests').rglob('new_rows_safety_audit.json')):validate_update_audits(cwd)
+                        raise
                     validate_update_audits(cwd)
                     changed=data_files(cwd)!=before
-                    journal['summary'][sex]=dict(added_fights=max(0,fight_count(cwd,sex)-count),changed=changed)
+                    rows, counts = captured_fights(cwd)
+                    journal['summary'][sex]=dict(added_fights=max(0,fight_count(cwd,sex)-count),changed=changed,binary_training_rows_added=0,**counts)
+                    atomic_json(txn/'audits'/sex/'captured_fights.json',dict(fights=rows,summary=counts))
                     # Skipped unresolved/future fights must remain visible in audit logs.
                     if not apply:continue
                     if not changed:continue
                 else:journal['summary'][sex]=dict(added_fights=0,changed=True)
                 check_cancel(cancel)
-                emit(stage='rebuilding',message='Rebuilding '+sex+' model features',cancellable=True)
-                rebuild_engine(stage,sex,logs,runner)
-                emit(stage='validating',message='Validating '+sex+' datasets and historical cutoffs',cancellable=True)
-                validator(stage,sex,logs,runner)
+                current_stage='rebuilding'
+                emit(stage='rebuilding',target=sex,message='Rebuilding '+sex+' model features',cancellable=True)
+                rebuild_engine(stage,sex,logs,runner,emit)
+                current_stage='validating'
+                emit(stage='validating',target=sex,message='Validating '+sex+' datasets and historical cutoffs',cancellable=True)
+                try:validator(stage,sex,logs,runner)
+                except MaintenanceError:raise
+                except (ValueError,RuntimeError) as exc:raise MaintenanceError('validation_failed','Dataset validation failed','The rebuilt datasets did not pass integrity or historical cutoff checks.') from exc
+                journal['summary'][sex]['binary_training_rows_added']=max(0,training_count(cwd,sex)-before_training)
+                journal['summary'][sex]['data_through']=max((r.get('latest_date') or '' for r in data_health(stage,False,(sex,))),default='')
             check_cancel(cancel)
             if kind=='update' and not apply:
                 journal['status']='dry_run';atomic_json(txn/'journal.json',journal)
@@ -189,18 +256,55 @@ def _maintenance(root=ROOT,kind='update',target='all',apply=False,max_events=Non
                 atomic_json(stage/'.runtime/local_dataset_state.json',dict(files=list(combined.values()),validated_at=dt.datetime.now(dt.timezone.utc).isoformat(),transaction=transaction))
                 files.append('.runtime/local_dataset_state.json')
                 check_cancel(cancel)
+                current_stage='committing'
                 emit(stage='committing',message='Installing validated datasets; please wait',cancellable=False)
                 promote(root,stage,txn,journal,sorted(files))
                 print('Validated datasets committed. Backup/recovery ID: '+transaction)
-        except BaseException:
-            rollback(root,txn,journal)
+        except BaseException as exc:
+            primary=exc
+            for value in journal['summary'].values():
+                value['attempted_added_fights']=value.get('added_fights',0)
+                value.update(added_fights=0,binary_training_rows_added=0,changed=False,attempted=True)
+            with contextlib.suppress(OSError):(txn/'failure.log').write_text(traceback.format_exc(),encoding='utf-8')
+            if not isinstance(exc,(MaintenanceError,Cancelled,KeyboardInterrupt,SystemExit)):
+                primary=MaintenanceError('disk_io_failed' if isinstance(exc,OSError) else 'maintenance_failed','Dataset operation could not finish','A file operation failed.' if isinstance(exc,OSError) else 'The dataset operation encountered an unexpected error.',diagnostics_path=str(txn/'failure.log'))
+            error=primary if isinstance(primary,MaintenanceError) else None
+            if error:
+                error.operation=kind;error.stage=current_stage;error.target=sex;error.transaction_id=transaction
+            try:
+                rollback(root,txn,journal)
+                if error:error.installation_state='rolled_back' if journal['promotions'] else 'unchanged'
+            except BaseException as recovery_exc:
+                journal['status']='recovery_required';atomic_json(txn/'journal.json',journal)
+                with contextlib.suppress(OSError):
+                    with (txn/'failure.log').open('a',encoding='utf-8') as stream:stream.write('\nRecovery failed:\n'+traceback.format_exc())
+                primary=MaintenanceError('recovery_failed','Dataset recovery needs attention','The operation failed and automatic recovery could not finish.','Use Help → Check installation; keep the transaction backup.',operation=kind,stage=current_stage,target=sex,transaction_id=transaction,installation_state='recovery_required',diagnostics_path=str(txn/'failure.log'))
+                raise primary from recovery_exc
+            if primary is not exc:raise primary from exc
             raise
         finally:
+            cleanup_errors=[]
             for sex in targets:
                 audits=stage/ENGINE[sex]/'_update_manifests'
-                if audits.exists():shutil.copytree(audits,txn/'audits'/sex,dirs_exist_ok=True)
+                try:
+                    if primary and kind=='update' and audits.exists() and sex not in journal['summary']:
+                        rows,counts=captured_fights(stage/ENGINE[sex])
+                        journal['summary'][sex]=dict(added_fights=0,changed=False,binary_training_rows_added=0,attempted=True,**counts)
+                        atomic_json(txn/'audits'/sex/'captured_fights.json',dict(fights=rows,summary=counts,installation_state=journal['status']))
+                        atomic_json(txn/'journal.json',journal)
+                    if audits.exists():shutil.copytree(audits,txn/'audits'/sex,dirs_exist_ok=True)
+                except (OSError,ValueError) as cleanup_exc:cleanup_errors.append(str(cleanup_exc))
+            if isinstance(primary,MaintenanceError):
+                retained=txn/'audits'/primary.target/primary.audit_relative_path if primary.audit_relative_path else None
+                if retained and retained.is_file():primary.diagnostics_path=str(retained)
+                elif not primary.diagnostics_path or not pathlib.Path(primary.diagnostics_path).is_file():primary.diagnostics_path=str(txn/'failure.log')
             # Remove only the verified private staging tree; retain audits and backups.
-            if stage.exists() and stage.resolve().is_relative_to((root/'.runtime/transactions').resolve()):shutil.rmtree(stage)
+            try:
+                if stage.exists() and stage.resolve().is_relative_to((root/'.runtime/transactions').resolve()):shutil.rmtree(stage)
+            except OSError as cleanup_exc:cleanup_errors.append(str(cleanup_exc))
+            if cleanup_errors:
+                with contextlib.suppress(OSError):
+                    with (txn/'cleanup.log').open('a',encoding='utf-8') as stream:stream.write('\n'.join(cleanup_errors)+'\n')
     emit(stage='complete',message='Already up to date' if journal['status']=='no_changes' else 'Dataset operation complete',cancellable=False)
     return transaction
 
@@ -222,7 +326,7 @@ def _recover(root=ROOT,transaction=None):
         if not state.exists() or json.loads(state.read_text(encoding='utf-8')).get('transaction')!=transaction:
             raise RuntimeError('Only the most recent committed maintenance transaction can be restored')
     if journal['status']=='rolled_back':print('Already restored.');lock.unlink(missing_ok=True);return
-    rollback(root,txn,journal);lock.unlink(missing_ok=True);print('Restored the datasets from before transaction '+transaction)
+    recover_transaction(root,txn,journal);lock.unlink(missing_ok=True);print('Restored the datasets from before transaction '+transaction)
 
 def recover_interrupted(root=ROOT):
     """Journal status, rather than a stale filename alone, determines recovery."""
@@ -236,10 +340,15 @@ def recover_interrupted(root=ROOT):
         transactions=root/'.runtime/transactions'
         for path in sorted(transactions.glob('*/journal.json')):
             journal=json.loads(path.read_text(encoding='utf-8'))
-            if journal['status'] in ('staging','committing'):
+            if journal['status'] in ('staging','committing','recovery_required'):
                 if process_alive(journal.get('pid')):raise RuntimeError('A dataset update is still running.')
-                rollback(root,path.parent,journal)
+                recover_transaction(root,path.parent,journal)
                 stage=path.parent/'stage'
+                for sex in journal.get('targets',[]):
+                    if sex not in ENGINE:continue
+                    audits=stage/ENGINE[sex]/'_update_manifests'
+                    if audits.exists():
+                        with contextlib.suppress(OSError):shutil.copytree(audits,path.parent/'audits'/sex,dirs_exist_ok=True)
                 if stage.exists() and stage.resolve().is_relative_to(transactions.resolve()):shutil.rmtree(stage)
                 recovered.append(journal['id'])
         lock.unlink(missing_ok=True)
@@ -253,7 +362,7 @@ def cleanup_history(root=ROOT):
     items=sorted(txns.glob('*/journal.json'),reverse=True)
     for index,path in enumerate(items):
         journal=json.loads(path.read_text(encoding='utf-8'))
-        if journal['status'] in ('staging','committing') or journal['id']==keep:continue
+        if journal['status'] in ('staging','committing','recovery_required') or journal['id']==keep:continue
         backup=path.parent/'before'
         if backup.exists() and backup.resolve().is_relative_to(txns.resolve()):shutil.rmtree(backup)
         if index>=10 and path.parent.resolve().is_relative_to(txns.resolve()):shutil.rmtree(path.parent)

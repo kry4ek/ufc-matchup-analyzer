@@ -50,7 +50,7 @@ def main():
         window.geometry(f'{width}x{height}');app.status.set('Checking installation…');window.update()
         if args.fixture:
             if not app.collapsed:app.toggle_inputs()
-            for tab,widgets in [(app.overview,[app.overview_tree,app.probability]),(app.comparison,[app.comparison_tree,app.filter_entry,app.details])]:
+            for tab,widgets in [(app.overview,[app.overview_tree,app.probability]),(app.comparison,[app.comparison_tree,app.filter_entry,app.details]),(app.recent_tab,[app.recent_canvas])]:
                 app.notebook.select(tab);window.update()
                 for widget in widgets:
                     x=widget.winfo_rootx()-window.winfo_rootx();y=widget.winfo_rooty()-window.winfo_rooty()
@@ -59,6 +59,9 @@ def main():
             for size in ('Small','Medium','Large'):
                 app.font_size.set(size);app.change_font();window.update()
                 assert app.comparison_tree.winfo_height()>50,('text size',percent,size)
+                assert app.recent_canvas.winfo_height()>50,('recent fights canvas',percent,size)
+                app.recent_trees['fighter_b'].focus_set();window.update()
+                assert window.tk.call('tk_focusNext',str(app.recent_trees['fighter_a']))
             app.font_size.set('Medium');app.change_font();app.notebook.select(2);window.update()
         # Focus traversal uses ttk/Tk's actual keyboard navigation order.
         for box in [app.division_box,app.date_entry,*app.name_boxes.values()]:

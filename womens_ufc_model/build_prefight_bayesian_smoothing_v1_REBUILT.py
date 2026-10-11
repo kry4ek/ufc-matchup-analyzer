@@ -38,6 +38,17 @@ from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
 import numpy as np
+# Optional structured progress for staged and standalone maintenance.
+import os as _maintenance_os
+import sys as _maintenance_sys
+if _maintenance_os.environ.get("UFC_APP_HELPERS"):
+    _maintenance_sys.path.insert(0, _maintenance_os.environ["UFC_APP_HELPERS"])
+try:
+    from analyzer_protocol import progress as maintenance_progress, source_failure
+except ImportError:
+    def maintenance_progress(*args, **kwargs): pass
+    def source_failure(exc): pass
+
 import pandas as pd
 
 SCRIPT_VERSION = "build_prefight_bayesian_smoothing_v1_REBUILT_2026_06_12_seb"
@@ -297,7 +308,11 @@ def _estimate_seb_strength_series(
     fighter_totals: dict[str, tuple[float, float]] = {}
     sum_x = sum_n = sum_n2 = sum_x2_over_n = 0.0
     strength_by_date: dict[pd.Timestamp, float] = {}
+    _progress_count = 0
+    maintenance_progress('rebuilding', 'Building Bayesian population history', phase='bayes_population', completed=0, total=len(records), unit='observations', force=True)
     for date, group in records.groupby("date", sort=True):
+        maintenance_progress('rebuilding', 'Building Bayesian population history', phase='bayes_population', completed=_progress_count, total=len(records), unit='observations')
+        _progress_count += len(group)
         strength_by_date[date] = _estimate_seb_strength_mom(
             sum_x, sum_n, sum_n2, sum_x2_over_n, len(fighter_totals), fallback
         )
@@ -315,6 +330,7 @@ def _estimate_seb_strength_series(
             sum_n2 += float(n) * float(n)
             sum_x2_over_n += (float(x) * float(x)) / float(n)
 
+    maintenance_progress('rebuilding', 'Bayesian population history built', phase='bayes_population', completed=_progress_count, total=len(records), unit='observations', force=True)
     final_strength = _estimate_seb_strength_mom(
         sum_x, sum_n, sum_n2, sum_x2_over_n, len(fighter_totals), fallback
     )

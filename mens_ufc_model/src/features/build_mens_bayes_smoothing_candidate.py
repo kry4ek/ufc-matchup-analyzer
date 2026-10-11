@@ -8,6 +8,17 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+# Optional structured progress for staged and standalone maintenance.
+import os as _maintenance_os
+import sys as _maintenance_sys
+if _maintenance_os.environ.get("UFC_APP_HELPERS"):
+    _maintenance_sys.path.insert(0, _maintenance_os.environ["UFC_APP_HELPERS"])
+try:
+    from analyzer_protocol import progress as maintenance_progress, source_failure
+except ImportError:
+    def maintenance_progress(*args, **kwargs): pass
+    def source_failure(exc): pass
+
 import pandas as pd
 
 
@@ -348,7 +359,11 @@ def build_strength_lookup(df: pd.DataFrame) -> dict[str, dict[str, Any]]:
         sum_x = sum_n = sum_n2 = sum_x2_over_n = 0.0
         dates: list[Any] = []
         strengths: list[float] = []
+        _progress_count = 0
+        maintenance_progress('rebuilding', 'Building Bayesian population history', phase='bayes_population:'+family.family, completed=0, total=len(records), unit='observations', force=True)
         for event_date, group in records.groupby("event_date", sort=True):
+            maintenance_progress('rebuilding', 'Building Bayesian population history', phase='bayes_population:'+family.family, completed=_progress_count, total=len(records), unit='observations')
+            _progress_count += len(group)
             dates.append(event_date)
             strengths.append(
                 estimate_strength_mom(sum_x, sum_n, sum_n2, sum_x2_over_n, len(fighter_totals), fallback)
@@ -366,6 +381,7 @@ def build_strength_lookup(df: pd.DataFrame) -> dict[str, dict[str, Any]]:
                 sum_n += float(n)
                 sum_n2 += float(n) * float(n)
                 sum_x2_over_n += (float(x) * float(x)) / float(n)
+        maintenance_progress('rebuilding', 'Bayesian population history built', phase='bayes_population:'+family.family, completed=_progress_count, total=len(records), unit='observations', force=True)
         lookup[family.family] = {
             "dates": np.array(dates, dtype="datetime64[ns]"),
             "strength_before": np.array(strengths, dtype=float),

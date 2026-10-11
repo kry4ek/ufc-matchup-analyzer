@@ -210,9 +210,13 @@ def main():
             from tools.adapt_workflows import adapt_men,adapt_women
             adapter=adapt_men if rel.startswith('mens_') else adapt_women
             dest.write_text(adapter(dest.read_text(encoding='utf-8')),encoding='utf-8',newline='\n')
-        if rel in files:records.append(dict(path=rel,source_sha256=sha(src),exported_sha256=sha(dest)))
+        if rel in files:
+            from tools.adapt_maintenance import apply_patch
+            dest.write_text(apply_patch(rel,dest.read_text(encoding='utf-8')),encoding='utf-8',newline='\n')
+            records.append(dict(path=rel,source_sha256=sha(src),exported_sha256=sha(dest)))
     provenance=dict(source_commit=subprocess.check_output(['git','-C',str(a.source),'rev-parse','HEAD'],text=True).strip(),allowlist=files,files=records,adaptations=['public men default v3','feature manifest relocated','updaters reject empty or malformed event listings','updaters filter future events before applying inspection limits','women cross-validation failures stop prediction instead of silently changing ensemble weights','prediction JSON exposes computed live comparison values, women ensemble weights and full reliability details without changing calculations','UTF-8 and LF line endings for portable checkout hashes'])
     provenance['adaptations'].append('v0.3 prepares dated comparison once before unchanged prediction fitting and exposes structured progress')
+    provenance['adaptations'].append('v0.4 checked maintenance patches retain completed draws/NCs without binary labels and emit measured progress; staging explicitly copies app protocol helpers')
     (a.destination/'source_manifest.json').write_text(json.dumps(provenance,indent=2)+'\n',encoding='utf-8',newline='\n')
     dataset=[]
     for rel in DATA:
@@ -223,7 +227,7 @@ def main():
                 count+=1;d=row.get('event_date',row.get('date','')) or ''
                 if d>latest:latest=d
         dataset.append(dict(path=rel,sha256=sha(f),size_bytes=f.stat().st_size,rows=count,columns=schema,latest_date=latest or None))
-    manifest=dict(version='0.3.0',source='UFCStats; derived features from retained engines',redistribution_status='review_required',release_repository=None,files=dataset)
+    manifest=dict(version='0.4.0',source='UFCStats; derived features from retained engines',redistribution_status='review_required',release_repository=None,files=dataset)
     (a.destination/'dataset_manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(f'Exported {len(files)} source files and {len(DATA)} datasets; {sum(x["size_bytes"] for x in dataset)/1048576:.1f} MiB data')
 

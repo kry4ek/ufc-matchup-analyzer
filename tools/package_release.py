@@ -7,6 +7,7 @@ from analyzer_support import VERSION,atomic_json,digest,manifest
 PUBLIC=['ufc_matchup_analyzer.py','analyzer_support.py','analyzer_maintenance.py','analyzer_runtime.py','analyzer_catalog.py','analyzer_results.py','analyzer_controller.py','analyzer_worker.py','analyzer_gui.py','analyzer_bootstrap.py','QUICK_START.txt','setup.py','setup.ps1','setup.bat','run.bat','requirements.lock','.gitignore','.gitattributes','README.md','LICENSE','DATA_NOTICE.md','THIRD_PARTY.md','CONTRIBUTING.md','RELEASE_VERIFICATION.md','source_manifest.json','dataset_manifest.json','release_checks.json','.github/workflows/ci.yml']
 PUBLIC += ['runtime_inputs.json']
 PUBLIC += ['analyzer_history.py','analyzer_protocol.py','analyzer_reporting.py','analyzer_widgets.py','analyzer_engine_runner.py']
+PUBLIC += ['analyzer_errors.py','analyzer_fight_history.py','tools/engine_patches.json']
 
 def archive(path,items,prefix='',base=ROOT):
     with zipfile.ZipFile(path,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=6) as z:

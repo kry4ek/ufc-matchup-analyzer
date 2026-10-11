@@ -29,6 +29,8 @@ from analyzer_results import format_result,result_filename
 from analyzer_reporting import report_sections,overview_rows,format_html
 from analyzer_history import History,fingerprint
 from analyzer_widgets import CalendarDialog,SuggestPopup
+from analyzer_errors import STATES, diagnostic_text
+from analyzer_fight_history import display_row, OLD_HISTORY_MESSAGE
 
 DIVISIONS={**{'Men — '+x:('men',x) for x in MEN_DIVISIONS},**{'Women — '+x:('women',x) for x in WOMEN_DIVISIONS}}
 
@@ -351,6 +353,8 @@ class AnalyzerApp(LegacyAnalyzerApp):
         self.notebook=ttk.Notebook(self.frame);self.notebook.grid(row=4,column=0,sticky='nsew')
         self.overview=ttk.Frame(self.notebook,padding=10);self.comparison=ttk.Frame(self.notebook,padding=10);full=ttk.Frame(self.notebook)
         for tab,label in ((self.overview,'Overview'),(self.comparison,'Fighter comparison'),(full,'Full report')):self.notebook.add(tab,text=label)
+        self.recent_tab=ttk.Frame(self.notebook,padding=10);self.notebook.add(self.recent_tab,text='Recent fights')
+        self.build_recent_tab()
         self.overview.columnconfigure(0,weight=1);self.overview.rowconfigure(3,weight=1)
         self.summary=tk.StringVar(value='Enter a matchup and choose Analyze or Compare statistics only.')
         ttk.Label(self.overview,textvariable=self.summary,font=('Segoe UI',11),wraplength=900).grid(row=0,column=0,sticky='w')
@@ -428,6 +432,7 @@ class AnalyzerApp(LegacyAnalyzerApp):
     def resize(self,event):
         if event.widget is not self.window:return
         width=max(500,self.window.winfo_width()-45)
+        if hasattr(self,'recent_groups'):self.layout_recent()
         for parent in (self.frame,self.overview,self.inputs):
             for child in parent.winfo_children():
                 if isinstance(child,ttk.Label):
@@ -442,6 +447,7 @@ class AnalyzerApp(LegacyAnalyzerApp):
         style=ttk.Style(self.window)
         for name in ('Treeview','Overview.Treeview','Comparison.Treeview'):style.configure(name,font=('Segoe UI',points),rowheight=line_height+6)
         if self.result:self.fill_table(self.overview_tree,overview_rows(self.result));self.render_comparison()
+        if hasattr(self,'recent_groups'):self.layout_recent()
 
     def resize_text(self,delta):
         sizes=['Small','Medium','Large'];index=sizes.index(self.font_size.get()) if self.font_size.get() in sizes else 1
@@ -607,7 +613,8 @@ class AnalyzerApp(LegacyAnalyzerApp):
                 if event.get('request_fingerprint') and event.get('request_fingerprint')!=getattr(self.controller,'request_fingerprint',None):continue
                 if event['type']=='progress':
                     self.pending_stage=event;self.stage_message='Cancelling safely…' if getattr(self.controller,'cancel_requested',False) else event['message']
-                    if event.get('total'):self.stage_message+=f" ({event.get('completed',0)}/{event['total']} models complete)"
+                    if event.get('target') and not self.stage_message.startswith(event['target'].title()+':') and not getattr(self.controller,'cancel_requested',False):self.stage_message=event['target'].title()+': '+self.stage_message
+                    if event.get('total'):self.stage_message+=f" ({event.get('completed',0)}/{event['total']} {event.get('unit','models')} complete)"
                 elif event['type']=='comparison_ready':
                     self.preview=event['payload']
                     if not self.viewing_other:self.display_result(self.preview)
@@ -629,6 +636,10 @@ class AnalyzerApp(LegacyAnalyzerApp):
                 if self.viewing_other:
                     self.new_result=self.preview;self.open_new_button.pack(side='left',padx=8)
                 else:self.display_result(self.preview)
+            if ((self.last_request or {}).get('operation') in ('update','rebuild','recover') or event.get('maintenance_error')) and event.get('code')!='cancelled':
+                self.last_log=event.get('log');self.status.set(event.get('message','Dataset operation could not finish.'))
+                if not self.closing:self.maintenance_error_dialog(event)
+                return
             return super().handle_terminal(event)
         operation=event['operation'];payload=event['payload']
         if operation in ('predict','compare'):
@@ -642,11 +653,13 @@ class AnalyzerApp(LegacyAnalyzerApp):
         if payload.get('catalogs'):self.catalogs={sex:FighterCatalog.from_payload(value) for sex,value in payload['catalogs'].items()}
         self.history_contexts=payload.get('calculation_fingerprints',{});self.backup_available=payload.get('backup_available',False);self.maintenance_status=payload.get('maintenance_status',{})
         self.refresh_coverage()
+        if operation=='update':self.status.set('Already up to date.' if payload.get('status')=='no_changes' else 'Update complete. Use Help → Dataset status and update details to view captured fights.')
 
     def display_result(self,payload):
         started=time.monotonic();self.result=payload;self.result_text=format_result(payload);self.set_text(self.result_text)
         state=payload.get('result_state','complete');title=payload['fighter_a']+' vs '+payload['fighter_b']
         self.matchup_header.set(title+' · '+str(payload.get('division',''))+' · '+payload['fight_date'])
+        self.render_recent(payload)
         if state=='complete':
             description=f"{payload['fighter_a']}: {payload['fighter_a_win_probability']:.1%}     {payload['fighter_b']}: {payload['fighter_b_win_probability']:.1%}\nPredicted winner: {payload['predicted_winner']}\n"
             description+=('Confidence: '+str(payload.get('confidence_tier')) if 'confidence_tier' in payload else 'Reliability: '+str(payload.get('reliability_label','See full report')))
@@ -774,12 +787,139 @@ class AnalyzerApp(LegacyAnalyzerApp):
     def maintenance_details(self):
         status=getattr(self,'maintenance_status',{})
         text=self.freshness.get()+'\n\nLast successful update check: '+status.get('last_successful_check','Never')+'\nLast successful data change: '+status.get('last_successful_change','Bundled snapshot')+'\nBackup available: '+('Yes' if self.backup_available else 'No')
-        if status.get('last_operation'):text+='\n\nLast operation: '+status['last_operation']+'\n'+status.get('stages','')+'\n'+'\n'.join(sex.title()+': '+str(value.get('added_fights',0))+' added fights' for sex,value in status.get('summary',{}).items())
+        if status.get('last_operation'):
+            text+='\n\nLast operation: '+status['last_operation']+' · '+status.get('transaction_status','')+'\n'+status.get('stages','')
+            for sex,value in status.get('summary',{}).items():
+                text+='\n\n'+sex.title()+': '+str(value.get('added_fights',0))+' added fights'
+                for field,label in [('events_inspected','Events inspected'),('decisive_fights','Decisive bouts'),('draws','Draws'),('no_contests','No contests'),('binary_training_rows_added','Binary training rows added'),('data_through','Data through')]:
+                    if field in value:text+='\n'+label+': '+str(value[field])
         dialog=tk.Toplevel(self.window);dialog.title('Dataset status and update details');dialog.geometry('650x380');dialog.transient(self.window)
         details=ScrolledText(dialog,wrap='word',font=('Segoe UI',10),padx=12,pady=12)
         details.pack(fill='both',expand=True);details.insert('1.0',text);details.configure(state='disabled')
-        ttk.Button(dialog,text='Close',command=dialog.destroy).pack(pady=8)
+        buttons=ttk.Frame(dialog);buttons.pack(pady=8)
+        if status.get('last_changed_transaction') or status.get('transaction'):
+            ttk.Button(buttons,text='View updated fights',command=self.updated_fights_dialog).pack(side='left',padx=8)
+        ttk.Button(buttons,text='Close',command=dialog.destroy).pack(side='left',padx=8)
         dialog.bind('<Escape>',lambda event:dialog.destroy())
+
+    def build_recent_tab(self):
+        self.recent_tab.columnconfigure(0,weight=1);self.recent_tab.rowconfigure(1,weight=1)
+        self.recent_caption=tk.StringVar(value='Analyze or compare a matchup to see recent fights.')
+        ttk.Label(self.recent_tab,textvariable=self.recent_caption,wraplength=900).grid(row=0,column=0,sticky='w',pady=(0,8))
+        self.recent_canvas=tk.Canvas(self.recent_tab,highlightthickness=0)
+        self.recent_canvas.grid(row=1,column=0,sticky='nsew')
+        scroll=ttk.Scrollbar(self.recent_tab,orient='vertical',command=self.recent_canvas.yview);scroll.grid(row=1,column=1,sticky='ns');self.recent_canvas.configure(yscrollcommand=scroll.set)
+        self.recent_holder=ttk.Frame(self.recent_canvas);self.recent_window=self.recent_canvas.create_window((0,0),window=self.recent_holder,anchor='nw')
+        self.recent_holder.bind('<Configure>',lambda e:self.recent_canvas.configure(scrollregion=self.recent_canvas.bbox('all')))
+        self.recent_canvas.bind('<Configure>',lambda e:(self.recent_canvas.itemconfigure(self.recent_window,width=e.width),self.layout_recent()))
+        self.recent_groups={};self.recent_trees={};self.recent_notes={};self.recent_titles={}
+        for side in ('fighter_a','fighter_b'):
+            group=ttk.Frame(self.recent_holder,padding=(0,0,8,8));group.columnconfigure(0,weight=1)
+            title=tk.StringVar(value=side.replace('_',' ').title());self.recent_titles[side]=title
+            ttk.Label(group,textvariable=title).grid(row=0,column=0,sticky='w',pady=(0,4))
+            tree=ttk.Treeview(group,columns=('date','opponent','result','division','method'),show='headings',height=5)
+            for field,label,width in [('date','Date',90),('opponent','Opponent',140),('result','Result',90),('division','Division',110),('method','Method',100)]:
+                tree.heading(field,text=label);tree.column(field,width=width,minwidth=width,stretch=True)
+            tree.grid(row=1,column=0,sticky='ew')
+            horizontal=ttk.Scrollbar(group,orient='horizontal',command=tree.xview);horizontal.grid(row=2,column=0,sticky='ew');tree.configure(xscrollcommand=horizontal.set)
+            note=tk.StringVar(value='No analysis selected.');self.recent_notes[side]=note
+            ttk.Label(group,textvariable=note,wraplength=460).grid(row=3,column=0,sticky='w',pady=6)
+            tree.bind('<<TreeviewSelect>>',lambda e,side=side:self.recent_selection(side))
+            tree.bind('<FocusIn>',lambda e,side=side:self.recent_focus(side))
+            tree.bind('<MouseWheel>',self.recent_scroll)
+            self.recent_groups[side]=group;self.recent_trees[side]=tree
+        self.layout_recent()
+
+    def recent_scroll(self,event):
+        region=self.recent_canvas.bbox('all')
+        if region and region[3]>self.recent_canvas.winfo_height():
+            self.recent_canvas.yview_scroll(-int(event.delta/120),'units');return 'break'
+
+    def recent_focus(self,side):
+        region=self.recent_canvas.bbox('all')
+        if region and region[3]>self.recent_canvas.winfo_height():
+            self.recent_canvas.yview_moveto(self.recent_groups[side].winfo_y()/max(1,region[3]))
+
+    def layout_recent(self):
+        wide=self.window.winfo_width() >= (1300 if self.font_size.get()=='Large' else 1100)
+        for i,side in enumerate(('fighter_a','fighter_b')):
+            self.recent_groups[side].grid(row=0 if wide else i,column=i if wide else 0,sticky='nsew')
+            for widget in self.recent_groups[side].winfo_children():
+                if isinstance(widget,ttk.Label):widget.configure(wraplength=max(260,(self.window.winfo_width()-100)//(2 if wide else 1)))
+        self.recent_holder.columnconfigure(0,weight=1);self.recent_holder.columnconfigure(1,weight=1 if wide else 0)
+
+    def render_recent(self,payload):
+        history=payload.get('recent_fights')
+        self.recent_caption.set('Last five recorded UFC bouts before '+history['history_cutoff']+' · all divisions · installed source snapshot' if history else OLD_HISTORY_MESSAGE)
+        for side in ('fighter_a','fighter_b'):
+            tree=self.recent_trees[side];tree.delete(*tree.get_children())
+            rows=history.get(side,[]) if history else []
+            self.recent_titles[side].set(payload[side]+f' · {len(rows)} recorded bouts' if history else payload[side])
+            for i,row in enumerate(rows):tree.insert('','end',iid=str(i),values=display_row(row))
+            self.recent_notes[side].set('Select a bout to see event, round and time.' if rows else 'No eligible recorded UFC fights before this date.' if history else OLD_HISTORY_MESSAGE)
+
+    def recent_selection(self,side):
+        selection=self.recent_trees[side].selection()
+        if not selection or not self.result:return
+        rows=self.result.get('recent_fights',{}).get(side,[])
+        if int(selection[0])>=len(rows):return
+        row=rows[int(selection[0])]
+        _,opponent,result,division,method=display_row(row)
+        self.recent_notes[side].set(opponent+' · '+result+' · '+division+' · '+method+'\nEvent: '+str(row.get('event_name') or 'N/A')+' · Round: '+str(row.get('round') or 'N/A')+' · Time: '+str(row.get('time') or 'N/A'))
+
+    def maintenance_error_dialog(self,event):
+        error=dict(event.get('maintenance_error') or {})
+        error.setdefault('title','Dataset operation could not finish');error.setdefault('message',event.get('message','Unknown failure'))
+        error.setdefault('next_step','Open details for the diagnostic log.');error.setdefault('diagnostics_path',event.get('log',''))
+        if error.get('installation_state')=='recovery_required':self.ready=False
+        dialog=tk.Toplevel(self.window);dialog.title(error['title']);dialog.transient(self.window);dialog.geometry('660x380')
+        text=error['message']
+        if error.get('event_name'):text+='\n\nEvent: '+error['event_name']
+        names=[error.get('fighter_a'),error.get('fighter_b')]
+        if any(names):text+='\nFight: '+' vs '.join(x or 'Unknown fighter' for x in names)
+        text+='\n\n'+error['next_step']+'\n\n'+STATES.get(error.get('installation_state'),'Open details to check the transaction state.')
+        details=ScrolledText(dialog,wrap='word',font=('Segoe UI',11),padx=12,pady=12);details.pack(fill='both',expand=True);details.insert('1.0',text);details.configure(state='disabled')
+        buttons=ttk.Frame(dialog,padding=10);buttons.pack(fill='x')
+        request=dict(self.last_request or {})
+        def retry():
+            if self.controller.busy:return
+            dialog.destroy();self.window.after_idle(lambda:self.start(request))
+        if error.get('retryable') and error.get('installation_state') in ('unchanged','rolled_back'):
+            ttk.Button(buttons,text='Retry',command=retry).pack(side='left',padx=(0,8))
+        def view():
+            path=Path(error.get('diagnostics_path') or '')
+            if path.is_file() or path.is_dir():os.startfile(path)
+            else:messagebox.showinfo('Details unavailable','This diagnostic file is no longer available. Use Help → Open diagnostics.',parent=dialog)
+        ttk.Button(buttons,text='View details',command=view).pack(side='left',padx=(0,8))
+        def copy():
+            self.window.clipboard_clear();self.window.clipboard_append(diagnostic_text(error,VERSION))
+        ttk.Button(buttons,text='Copy diagnostics',command=copy).pack(side='left',padx=(0,8))
+        close=ttk.Button(buttons,text='Close',command=dialog.destroy);close.pack(side='right');close.focus_set()
+        dialog.bind('<Escape>',lambda e:dialog.destroy())
+
+    def updated_fights_dialog(self):
+        status=getattr(self,'maintenance_status',{});transaction=status.get('last_changed_transaction') or status.get('transaction')
+        if not transaction or Path(transaction).name!=transaction:return
+        base=self.root/'.runtime/transactions'/transaction
+        rows=[]
+        for sex in ('men','women'):
+            try:
+                value=json.loads((base/'audits'/sex/'captured_fights.json').read_text(encoding='utf-8'))
+                rows.extend((sex,row) for row in value['fights'])
+            except (OSError,ValueError,KeyError):pass
+        dialog=tk.Toplevel(self.window);dialog.title('Updated fights');dialog.geometry('1000x480');dialog.transient(self.window)
+        try:transaction_state=json.loads((base/'journal.json').read_text(encoding='utf-8')).get('status','Unknown')
+        except (OSError,ValueError):transaction_state='Details unavailable'
+        caption='Captured fights · transaction '+transaction+' · '+transaction_state if rows else 'No newly captured fights, or the detailed audit is no longer available.'
+        ttk.Label(dialog,text=caption,padding=10).pack(anchor='w')
+        columns=('date','event','fighters','outcome','training')
+        tree=ttk.Treeview(dialog,columns=columns,show='headings')
+        for col,label,width in [('date','Date',95),('event','Event',270),('fighters','Fighters',300),('outcome','Outcome',100),('training','Binary training',110)]:tree.heading(col,text=label);tree.column(col,width=width,minwidth=width)
+        tree.pack(fill='both',expand=True,padx=10)
+        for sex,row in rows:
+            outcome={'win_loss':'Decisive','draw':'Draw','nc':'No contest','no_contest':'No contest'}.get(row.get('outcome'),'N/A')
+            tree.insert('','end',values=(row.get('event_date'),row.get('event_name'),row.get('fighter_1','')+' vs '+row.get('fighter_2',''),outcome,'Eligible' if row.get('training_eligible')=='True' else 'Excluded'))
+        ttk.Button(dialog,text='Close',command=dialog.destroy).pack(pady=10);dialog.bind('<Escape>',lambda e:dialog.destroy())
 
     def help(self):
         messagebox.showinfo('Quick instructions','Choose a division, date and two fighters. Suggestions appear as you type.\n\nAnalyze prepares statistics and then trains locally; Compare statistics only skips prediction training. Read Overview, browse Fighter comparison, or open the complete Full report.\n\nCopy and Save include the complete displayed report. Save supports TXT and offline HTML. Recent analyses keeps the latest 50 completed results and reuses identical valid results. Recalculate runs again.\n\nDataset updates need internet. Use Help for status, diagnostics, rebuild and recovery.\n\nKeyboard: Ctrl+Enter analyzes; Ctrl+S saves; Ctrl+Shift+C copies; Ctrl+F finds a metric; Ctrl+Plus/Minus changes text size.',parent=self.window)

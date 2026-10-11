@@ -81,12 +81,12 @@
     {
       "path": "mens_ufc_model/src/features/build_mens_advanced_features.py",
       "source_sha256": "fc3461d4ac7ac3eaed89dfe944c604c959392f0ba3134778f4ff2eb313ab83a3",
-      "exported_sha256": "fc3461d4ac7ac3eaed89dfe944c604c959392f0ba3134778f4ff2eb313ab83a3"
+      "exported_sha256": "9d37caa9592c28c127243a2019aca1fb197530186b5b9e67df0275e2230040ee"
     },
     {
       "path": "mens_ufc_model/src/features/build_mens_bayes_smoothing_candidate.py",
       "source_sha256": "970440bd5e084906afa68412d4a1f3643dd3ed60414262a46de1b4a3853b0d36",
-      "exported_sha256": "55b30738cde95043ce53700ff08e4a201c7b7b6c0a4bc10443f171fde54f497e"
+      "exported_sha256": "bed421b3007b92373c4a7105153dbdb96ea5e03ffb270a957efa2e3f21f0cf4b"
     },
     {
       "path": "mens_ufc_model/src/features/mens_elo.py",
@@ -96,7 +96,7 @@
     {
       "path": "mens_ufc_model/src/features/mens_features.py",
       "source_sha256": "e6f5afd3a4a0b55822fcd6480d0382cf6ff4d93d093d9c4ef5d2c60b683a646a",
-      "exported_sha256": "e6f5afd3a4a0b55822fcd6480d0382cf6ff4d93d093d9c4ef5d2c60b683a646a"
+      "exported_sha256": "37db4582030349d3e65f8ceae8267b901ff10ccd59eed860fe9377a869fb7b35"
     },
     {
       "path": "mens_ufc_model/src/features/mens_live_v2_features.py",
@@ -156,17 +156,17 @@
     {
       "path": "mens_ufc_model/src/validation/validate_mens_dataset.py",
       "source_sha256": "5fd3bf3e8847392f30f6f4bf05a04473adf15188a121e4618cc0ee8e08850738",
-      "exported_sha256": "5fd3bf3e8847392f30f6f4bf05a04473adf15188a121e4618cc0ee8e08850738"
+      "exported_sha256": "41398959c80430ed1c134101bf6f16cb72ee59358491be9b3719f183dcb1b263"
     },
     {
       "path": "mens_ufc_model/update_ufc_mens_dataset_incremental.py",
       "source_sha256": "b4553241a3c57a0f80d3054695c36709d418152d63af4111243c9eb045222c75",
-      "exported_sha256": "767182e1ed5f6b94209d009e7eb1c2177a3be0e60e1c7a4a1f1516cadf94755b"
+      "exported_sha256": "cb1211a417072d627bc54a74e428d60243d3e4cb10d698fafdd867045e987e21"
     },
     {
       "path": "womens_ufc_model/build_prefight_bayesian_smoothing_v1_REBUILT.py",
       "source_sha256": "c563fbb8f6e62141748234ca8169554662f0c6fad36a9cfef60ed6562a154abd",
-      "exported_sha256": "c563fbb8f6e62141748234ca8169554662f0c6fad36a9cfef60ed6562a154abd"
+      "exported_sha256": "46f382ec7556ff5306b8f45b8b0e24fb980e4f35d1c390d42d43e266ccc62998"
     },
     {
       "path": "womens_ufc_model/compute_live_bayes_smoothing_features_v1.py",
@@ -181,7 +181,7 @@
     {
       "path": "womens_ufc_model/update_ufc_womens_dataset_incremental.py",
       "source_sha256": "53015b091efac41f8a80677f0af423dbe29d3c2fa0f8c8a327303d0a42d42d89",
-      "exported_sha256": "cb8a104579a5f5a1af08228ef7f5163410b514b49e1b5e80dc71be0cda3d5724"
+      "exported_sha256": "8e59599305982379ee28ac9783b43910719bc0815f92c34f38ed602282541115"
     }
   ],
   "adaptations": [
@@ -192,6 +192,7 @@
     "women cross-validation failures stop prediction instead of silently changing ensemble weights",
     "UTF-8 and LF line endings for portable checkout hashes",
     "prediction JSON exposes computed live comparison values, women ensemble weights and full reliability details without changing calculations",
-    "v0.3 prepares dated comparison once before unchanged prediction fitting and exposes structured progress"
+    "v0.3 prepares dated comparison once before unchanged prediction fitting and exposes structured progress",
+    "v0.4 checked maintenance patches retain completed draws/NCs without binary labels and emit measured progress; staging explicitly copies app protocol helpers"
   ]
 }

@@ -34,6 +34,8 @@ Men's Bayesian comparison shows the four selected rate-strength variants, exclud
 
 Fight history and Bayesian priors obey the analysis cutoff. Physical profile measurements can reflect later source corrections, so they are not guaranteed to be the measurement published on the historical date. Results are immutable: the window, clipboard and TXT export use the same complete report after later input changes.
 
+The Recent fights panel reads raw recorded bouts, deduplicates by fight/fighter identity and selects at most five with `event_date < fight_date`. Draws and no-contests appear with textual results even though they do not supply binary training labels. All divisions are included. Date ties use a stable fight-ID order without claiming within-day chronology. Missing metadata remains N/A. The men's optional earlier model-training cutoff is distinct from this displayed history date. Each saved analysis retains its captured list; older reports without one are not backfilled from current datasets.
+
 The review baseline included successful real predictions for both routes, men’s dataset integrity checks, and a sampled v3 parity test covering 20 fights and 10,800 comparisons without mismatches or same-date/target-fight leakage. Release-specific checks and results are in `RELEASE_VERIFICATION.md`.
 
 Passing engineering checks is not evidence of guaranteed accuracy or profitability. Estimates can be overconfident, data can be incomplete, UFC history can be sparse, and changing fighter conditions are not fully captured. Women's reliability evaluates stability and support, not whether a fight is predictable. No live odds feed or full-card workflow is included.

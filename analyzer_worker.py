@@ -15,6 +15,7 @@ from analyzer_support import ROOT, VERSION, data_health, dependency_health, atom
 from analyzer_catalog import FighterCatalog
 from analyzer_history import calculation_context, fingerprint, utc_now
 from analyzer_runtime import Cancelled, check_cancel, operation_lock
+from analyzer_errors import MaintenanceError
 
 def installation_report(root=ROOT):
     checks=dependency_health(root)
@@ -66,6 +67,7 @@ def execute(request,emit,cancel=None,root=ROOT):
             args.use_cache=request.get('use_cache',True);args.force_recalculate=request.get('force_recalculate',False)
             return predict(args,root,emit,cancel)
         if operation in ('update','rebuild'):
+            recover_interrupted(root)
             transaction=maintenance(root,kind=operation,target='all',apply=True,max_events=request.get('max_events'),from_date=request.get('from_date'),progress=emit,cancel=cancel)
             journal=json.loads((root/'.runtime/transactions'/transaction/'journal.json').read_text(encoding='utf-8'))
             report=installation_report(root)
@@ -77,6 +79,9 @@ def execute(request,emit,cancel=None,root=ROOT):
                 changed=any((root/r['path']).exists() and (not r['existed'] or digest(root/r['path'])!=digest(root/'.runtime/transactions'/transaction/'before'/r['path'])) for r in journal['promotions'] if r['path'].endswith('.csv'))
                 if changed:status['last_successful_change']=utc_now()
             status['last_operation']=operation;status['summary']=journal['summary'];status['stages']='Staging → audit → rebuild → validate → install'
+            status['transaction']=transaction;status['transaction_status']=journal['status']
+            if journal['status']=='committed' and any(v.get('captured_fights') for v in journal['summary'].values()):
+                status['last_changed_transaction']=transaction
             atomic_json(root/'.runtime/maintenance_status.json',status);report['maintenance_status']=status
             cleanup_history(root)
             return report
@@ -89,7 +94,7 @@ def execute(request,emit,cancel=None,root=ROOT):
             recover(root,transaction)
             report=installation_report(root)
             status=report.get('maintenance_status',{})
-            status.update(last_successful_change=utc_now(),last_operation='restore',stages='Restore → verify',summary={})
+            status.update(last_successful_change=utc_now(),last_operation='restore',stages='Restore → verify',summary={},transaction=transaction,transaction_status='rolled_back')
             atomic_json(root/'.runtime/maintenance_status.json',status)
             report['maintenance_status']=status
             return report
@@ -113,7 +118,9 @@ def main():
         except BaseException as exc:
             traceback.print_exc(file=stream)
             stream.flush()
-            send('error',code='cancelled' if isinstance(exc,Cancelled) else 'worker_permission' if getattr(exc,'worker_permission',False) else 'failed',message=str(exc) or type(exc).__name__,log=getattr(exc,'log',str(log)))
+            error=exc.payload() if isinstance(exc,MaintenanceError) else None
+            if error and not Path(error.get('diagnostics_path') or '').is_file():error['diagnostics_path']=str(log)
+            send('error',code='cancelled' if isinstance(exc,Cancelled) else exc.code if error else 'worker_permission' if getattr(exc,'worker_permission',False) else 'failed',message=str(exc) or type(exc).__name__,log=error['diagnostics_path'] if error else getattr(exc,'log',str(log)),maintenance_error=error)
             return 130 if isinstance(exc,Cancelled) else 1
 
 if __name__=='__main__':raise SystemExit(main())
