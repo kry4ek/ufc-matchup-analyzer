@@ -3,7 +3,7 @@ from __future__ import annotations
 import csv, datetime as dt, hashlib, importlib, importlib.metadata, json, os, pathlib, struct, sys, tempfile, urllib.request, zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent
-VERSION = '0.5.0'
+VERSION = '0.6.0'
 
 def digest(path):
     with pathlib.Path(path).open('rb') as stream:
@@ -22,18 +22,23 @@ def safe_path(root, relative):
     return path
 
 def csv_info(path):
-    count = 0; latest = ''; invalid = 0
+    count = 0; latest = ''; invalid = 0; today = dt.date.today(); date_cache = {}
     with pathlib.Path(path).open(encoding='utf-8-sig', newline='') as stream:
-        reader = csv.DictReader(stream); columns = reader.fieldnames or []
+        # Validation consumes the header and date only; avoid materializing hundreds
+        # of unused dictionary fields per feature row. Still parse every CSV record.
+        reader = csv.reader(stream); columns = next(reader, [])
+        positions={name:i for i,name in enumerate(columns)}
+        date_index=positions.get('event_date',positions.get('date'))
         for row in reader:
-            count += 1; value = row.get('event_date', row.get('date', '')) or ''
+            if not row:continue  # DictReader also skips physically blank records.
+            count += 1; value = row[date_index] if date_index is not None and date_index<len(row) else ''
             if value:
-                try:
-                    date = dt.date.fromisoformat(value[:10])
-                    invalid += date > dt.date.today()
-                    latest = max(latest, date.isoformat())
-                except ValueError:
-                    invalid += 1
+                token=value[:10]
+                if token not in date_cache:
+                    try:
+                        date=dt.date.fromisoformat(token);date_cache[token]=(date.isoformat(),int(date>today))
+                    except ValueError:date_cache[token]=('',1)
+                canonical,issue=date_cache[token];invalid+=issue;latest=max(latest,canonical)
     return dict(rows=count, columns=columns, latest_date=latest or None, invalid_or_future_dates=invalid)
 
 def manifest(root=ROOT):

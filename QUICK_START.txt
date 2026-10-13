@@ -15,7 +15,8 @@ The date format is YYYY-MM-DD. Use Today or Calendar to choose a date.
 History counts exclude the selected date and later. Confirm unusual divisions
 or zero-history hypothetical matchups before starting.
 
-Analyze prepares comparison statistics first, then fits prediction models.
+Analyze shows initial profile/history evidence, prepares advanced statistics,
+then fits prediction models. Initial evidence contains no win probability.
 Compare statistics only skips prediction training and produces no probability.
 An analysis usually takes a few minutes. The window remains usable and shows
 elapsed time. Cancel stops the analysis. Predictions work without internet.
@@ -33,6 +34,8 @@ including draws/no-contests and bouts in other divisions. Select a row for event
 round and time. Saved reports keep this list after dataset updates.
 Use the bottom scrollbar for wide tables. N/A means unavailable; pp means
 percentage points. Copy and Save include the entire report, not just visible rows.
+Visual comparison shows paired statistics and stored pre-bout Elo history.
+Charts and their numeric evidence are included in offline HTML/TXT exports.
 
 Recent analyses automatically keeps the latest 50 completed analyses, capped
 at 50 MB, inside the app folder. Identical valid requests can reuse a result;
@@ -40,6 +43,13 @@ the original time is shown. Recalculate runs afresh. Outdated results remain
 viewable. Help can disable history; Recent analyses can delete/clear entries.
 HTML exports open offline and can be printed from a browser.
 Edit matchup reopens collapsed inputs. Text size and window size are remembered.
+Help > Import from previous installation previews saved analyses from a previous
+extracted app folder. Select entries and optionally import display preferences.
+Existing analyses are preserved. Help > Undo latest import reverses matching
+imported entries. Original installations and calculation caches are not changed.
+Help > Model validation shows a dated retrospective report and its limitations.
+The women model's internal folds overlap mirrored bouts; this report does not
+establish clean model validation or general prediction accuracy.
 Keyboard: Ctrl+Enter analyzes; Ctrl+S saves; Ctrl+Shift+C copies; Ctrl+F finds
 a metric; Ctrl+Plus/Minus adjusts report text size.
 

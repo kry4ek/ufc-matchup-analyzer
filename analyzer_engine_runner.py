@@ -85,12 +85,15 @@ def main():
             prepared['cached_models'] = cache.load('fitted_womens_ensemble', {})
         output = args.json_out
     comparison = engine.comparison_from_prepared(prepared)
+    from analyzer_visuals import build_visual_evidence,engine_trends
+    comparison['visual_evidence']=build_visual_evidence(comparison,engine_trends(sex,prepared,comparison))
     comparison['time_to_comparison_seconds'] = round(time.monotonic() - started, 3)
     emit('comparison_ready', payload=comparison)
     if comparison_only:
         payload = comparison
     else:
         payload = engine.predict_prepared_matchup(prepared)
+        payload['visual_evidence']=comparison['visual_evidence']
         if cache and sex == 'women' and not prepared.get('cached_models'):
             cache.save('fitted_womens_ensemble', {}, prepared['fitted_models'])
         payload['time_to_comparison_seconds'] = comparison['time_to_comparison_seconds']

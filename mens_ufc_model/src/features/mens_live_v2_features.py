@@ -72,13 +72,18 @@ def _process_date_group(
     global_totals: dict[str, dict[str, float]],
     division_totals: dict[str, dict[str, dict[str, float]]],
 ) -> None:
+    # Only opponent pre-date win percentage is consumed by the update pass.
+    # Preserve the frozen date boundary without constructing unused full snapshots.
     date_snapshots: dict[tuple[str, str], dict[str, Any]] = {}
     for _, row in date_group.iterrows():
         fighter_id = _clean_id(row.get("fighter_id"))
         if not fighter_id:
             continue
-        snap = _fighter_snapshot(row, histories[fighter_id], global_totals, division_totals)
-        date_snapshots[(_clean_id(row.get("fight_id")), fighter_id)] = snap
+        history = histories[fighter_id]
+        wins = int(history["wins"])
+        completed = wins + int(history["losses"])
+        rate = float(wins / completed) if completed > 0 else np.nan
+        date_snapshots[(_clean_id(row.get("fight_id")), fighter_id)] = {"ufc_win_pct_before": rate}
 
     for _, row in date_group.iterrows():
         fighter_id = _clean_id(row.get("fighter_id"))

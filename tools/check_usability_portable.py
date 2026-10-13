@@ -68,7 +68,7 @@ def main():
         # Cancellation after real preparation retains its metrics and creates no history entry.
         select('women','Valentina Shevchenko','Manon Fiorot','2026-10-11')
         count=len(app.history.entries());app.analyze();started=time.monotonic()
-        while app.preview is None and time.monotonic()-started<90:
+        while (app.preview is None or app.result.get('quick_comparison')) and time.monotonic()-started<90:
             window.update();time.sleep(.04)
         assert app.preview is not None and app.result['result_state']=='pending'
         preview=report_sections(app.result);recent=app.result['recent_fights'];assert app.controller.cancellable;app.cancel();wait(90)

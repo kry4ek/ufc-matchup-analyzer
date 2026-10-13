@@ -1,3 +1,12 @@
+# v0.6.0 implementation
+
+- Initial profile/coverage/recent-history evidence appears before advanced engine preparation; partial cancellation/failure reports remain exportable without entering completed history.
+- One fighter catalog resolves both names and supplies coverage. The parent engine's dated history pass avoids unused full snapshots while preserving opponent-win-percentage updates and chronology.
+- Frozen paired comparison bars and engine pre-bout Elo histories appear in a native visual tab and numeric/offline HTML/TXT exports; older reports keep their original evidence.
+- A dated, integrity-checked research evaluation view reports chronological holdout metrics, calibration counts, baseline scores and audit limitations.
+- Reviewed JSON history/preferences import preserves originals and existing destination records, reports skips/conflicts/capacity, recovers interrupted commits and supports undo.
+- Existing men's v3 and women's ensemble policies are retained. The women's internal ungrouped-fold issue is reported explicitly and requires a separate model-research correction.
+
 # v0.5.0 local release candidate
 
 - Reuse compatible dated history, parsed resources and fitted models across different matchups. Calculation artifacts are checked by content and bounded to 1 GiB. Recalculate bypasses all cache reads; Help can clear calculations independently of saved analyses.

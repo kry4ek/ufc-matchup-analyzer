@@ -100,8 +100,8 @@
     },
     {
       "path": "mens_ufc_model/src/features/mens_live_v2_features.py",
-      "source_sha256": "5ad4fcd91a04d29abf1ded043bf5004554bd538e1ed5cd0ca05c0d33fa231def",
-      "exported_sha256": "19b59d53a3dee9ea59c13521342ebb3cf92ba51f16c4c146cc1327d83851a9f9"
+      "source_sha256": "152ec1db1e69ee849a5945da7ed5ecc742aa12e8bb3160ab2f2f6380a1ba0592",
+      "exported_sha256": "9bfc516b0e23388139275764355e9226d554c2f4f32063a3c8a22dc6d5ddb7e3"
     },
     {
       "path": "mens_ufc_model/src/features/mens_live_v3_bayes_features.py",
@@ -190,8 +190,8 @@
     "updaters reject empty or malformed event listings",
     "updaters filter future events before applying inspection limits",
     "women cross-validation failures stop prediction instead of silently changing ensemble weights",
-    "UTF-8 and LF line endings for portable checkout hashes",
     "prediction JSON exposes computed live comparison values, women ensemble weights and full reliability details without changing calculations",
+    "UTF-8 and LF line endings for portable checkout hashes",
     "v0.3 prepares dated comparison once before unchanged prediction fitting and exposes structured progress",
     "v0.4 checked maintenance patches retain completed draws/NCs without binary labels and emit measured progress; staging explicitly copies app protocol helpers",
     "v0.5 accepts compatible locally fitted women models without changing fitting, ensemble weights or inference"

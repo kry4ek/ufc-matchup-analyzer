@@ -355,6 +355,9 @@ class AnalyzerApp(LegacyAnalyzerApp):
         for tab,label in ((self.overview,'Overview'),(self.comparison,'Fighter comparison'),(full,'Full report')):self.notebook.add(tab,text=label)
         self.recent_tab=ttk.Frame(self.notebook,padding=10);self.notebook.add(self.recent_tab,text='Recent fights')
         self.build_recent_tab()
+        self.visual_tab=ttk.Frame(self.notebook,padding=10);self.notebook.add(self.visual_tab,text='Visual comparison')
+        from analyzer_visuals import VisualPanel
+        self.visual_panel=VisualPanel(self.visual_tab)
         self.overview.columnconfigure(0,weight=1);self.overview.rowconfigure(4,weight=1)
         self.summary=tk.StringVar(value='Enter a matchup and choose Analyze or Compare statistics only.')
         ttk.Label(self.overview,textvariable=self.summary,font=('Segoe UI',11),wraplength=900).grid(row=0,column=0,sticky='w')
@@ -394,6 +397,9 @@ class AnalyzerApp(LegacyAnalyzerApp):
         for label,command in [('Quick instructions',self.help),('Check installation',lambda:self.start_operation('doctor')),('Open diagnostics',self.open_diagnostics),('Rebuild local features',lambda:self.start_operation('rebuild')),('Restore previous datasets',self.restore),('Dataset status and update details',self.maintenance_details)]:self.help_menu.add_command(label=label,command=command)
         self.help_menu.add_command(label='Recheck recent events…',command=self.recheck_dialog)
         self.help_menu.add_command(label='Clear calculation cache…',command=self.clear_calculation_cache)
+        self.help_menu.add_command(label='Model validation',command=self.validation_dialog)
+        self.help_menu.add_command(label='Import from previous installation…',command=self.import_dialog)
+        self.help_menu.add_command(label='Undo latest import…',command=self.undo_import)
         self.help_menu.add_separator();self.help_menu.add_checkbutton(label='Keep recent analyses and reuse valid results',variable=self.history_setting,command=self.save_history_setting)
         self.progress=ttk.Progressbar(self.frame,mode='indeterminate');self.progress.grid(row=6,column=0,sticky='ew',pady=(0,4))
         ttk.Label(self.frame,textvariable=self.status,wraplength=900).grid(row=7,column=0,sticky='w')
@@ -454,6 +460,8 @@ class AnalyzerApp(LegacyAnalyzerApp):
         points={'Small':9,'Medium':10,'Large':12}.get(self.font_size.get(),10)
         self.output.configure(font=('Consolas',points));self.details.configure(font=('Segoe UI',points))
         if hasattr(self,'summary_text'):self.summary_text.configure(font=('Segoe UI',points))
+        if hasattr(self,'visual_panel'):
+            self.visual_panel.table.configure(font=('Segoe UI',points));self.visual_panel.points=points;self.visual_panel.draw()
         from tkinter import font
         line_height=font.Font(self.window,family='Segoe UI',size=points).metrics('linespace')
         style=ttk.Style(self.window)
@@ -613,6 +621,8 @@ class AnalyzerApp(LegacyAnalyzerApp):
         for index in (1,3):self.set_help_entry_state(index,'disabled' if busy else 'normal')
         self.set_help_entry_state(4,'normal' if self.backup_available and not busy else 'disabled')
         for index in (6,7):self.set_help_entry_state(index,'normal' if self.ready and not busy else 'disabled')
+        for index in (9,10):self.set_help_entry_state(index,'normal' if self.ready and not busy else 'disabled')
+        self.set_help_entry_state(12,'disabled' if busy and (self.last_request or {}).get('operation') in ('import_history','undo_import') else 'normal')
         if busy and self.pending_stage and self.pending_stage.get('total'):
             if self.progress_running:self.progress.stop();self.progress_running=False
             total=self.pending_stage['total'];self.progress.configure(mode='determinate',maximum=total,value=self.pending_stage.get('completed',0))
@@ -628,7 +638,7 @@ class AnalyzerApp(LegacyAnalyzerApp):
                     self.pending_stage=event;self.stage_message='Cancelling safely…' if getattr(self.controller,'cancel_requested',False) else event['message']
                     if event.get('target') and not self.stage_message.startswith(event['target'].title()+':') and not getattr(self.controller,'cancel_requested',False):self.stage_message=event['target'].title()+': '+self.stage_message
                     if event.get('total'):self.stage_message+=f" ({event.get('completed',0)}/{event['total']} {event.get('unit','models')} complete)"
-                elif event['type']=='comparison_ready':
+                elif event['type'] in ('initial_ready','comparison_ready'):
                     self.preview=event['payload']
                     if not self.viewing_other:self.display_result(self.preview)
                 else:self.pending_terminal=event
@@ -659,6 +669,30 @@ class AnalyzerApp(LegacyAnalyzerApp):
             self.maintenance_status=payload.get('maintenance_status',getattr(self,'maintenance_status',{}))
             self.status.set('Recheck complete. Review the captured corrections.');self.corrections_dialog(payload['preview']);return
         if operation=='clear_cache':self.status.set('Calculation cache cleared. Saved analyses retained.');return
+        if operation in ('import_history','undo_import'):
+            self.status.set(payload['message'])
+            if 'preferences_snapshot' in payload or payload.get('preferences'):
+                if 'preferences_snapshot' in payload:self.preferences=payload['preferences_snapshot']
+                else:self.preferences.update(payload['preferences'])
+                self.font_size.set(self.preferences.get('text_size','Medium'));self.change_font()
+                if self.collapsed!=self.preferences.get('inputs_collapsed',self.collapsed):self.toggle_inputs()
+                self.history_setting.set(self.preferences.get('history_enabled',True))
+                if self.preferences.get('division') in DIVISIONS:
+                    self.division.set(self.preferences['division']);self.change_division()
+                    for side in ('a','b'):self.names[side].set(self.preferences.get('fighter_'+side,''))
+                    self.queue_coverage()
+                geometry=self.preferences.get('geometry')
+                if geometry:
+                    try:
+                        w,h=map(int,geometry.split('x'));self.window.state('normal')
+                        self.window.geometry(f'{max(720,min(w,self.window.winfo_screenwidth()-40))}x{max(520,min(h,self.window.winfo_screenheight()-80))}')
+                    except (ValueError,tk.TclError):pass
+                if self.preferences.get('maximized'):
+                    try:self.window.state('zoomed')
+                    except tk.TclError:pass
+                self.window.update_idletasks()
+                self.last_import_ui_preferences=self.preference_snapshot()
+            messagebox.showinfo('Import history',payload['message'],parent=self.window);return
         if operation in ('predict','compare'):
             if self.viewing_other:
                 self.new_result=payload;self.open_new_button.pack(side='left',padx=8);self.status.set('New analysis complete. Click Open new result.')
@@ -677,12 +711,13 @@ class AnalyzerApp(LegacyAnalyzerApp):
         state=payload.get('result_state','complete');title=payload['fighter_a']+' vs '+payload['fighter_b']
         self.matchup_header.set(title+' · '+str(payload.get('division',''))+' · '+payload['fight_date'])
         self.render_recent(payload)
+        self.visual_panel.show(payload)
         if state=='complete':
             description=f"{payload['fighter_a']}: {payload['fighter_a_win_probability']:.1%}     {payload['fighter_b']}: {payload['fighter_b_win_probability']:.1%}\nPredicted winner: {payload['predicted_winner']}\n"
             description+=('Confidence: '+str(payload.get('confidence_tier')) if 'confidence_tier' in payload else 'Reliability: '+str(payload.get('reliability_label','See full report')))
             if payload.get('reliability_score') is not None:description+=f" ({payload['reliability_score']}/100)"
             if 'reliability_label' in payload:description+=' — stability of the probability, not outcome certainty'
-        else:description='Statistics comparison — no prediction calculated.' if state=='comparison' else 'Comparison ready; prediction running.' if state=='pending' else 'Statistics comparison — prediction '+state+'.'
+        else:description=('Initial comparison — partial evidence; advanced statistics pending.' if payload.get('quick_comparison') else 'Statistics comparison — no prediction calculated.' if state=='comparison' else 'Comparison ready; prediction running.' if state=='pending' else 'Statistics comparison — prediction '+state+'.')
         description+='\nGenerated: '+str(payload.get('generated_at','Unknown'))
         if payload.get('reused'):description+=' · Reused saved analysis'
         self.summary.set(description);self.result_warning.set('\n'.join(payload.get('coverage_warnings',[]) + payload.get('warnings',[])) or 'Read the full report for model limitations and data support.')
@@ -792,10 +827,14 @@ class AnalyzerApp(LegacyAnalyzerApp):
             if tree.selection():
                 entry=entries[tree.selection()[0]];self.viewing_other=self.controller.busy;self.display_result(dict(entry['payload'],history_id=entry['id']));dialog.destroy()
         def remove():
+            if self.controller.busy and (self.last_request or {}).get('operation') in ('import_history','undo_import'):
+                messagebox.showinfo('Import running','Wait for the history import to finish before deleting entries.',parent=dialog);return
             if tree.selection():
                 try:self.history.delete(tree.selection()[0]);refresh()
                 except OSError as exc:messagebox.showerror('Could not delete history',str(exc),parent=dialog)
         def clear():
+            if self.controller.busy and (self.last_request or {}).get('operation') in ('import_history','undo_import'):
+                messagebox.showinfo('Import running','Wait for the history import to finish before clearing history.',parent=dialog);return
             if messagebox.askyesno('Clear history','Delete all locally saved analyses?',parent=dialog):
                 try:self.history.clear();refresh()
                 except OSError as exc:messagebox.showerror('Could not clear history',str(exc),parent=dialog)
@@ -816,6 +855,64 @@ class AnalyzerApp(LegacyAnalyzerApp):
         self.preferences['history_enabled']=self.history_setting.get()
         try:atomic_json(self.preferences_path,self.preferences)
         except OSError as exc:messagebox.showerror('Setting could not be saved',str(exc),parent=self.window)
+
+    def validation_dialog(self):
+        from analyzer_validation import load_report,format_validation
+        try:text=format_validation(load_report(self.root),self.root)
+        except (OSError,ValueError,KeyError) as exc:text='Validation report could not be read: '+str(exc)
+        dialog=tk.Toplevel(self.window);dialog.title('Model validation');dialog.geometry('850x650');dialog.transient(self.window)
+        output=ScrolledText(dialog,wrap='word',font=('Segoe UI',10));output.pack(fill='both',expand=True,padx=12,pady=12)
+        output.insert('1.0',text);output.configure(state='disabled')
+        charts=self.root/'docs/MODEL_VALIDATION.html'
+        if charts.is_file():
+            import webbrowser
+            ttk.Button(dialog,text='Open calibration charts (offline)',command=lambda:webbrowser.open(charts.resolve().as_uri())).pack(pady=(0,8))
+        ttk.Button(dialog,text='Close',command=dialog.destroy).pack(pady=(0,12))
+
+    def import_dialog(self):
+        if self.controller.busy:return
+        folder=filedialog.askdirectory(parent=self.window,title='Choose the previous extracted app folder')
+        if not folder:return
+        from analyzer_migration import preview
+        try:
+            self.preferences=self.preference_snapshot();atomic_json(self.preferences_path,self.preferences)
+            value=preview(self.root,folder)
+        except (OSError,ValueError,TypeError) as exc:messagebox.showerror('Import could not be reviewed',str(exc),parent=self.window);return
+        dialog=tk.Toplevel(self.window);dialog.title('Review previous analyses');dialog.geometry('780x500');dialog.transient(self.window)
+        output=ScrolledText(dialog,wrap='word',font=('Segoe UI',10));output.pack(fill='both',expand=True,padx=12,pady=12)
+        counts=value['counts'];output.insert('1.0','Ready to import: '+str(counts['valid'])+'\n'+', '.join(k+': '+str(v) for k,v in counts.items() if k!='valid')+'\n\n')
+        for row in value['rows']:output.insert('end',row['name']+' — '+row['status']+(' — '+row['reason'] if row.get('reason') else '')+'\n')
+        output.configure(state='disabled');prefs=tk.BooleanVar(value=False)
+        selection=ttk.Treeview(dialog,columns=('matchup','status'),show='headings',selectmode='extended',height=5)
+        selection.heading('matchup',text='Choose incoming analyses (Ctrl+click)');selection.heading('status',text='Preview status')
+        selection.column('matchup',width=490);selection.column('status',width=160);selection.pack(fill='x',padx=12)
+        for row in value['rows']:
+            if row.get('entry'):
+                payload=row['entry']['payload'];identity=row['name'][:-5]
+                selection.insert('','end',iid=identity,values=(payload['fighter_a']+' vs '+payload['fighter_b']+' · '+payload['fight_date'],row['status']))
+                if row['status']=='valid':selection.selection_add(identity)
+        ttk.Checkbutton(dialog,text='Also import text size, window size and collapsed-input preference',variable=prefs).pack(anchor='w',padx=12)
+        ttk.Label(dialog,text='Existing analyses stay in place. Original installation is read-only. Close the older app before importing.').pack(anchor='w',padx=12,pady=8)
+        def apply_import():
+            request=dict(operation='import_history',preview_id=value['id'],import_preferences=prefs.get(),selected_ids=list(selection.selection()));dialog.destroy();self.start(request)
+        ttk.Button(dialog,text='Import reviewed analyses',command=apply_import).pack(side='left',padx=12,pady=12)
+        ttk.Button(dialog,text='Cancel',command=dialog.destroy).pack(side='right',padx=12,pady=12)
+
+    def undo_import(self):
+        if self.controller.busy:return
+        if messagebox.askyesno('Undo latest import','Remove entries from the latest import and restore its preferences when they have not changed?',parent=self.window):
+            current=self.preference_snapshot()
+            try:
+                if current!=getattr(self,'last_import_ui_preferences',None):
+                    atomic_json(self.preferences_path,current);self.preferences=current
+            except OSError as exc:messagebox.showerror('Undo could not start',str(exc),parent=self.window);return
+            self.start(dict(operation='undo_import'))
+
+    def preference_snapshot(self):
+        return dict(self.preferences,division=self.division.get(),fighter_a=self.names['a'].get(),fighter_b=self.names['b'].get(),
+                    category_names=dict(self.category_names),inputs_collapsed=self.collapsed,text_size=self.font_size.get(),
+                    history_enabled=self.history_setting.get(),maximized=self.window.state()=='zoomed',
+                    geometry=f'{self.window.winfo_width()}x{self.window.winfo_height()}')
 
     def summary_metrics(self):
         self.notebook.select(self.comparison);self.section.set('Summary supporting metrics');self.filter.set('');self.render_comparison()

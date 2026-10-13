@@ -43,3 +43,11 @@
 Choose **Save TXT / HTML → Save HTML report** for a browser-friendly comparison. Ctrl+S opens text saving. All sections are exported even when a table filter is active. Declining overwrite preserves the existing file.
 
 Portable diagnostics are under `app/.runtime`; source diagnostics are under `.runtime`. Logs can include fighter names and local paths, so review them before sharing.
+
+**Initial comparison has no probability:** this is partial profile/history evidence while advanced features and model training continue. Cancelled or failed initial reports remain exportable and are labelled partial. They are not stored as completed analyses.
+
+**Import cannot fit:** deselect incoming entries until the count and byte budget fit. Existing records are preserved; clear selected old records yourself only if you intend to remove them. Conflicting IDs, corrupt records and unsupported schemas are listed and skipped. If the old app changes between preview and import, close it and preview again.
+
+**Undo retains a record:** the imported file or preference changed after import. Undo preserves that change and reports a conflict. Interrupted imports are recovered at startup; the source installation is never changed.
+
+**Old report has no Elo chart:** only ratings saved in the original report can be displayed. Opening an older report does not add ratings from today's datasets. The numeric table explains which evidence is available.

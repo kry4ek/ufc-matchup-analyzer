@@ -1,13 +1,16 @@
 """Audit retained source, dependency closure, private paths, secrets, and data."""
 from pathlib import Path
-import argparse, ast, json, re, subprocess, sys
+import argparse, ast, json, os, re, subprocess, sys
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from analyzer_support import data_health,dependency_health,digest
 from tools.package_release import public_files
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--source-only',action='store_true');a=p.parse_args();errors=[];parsed=0
-    files=[x for x in ROOT.rglob('*.py') if not any(y in x.parts for y in ['.venv','.runtime','__pycache__','work','dist','release-assets'])]
+    files=[];excluded={'.venv','.runtime','__pycache__','work','dist','release-assets','.git'}
+    for directory,children,names in os.walk(ROOT):
+        children[:]=[name for name in children if name not in excluded]
+        files.extend(Path(directory)/name for name in names if name.endswith('.py'))
     for file in files:
         text=file.read_text(encoding='utf-8-sig');parsed+=1
         try:ast.parse(text,filename=file.name)

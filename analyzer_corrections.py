@@ -11,6 +11,7 @@ from pathlib import Path
 import shutil
 import sys
 import uuid
+sys.path.insert(0,str(Path(__file__).resolve().parent))
 from analyzer_history import fingerprint, utc_now
 from analyzer_support import atomic_json, digest, safe_path
 from analyzer_runtime import check_cancel, operation_lock, python_executable

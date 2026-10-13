@@ -245,13 +245,13 @@ class WindowTests(unittest.TestCase):
         self.assertEqual(self.app.help_menu.entrycget(4,'state'),'normal')
         self.controller.busy=True;self.controller.started=time.monotonic()
         with mock.patch.object(self.app.help_menu,'entryconfigure',wraps=self.app.help_menu.entryconfigure) as configure:
-            self.app.controls();self.assertEqual(configure.call_count,5)
-            for index in (1,3,4):self.assertEqual(self.app.help_menu.entrycget(index,'state'),'disabled')
+            self.app.controls();self.assertEqual(configure.call_count,7)
+            for index in (1,3,4,9,10):self.assertEqual(self.app.help_menu.entrycget(index,'state'),'disabled')
             configure.reset_mock()
             for _ in range(20):self.app.controls()
             configure.assert_not_called()
-            self.controller.busy=False;self.app.controls();self.assertEqual(configure.call_count,5)
-            for index in (1,3,4):self.assertEqual(self.app.help_menu.entrycget(index,'state'),'normal')
+            self.controller.busy=False;self.app.controls();self.assertEqual(configure.call_count,7)
+            for index in (1,3,4,9,10):self.assertEqual(self.app.help_menu.entrycget(index,'state'),'normal')
             configure.reset_mock();self.app.backup_available=False;self.app.controls()
             self.assertEqual(configure.call_count,1);self.assertEqual(self.app.help_menu.entrycget(4,'state'),'disabled')
     def test_worker_permission_retry_preserves_original_request(self):

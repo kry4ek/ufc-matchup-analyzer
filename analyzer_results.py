@@ -286,7 +286,7 @@ def format_result(payload):
     if state=='complete':
         text=_format_prediction(payload)
     else:
-        label='Statistics comparison — no prediction calculated.' if state=='comparison' else 'Comparison ready; prediction running.' if state=='pending' else 'Statistics comparison — prediction '+state+'. No completed prediction is available.'
+        label=('Initial comparison — partial evidence; no completed prediction.' if payload.get('quick_comparison') else 'Statistics comparison — no prediction calculated.' if state=='comparison' else 'Comparison ready; prediction running.' if state=='pending' else 'Statistics comparison — prediction '+state+'. No completed prediction is available.')
         lines=['UFC MATCHUP ANALYZER',payload['fighter_a']+' vs '+payload['fighter_b'],'',label,
                'Fight date: '+str(payload['fight_date']),'Division: '+str(payload.get('division','')),'',
                'A−B is a numerical difference, not a guaranteed advantage. N/A means unavailable. Percentage differences use percentage points (pp).']
@@ -308,7 +308,11 @@ def format_result(payload):
     if payload.get('reused'):additions.append('Reused saved analysis; original generation time shown above. Recalculate to run again.')
     from analyzer_fight_history import format_recent_fights
     from analyzer_summary import format_summary
-    return text+'\nMATCHUP SUMMARY\n'+format_summary(payload)+'\n'+('\n'+'\n'.join(dict.fromkeys(additions))+'\n' if additions else '')+'\n'+format_recent_fights(payload)
+    from analyzer_visuals import format_visuals
+    if payload.get('quick_comparison'):
+        from analyzer_quick_comparison import format_quick
+        return text+'\n'+format_quick(payload)+'\n'+format_recent_fights(payload)
+    return text+'\nMATCHUP SUMMARY\n'+format_summary(payload)+'\n'+('\n'+'\n'.join(dict.fromkeys(additions))+'\n' if additions else '')+'\n'+format_recent_fights(payload)+'\n'+format_visuals(payload)+'\n'
 
 def result_filename(payload):
     name = payload['fighter_a'] + ' vs ' + payload['fighter_b']

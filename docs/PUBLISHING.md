@@ -4,12 +4,12 @@ The public repository is `kry4ek/ufc-matchup-analyzer`. Keep datasets, bundled r
 
 ## Current experimental publication
 
-The owner authorized experimental publication of v0.3.0 on October 1, 2026 and explicitly requested publication of the new v0.4.0 portable app on October 11, 2026. The candidate is a **prerelease**, with unresolved dataset redistribution rights and unavailable clean-machine/display-scale checks disclosed in the README and release notes. This decision is separate from the verification gate. Keep dataset `redistribution_status` as `review_required` and keep failed/unavailable checks visible. Do not claim that permission was obtained or that the standard gate passed. See [DATA_NOTICE.md](../DATA_NOTICE.md) and [release verification](../RELEASE_VERIFICATION.md).
+The owner requested publication of v0.6.0 on October 13, 2026, following the earlier authorized v0.3/v0.4 experimental releases. The candidate is a **prerelease**, with unresolved dataset redistribution rights, unavailable clean-machine/display-scale checks and the disclosed women's mirrored-bout CV/calibration defect. This decision is separate from the verification gate. Keep dataset `redistribution_status` as `review_required` and keep failed/unavailable checks visible. Do not claim that permission was obtained or that the standard gate passed. See [DATA_NOTICE.md](../DATA_NOTICE.md) and [release verification](../RELEASE_VERIFICATION.md).
 
 The release includes:
 
-- `ufc-matchup-analyzer-v0.4.0-windows.zip`: the complete Windows x64 app.
-- `ufc-matchup-analyzer-source-v0.4.0.zip`: curated source, without data/runtime.
+- `ufc-matchup-analyzer-v0.6.0-windows.zip`: the complete Windows x64 app, including v0.5 improvements.
+- `ufc-matchup-analyzer-source-v0.6.0.zip`: curated source, without data/runtime.
 - `SHA256SUMS.txt`, `archive_manifest.json` and the verification report.
 
 The owner requested omission of the separate dataset ZIP. Its CSV files remain

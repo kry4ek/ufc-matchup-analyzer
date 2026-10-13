@@ -1,0 +1,291 @@
+{
+  "schema": 1,
+  "status": "LIMITED_RETROSPECTIVE_EVALUATION",
+  "protocol_version": "v06-frozen-20261013-1",
+  "period": {
+    "start": "2026-09-19",
+    "end": "2026-09-26",
+    "holdout_start": "2026-09-26"
+  },
+  "datasets": {
+    "mens_ufc_model/data/raw/ufcstats_men/events.csv": "c873a9a0dbc768c3f664dc23b161efc07cd282b84facd35b404ef4e1ccdb5eae",
+    "mens_ufc_model/data/raw/ufcstats_men/fights.csv": "e94c16cc5061f8b2f736795ccfa912dd47db06d4aacc80caac2600f80c6cfe42",
+    "mens_ufc_model/data/raw/ufcstats_men/fight_stats.csv": "0fffbd3496c4810da7fc20c6dcecf4f23d9b5ba99236f84283ac2e63fd5a1fe5",
+    "mens_ufc_model/data/raw/ufcstats_men/fighters.csv": "95305f69bf04470d1f98228fe8c05cf201955e0e5becc7b3d7ac2605bb33b810",
+    "mens_ufc_model/data/interim/mens_prefight_snapshots.csv": "d0831a51a0e20a30b09481c30e8eb2fbe56e69190730802cc05652bad8cd1b5a",
+    "mens_ufc_model/data/interim/mens_model_ready_matchups.csv": "f7f3b4ed205fa6ad12cba10d27da95aad99e7c7f43177bacaeb2a31e15667406",
+    "mens_ufc_model/data/processed/mens_training_rows.csv": "8ff04cef6968821ff2a7d5cc7464cdbf5f47b26c125f0dc96e0d43f9b018ae93",
+    "mens_ufc_model/data/processed/mens_training_rows_with_elo.csv": "fb13db6b333201e68395977ab0c1947c5ec6343a4d7bc53391bd47af3203b1cd",
+    "mens_ufc_model/data/processed/mens_training_rows_v2_advanced.csv": "11357e66c38101bebe3a56d8b2661fdde6c61127f7513095034dcfe2b2b22867",
+    "mens_ufc_model/data/processed/mens_training_rows_v3_bayes_smoothing_candidate.csv": "5c15420f6b37ca17eb42f080cdcd9c357c34b5248d7fdc1f9d402d3866fc2f98",
+    "womens_ufc_model/output_td_repaired/ufc_womens_fighter_fight_stats_td_control_repaired.csv": "69a9492fed7e48bbdc9c496741c3c16896b0b8398d2f2299675511b2fece435a",
+    "womens_ufc_model/output_advanced_features_sig_fixed/ufc_womens_model_training_rows_advanced_sig_fixed.csv": "5271fe8540d54d69ad9e21154594174f3cce85885b38d2ceb052e63a959d33a3",
+    "womens_ufc_model/output_bayesian_prefight_smoothing_sig_fixed_v1/ufc_womens_model_training_rows_advanced_plus_bayes_prefight_smoothing_v1.csv": "717613548af82ff2ea9f3d2ef4df917c0a1b42abb2313c46b29e4f23928b1932",
+    "womens_ufc_model/output_advanced_features/advanced_prefight_snapshots.csv": "c31cee582fa16fa21d17466829394067538b9f11e1f419f0232cc113ddd9f6a9",
+    "womens_ufc_model/output_quality_fixed/ufc_womens_fighter_profiles.csv": "fad48168d33693c3f44ed4fe4d992ec17a85c1a8a059ec3826c17f29669387f2"
+  },
+  "code": {
+    "mens_ufc_model/update_ufc_mens_dataset_incremental.py": "cb1211a417072d627bc54a74e428d60243d3e4cb10d698fafdd867045e987e21",
+    "mens_ufc_model/src/__init__.py": "38f718a20ab758359a4d0f9454f3b6fba7abc939a95eda2c953ea102b49cb94e",
+    "mens_ufc_model/src/common/utils.py": "ed76191210ee765236f7ddf06080def99bf3efe18b823a1a7cc6e370539da28e",
+    "mens_ufc_model/src/common/__init__.py": "95a4108a6c36bea247f75415ac3adac64413032ae20a42072665490b085d953b",
+    "mens_ufc_model/src/data/build_mens_training_dataset.py": "380c1d75a4390aadc58d76ead101a7d042999c85ccb56a0dc0d8c68c8c053cb6",
+    "mens_ufc_model/src/data/ingest_ufcstats.py": "7c8481835d9772991b81edfee21a6a3bbaed7bf42ee45e00a11c1acca266f564",
+    "mens_ufc_model/src/data/ufcstats_scraper.py": "72de90e4be60e369fde60493d5eaeececf5df39616aa03e737758007e5c2a70a",
+    "mens_ufc_model/src/data/__init__.py": "b6afbed42f026ccc2c6cf9e0a7eb7f1b3dd9ab764562c80c3961bcbcba118d6a",
+    "mens_ufc_model/src/features/add_mens_elo_features.py": "088ea8174e8ddc0309fdf397000bf1945f4665dd1e8e2304d7fcfc0ef568133b",
+    "mens_ufc_model/src/features/build_mens_advanced_features.py": "9d37caa9592c28c127243a2019aca1fb197530186b5b9e67df0275e2230040ee",
+    "mens_ufc_model/src/features/build_mens_bayes_smoothing_candidate.py": "bed421b3007b92373c4a7105153dbdb96ea5e03ffb270a957efa2e3f21f0cf4b",
+    "mens_ufc_model/src/features/mens_elo.py": "7ba6537483bc8a2e683e5bddde28f7c8aa378b28cd4a9f489e80bbd5a30ac78a",
+    "mens_ufc_model/src/features/mens_features.py": "37db4582030349d3e65f8ceae8267b901ff10ccd59eed860fe9377a869fb7b35",
+    "mens_ufc_model/src/features/mens_live_v2_features.py": "9bfc516b0e23388139275764355e9226d554c2f4f32063a3c8a22dc6d5ddb7e3",
+    "mens_ufc_model/src/features/mens_live_v3_bayes_features.py": "bf3518dd8786603c473997fbd5fdfaa459d64758677d5c3f76d52e82adb72f81",
+    "mens_ufc_model/src/features/__init__.py": "23d090f1ea70e3861d065f255c07be532dd1d1a64cb6b6e2d0d4047a7a6149a0",
+    "mens_ufc_model/src/models/model_registry.py": "cda14d878cac76f303bf3f3883f2be15f9029f6874abbf89654112fba63a0585",
+    "mens_ufc_model/src/models/train_baseline.py": "8078506cd93584c418ca74d833d46d802715044274dccbac8fb5053eeedc28c4",
+    "mens_ufc_model/src/models/__init__.py": "7f44248fb02cfd7652bb8ee460f706a5359dd71bc0f207a8f863d3715098b418",
+    "mens_ufc_model/src/prediction/fighter_lookup.py": "a545356bbb160348db8e24458703da361bff20674b5353a6395ecc70211d2f42",
+    "mens_ufc_model/src/prediction/prediction_engine.py": "ffde46624e621d39b4cbb2b18ec1d37a6bc199cc61317abd1d41d96b4a673351",
+    "mens_ufc_model/src/prediction/predict_matchup.py": "5db9a2ccc872021faa4b7a6ea70560f4264a3bb91c71200b1e04d35b4204d86f",
+    "mens_ufc_model/src/prediction/__init__.py": "bdf77a4e79d53839b163143960d0377c35d9e0edc2d25281ce9cfacb596809bf",
+    "mens_ufc_model/src/validation/validate_live_v3_bayes_parity.py": "5afaa7a2c66cb59d99df7d40246526db930e70bd412b5564a8e6b25ae1022b99",
+    "mens_ufc_model/src/validation/validate_mens_dataset.py": "41398959c80430ed1c134101bf6f16cb72ee59358491be9b3719f183dcb1b263",
+    "mens_ufc_model/src/validation/__init__.py": "e23bbc8f4cc72c5e9ed2e5a83b779d4972b80c37fdfef0394351c93e7ddc3586",
+    "womens_ufc_model/build_prefight_bayesian_smoothing_v1_REBUILT.py": "46f382ec7556ff5306b8f45b8b0e24fb980e4f35d1c390d42d43e266ccc62998",
+    "womens_ufc_model/compute_live_bayes_smoothing_features_v1.py": "65168122ce9537aac733761e3807689925ca962f8011523abee5f98679797800",
+    "womens_ufc_model/predict_matchup_advanced.py": "470ff8197ea564c6a33fee5c9503f0837ef7d0daa4ea40bd37e908764b80a879",
+    "womens_ufc_model/update_ufc_womens_dataset_incremental.py": "8e59599305982379ee28ac9783b43910719bc0815f92c34f38ed602282541115"
+  },
+  "cv_audit": {
+    "status": "FAIL",
+    "overlapping_bout_counts_by_fold": [
+      282,
+      300,
+      276,
+      277,
+      295
+    ],
+    "rows": 1868,
+    "unique_bouts": 934,
+    "finding": "Existing women ensemble uses shuffled, ungrouped folds; mirrored bouts cross training/validation folds. Internal calibration also uses ungrouped stratification. Outer evaluation remains strictly chronological; internal CV is not a clean accuracy estimate."
+  },
+  "limitations": [
+    "Small two-event/date evaluation; not evidence of general accuracy or profitability.",
+    "Existing women ensemble uses shuffled, ungrouped folds; mirrored bouts cross training/validation folds. Internal calibration also uses ungrouped stratification. Outer evaluation remains strictly chronological; internal CV is not a clean accuracy estimate.",
+    "No algorithm tuning or calibration changes. Corrected snapshot does not reconstruct historical publication state.",
+    "Mirrored-fold defect needs a separately validated parent model correction; this report does not clear that methodological gate."
+  ],
+  "models": {
+    "men": {
+      "model_version": "v3_bayes_smoothed",
+      "evaluated": 20,
+      "excluded": 0,
+      "failed": 0,
+      "remaining": 0,
+      "scores": {
+        "Model holdout": {
+          "accuracy": 0.6666666666666666,
+          "brier": 0.19919414753437092,
+          "log_loss": 0.5879968456337523
+        },
+        "50/50 holdout": {
+          "accuracy": 0.5555555555555556,
+          "brier": 0.25,
+          "log_loss": 0.6931471805599453
+        },
+        "Elo holdout": {
+          "accuracy": 0.6666666666666666,
+          "brier": 0.2444704320798059,
+          "log_loss": 0.68207491913272
+        }
+      },
+      "development_scores": {
+        "accuracy": 0.5454545454545454,
+        "brier": 0.2552952943380787,
+        "log_loss": 0.7076513891770783
+      },
+      "calibration": [
+        {
+          "low": 0.0,
+          "high": 0.2,
+          "count": 0,
+          "mean_probability": null,
+          "observed_rate": null
+        },
+        {
+          "low": 0.2,
+          "high": 0.4,
+          "count": 5,
+          "mean_probability": 0.36462139737959803,
+          "observed_rate": 0.2
+        },
+        {
+          "low": 0.4,
+          "high": 0.6,
+          "count": 3,
+          "mean_probability": 0.49938080529379114,
+          "observed_rate": 1.0
+        },
+        {
+          "low": 0.6,
+          "high": 0.8,
+          "count": 1,
+          "mean_probability": 0.7133572150033518,
+          "observed_rate": 1.0
+        },
+        {
+          "low": 0.8,
+          "high": 1.0,
+          "count": 0,
+          "mean_probability": null,
+          "observed_rate": null
+        }
+      ],
+      "uncertainty": {
+        "status": "Unavailable: fewer than five independent event/date clusters",
+        "clusters": 1
+      },
+      "event_dates": [
+        "2026-09-19",
+        "2026-09-26"
+      ],
+      "failures": []
+    },
+    "women": {
+      "model_version": "v1_current_ensemble",
+      "evaluated": 4,
+      "excluded": 0,
+      "failed": 0,
+      "remaining": 0,
+      "scores": {
+        "Model holdout": {
+          "accuracy": 1.0,
+          "brier": 0.21869054112706945,
+          "log_loss": 0.6303399136604039
+        },
+        "50/50 holdout": {
+          "accuracy": 0.3333333333333333,
+          "brier": 0.25,
+          "log_loss": 0.6931471805599453
+        },
+        "Elo holdout": {
+          "accuracy": 0.3333333333333333,
+          "brier": 0.24988997949655042,
+          "log_loss": 0.692926045294353
+        }
+      },
+      "development_scores": {
+        "accuracy": 0.0,
+        "brier": 0.2506238422523502,
+        "log_loss": 0.6943948657114716
+      },
+      "calibration": [
+        {
+          "low": 0.0,
+          "high": 0.2,
+          "count": 0,
+          "mean_probability": null,
+          "observed_rate": null
+        },
+        {
+          "low": 0.2,
+          "high": 0.4,
+          "count": 0,
+          "mean_probability": null,
+          "observed_rate": null
+        },
+        {
+          "low": 0.4,
+          "high": 0.6,
+          "count": 3,
+          "mean_probability": 0.48579438623188237,
+          "observed_rate": 0.3333333333333333
+        },
+        {
+          "low": 0.6,
+          "high": 0.8,
+          "count": 0,
+          "mean_probability": null,
+          "observed_rate": null
+        },
+        {
+          "low": 0.8,
+          "high": 1.0,
+          "count": 0,
+          "mean_probability": null,
+          "observed_rate": null
+        }
+      ],
+      "uncertainty": {
+        "status": "Unavailable: fewer than five independent event/date clusters",
+        "clusters": 1
+      },
+      "event_dates": [
+        "2026-09-19",
+        "2026-09-26"
+      ],
+      "failures": []
+    }
+  },
+  "integrity": "cc060313669e1ebba70a5336eaf452b51766000d3a84fd9ee736890d15104ea9",
+  "reviewed_at": "2026-10-13T11:12:34+00:00",
+  "parent_report_sha256": "4f4ed9d5e485ba9fb64cb322469493a41ccdbd102d021dd9bd0947daac4adc09",
+  "protocol_signature": "826d504c0b6cc70c798e9405501aebf7be90cef1d1e79d4158a96986ab5f9c82",
+  "protocol": {
+    "version": "v06-frozen-20261013-1",
+    "start": "2026-09-19",
+    "end": "2026-09-26",
+    "holdout_start": "2026-09-26",
+    "datasets": {
+      "mens_ufc_model/data/raw/ufcstats_men/events.csv": "c873a9a0dbc768c3f664dc23b161efc07cd282b84facd35b404ef4e1ccdb5eae",
+      "mens_ufc_model/data/raw/ufcstats_men/fights.csv": "e94c16cc5061f8b2f736795ccfa912dd47db06d4aacc80caac2600f80c6cfe42",
+      "mens_ufc_model/data/raw/ufcstats_men/fight_stats.csv": "0fffbd3496c4810da7fc20c6dcecf4f23d9b5ba99236f84283ac2e63fd5a1fe5",
+      "mens_ufc_model/data/raw/ufcstats_men/fighters.csv": "95305f69bf04470d1f98228fe8c05cf201955e0e5becc7b3d7ac2605bb33b810",
+      "mens_ufc_model/data/interim/mens_prefight_snapshots.csv": "d0831a51a0e20a30b09481c30e8eb2fbe56e69190730802cc05652bad8cd1b5a",
+      "mens_ufc_model/data/interim/mens_model_ready_matchups.csv": "f7f3b4ed205fa6ad12cba10d27da95aad99e7c7f43177bacaeb2a31e15667406",
+      "mens_ufc_model/data/processed/mens_training_rows.csv": "8ff04cef6968821ff2a7d5cc7464cdbf5f47b26c125f0dc96e0d43f9b018ae93",
+      "mens_ufc_model/data/processed/mens_training_rows_with_elo.csv": "fb13db6b333201e68395977ab0c1947c5ec6343a4d7bc53391bd47af3203b1cd",
+      "mens_ufc_model/data/processed/mens_training_rows_v2_advanced.csv": "11357e66c38101bebe3a56d8b2661fdde6c61127f7513095034dcfe2b2b22867",
+      "mens_ufc_model/data/processed/mens_training_rows_v3_bayes_smoothing_candidate.csv": "5c15420f6b37ca17eb42f080cdcd9c357c34b5248d7fdc1f9d402d3866fc2f98",
+      "womens_ufc_model/output_td_repaired/ufc_womens_fighter_fight_stats_td_control_repaired.csv": "69a9492fed7e48bbdc9c496741c3c16896b0b8398d2f2299675511b2fece435a",
+      "womens_ufc_model/output_advanced_features_sig_fixed/ufc_womens_model_training_rows_advanced_sig_fixed.csv": "5271fe8540d54d69ad9e21154594174f3cce85885b38d2ceb052e63a959d33a3",
+      "womens_ufc_model/output_bayesian_prefight_smoothing_sig_fixed_v1/ufc_womens_model_training_rows_advanced_plus_bayes_prefight_smoothing_v1.csv": "717613548af82ff2ea9f3d2ef4df917c0a1b42abb2313c46b29e4f23928b1932",
+      "womens_ufc_model/output_advanced_features/advanced_prefight_snapshots.csv": "c31cee582fa16fa21d17466829394067538b9f11e1f419f0232cc113ddd9f6a9",
+      "womens_ufc_model/output_quality_fixed/ufc_womens_fighter_profiles.csv": "fad48168d33693c3f44ed4fe4d992ec17a85c1a8a059ec3826c17f29669387f2"
+    },
+    "code": {
+      "mens_ufc_model/update_ufc_mens_dataset_incremental.py": "cb1211a417072d627bc54a74e428d60243d3e4cb10d698fafdd867045e987e21",
+      "mens_ufc_model/src/__init__.py": "38f718a20ab758359a4d0f9454f3b6fba7abc939a95eda2c953ea102b49cb94e",
+      "mens_ufc_model/src/common/utils.py": "ed76191210ee765236f7ddf06080def99bf3efe18b823a1a7cc6e370539da28e",
+      "mens_ufc_model/src/common/__init__.py": "95a4108a6c36bea247f75415ac3adac64413032ae20a42072665490b085d953b",
+      "mens_ufc_model/src/data/build_mens_training_dataset.py": "380c1d75a4390aadc58d76ead101a7d042999c85ccb56a0dc0d8c68c8c053cb6",
+      "mens_ufc_model/src/data/ingest_ufcstats.py": "7c8481835d9772991b81edfee21a6a3bbaed7bf42ee45e00a11c1acca266f564",
+      "mens_ufc_model/src/data/ufcstats_scraper.py": "72de90e4be60e369fde60493d5eaeececf5df39616aa03e737758007e5c2a70a",
+      "mens_ufc_model/src/data/__init__.py": "b6afbed42f026ccc2c6cf9e0a7eb7f1b3dd9ab764562c80c3961bcbcba118d6a",
+      "mens_ufc_model/src/features/add_mens_elo_features.py": "088ea8174e8ddc0309fdf397000bf1945f4665dd1e8e2304d7fcfc0ef568133b",
+      "mens_ufc_model/src/features/build_mens_advanced_features.py": "9d37caa9592c28c127243a2019aca1fb197530186b5b9e67df0275e2230040ee",
+      "mens_ufc_model/src/features/build_mens_bayes_smoothing_candidate.py": "bed421b3007b92373c4a7105153dbdb96ea5e03ffb270a957efa2e3f21f0cf4b",
+      "mens_ufc_model/src/features/mens_elo.py": "7ba6537483bc8a2e683e5bddde28f7c8aa378b28cd4a9f489e80bbd5a30ac78a",
+      "mens_ufc_model/src/features/mens_features.py": "37db4582030349d3e65f8ceae8267b901ff10ccd59eed860fe9377a869fb7b35",
+      "mens_ufc_model/src/features/mens_live_v2_features.py": "9bfc516b0e23388139275764355e9226d554c2f4f32063a3c8a22dc6d5ddb7e3",
+      "mens_ufc_model/src/features/mens_live_v3_bayes_features.py": "bf3518dd8786603c473997fbd5fdfaa459d64758677d5c3f76d52e82adb72f81",
+      "mens_ufc_model/src/features/__init__.py": "23d090f1ea70e3861d065f255c07be532dd1d1a64cb6b6e2d0d4047a7a6149a0",
+      "mens_ufc_model/src/models/model_registry.py": "cda14d878cac76f303bf3f3883f2be15f9029f6874abbf89654112fba63a0585",
+      "mens_ufc_model/src/models/train_baseline.py": "8078506cd93584c418ca74d833d46d802715044274dccbac8fb5053eeedc28c4",
+      "mens_ufc_model/src/models/__init__.py": "7f44248fb02cfd7652bb8ee460f706a5359dd71bc0f207a8f863d3715098b418",
+      "mens_ufc_model/src/prediction/fighter_lookup.py": "a545356bbb160348db8e24458703da361bff20674b5353a6395ecc70211d2f42",
+      "mens_ufc_model/src/prediction/prediction_engine.py": "ffde46624e621d39b4cbb2b18ec1d37a6bc199cc61317abd1d41d96b4a673351",
+      "mens_ufc_model/src/prediction/predict_matchup.py": "5db9a2ccc872021faa4b7a6ea70560f4264a3bb91c71200b1e04d35b4204d86f",
+      "mens_ufc_model/src/prediction/__init__.py": "bdf77a4e79d53839b163143960d0377c35d9e0edc2d25281ce9cfacb596809bf",
+      "mens_ufc_model/src/validation/validate_live_v3_bayes_parity.py": "5afaa7a2c66cb59d99df7d40246526db930e70bd412b5564a8e6b25ae1022b99",
+      "mens_ufc_model/src/validation/validate_mens_dataset.py": "41398959c80430ed1c134101bf6f16cb72ee59358491be9b3719f183dcb1b263",
+      "mens_ufc_model/src/validation/__init__.py": "e23bbc8f4cc72c5e9ed2e5a83b779d4972b80c37fdfef0394351c93e7ddc3586",
+      "womens_ufc_model/build_prefight_bayesian_smoothing_v1_REBUILT.py": "46f382ec7556ff5306b8f45b8b0e24fb980e4f35d1c390d42d43e266ccc62998",
+      "womens_ufc_model/compute_live_bayes_smoothing_features_v1.py": "65168122ce9537aac733761e3807689925ca962f8011523abee5f98679797800",
+      "womens_ufc_model/predict_matchup_advanced.py": "470ff8197ea564c6a33fee5c9503f0837ef7d0daa4ea40bd37e908764b80a879",
+      "womens_ufc_model/update_ufc_womens_dataset_incremental.py": "8e59599305982379ee28ac9783b43910719bc0815f92c34f38ed602282541115"
+    },
+    "scoring": "One decisive bout, stable ID order; no same-date training; 5 fixed equal-width calibration bins; log-loss clip 1e-12; no tuning.",
+    "baselines": "50/50 and unmodified pre-fight Elo expected score; no fit to held-out outcomes."
+  }
+}

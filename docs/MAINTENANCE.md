@@ -73,3 +73,7 @@ Dataset checksums after a valid update are recorded in `.runtime/local_dataset_s
 `update` changes fight data and derived features. Download a new portable version into a new folder to update application code/dependencies; it requires no setup. Keep the old folder until the new one passes its startup checks and a prediction. Source users rerun source setup as documented. Do not transplant a `.venv` between computers.
 
 Algorithm changes require separate evaluation, leakage-safe validation, and an explicit model-version decision. They are not promoted by a successful data update.
+
+In v0.6, use Help → Import from previous installation after the new app is ready. Close the previous app, select its extracted folder, review the counts and choose the analyses to import. Display preferences are optional. The importer preserves current records and history-storage settings; it does not copy datasets, caches or executable files. Help → Undo latest import removes only unchanged imported records and restores matching preferences. Keep the original installation until you have checked the imported reports.
+
+Help → Model validation presents a dated, offline report. A changed dataset or engine is identified as differing from the evaluated snapshot. The v0.6 report records an unresolved women-model fold defect and limited retrospective scoring; it does not clear the methodology gate.

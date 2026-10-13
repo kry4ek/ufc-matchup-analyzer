@@ -50,7 +50,7 @@ def main():
         window.geometry(f'{width}x{height}');app.status.set('Checking installation…');window.update()
         if args.fixture:
             if not app.collapsed:app.toggle_inputs()
-            for tab,widgets in [(app.overview,[app.overview_tree,app.probability]),(app.comparison,[app.comparison_tree,app.filter_entry,app.details]),(app.recent_tab,[app.recent_canvas])]:
+            for tab,widgets in [(app.overview,[app.overview_tree,app.probability]),(app.comparison,[app.comparison_tree,app.filter_entry,app.details]),(app.recent_tab,[app.recent_canvas]),(app.visual_tab,[app.visual_panel.canvas,app.visual_panel.trend,app.visual_panel.table])]:
                 app.notebook.select(tab);window.update()
                 for widget in widgets:
                     x=widget.winfo_rootx()-window.winfo_rootx();y=widget.winfo_rooty()-window.winfo_rooty()
@@ -60,6 +60,7 @@ def main():
                 app.font_size.set(size);app.change_font();window.update()
                 assert app.comparison_tree.winfo_height()>50,('text size',percent,size)
                 assert app.recent_canvas.winfo_height()>50,('recent fights canvas',percent,size)
+                assert app.visual_panel.table.winfo_height()>25,('visual evidence table',percent,size)
                 app.recent_trees['fighter_b'].focus_set();window.update()
                 assert window.tk.call('tk_focusNext',str(app.recent_trees['fighter_a']))
             app.font_size.set('Medium');app.change_font();app.notebook.select(2);window.update()
@@ -71,6 +72,11 @@ def main():
             sys.path.append(str(Path(__file__).resolve().parent))
             from capture_window import capture
             capture(window,args.screenshots/(str(percent)+'.png'))
+            if args.fixture:
+                app.notebook.select(app.visual_tab)
+                for size in ('Medium','Large'):
+                    app.font_size.set(size);app.change_font();window.update()
+                    capture(window,args.screenshots/(str(percent)+'-visual-'+size.lower()+'.png'))
         app.destroy()
     atomic_json(args.out,dict(status='PASS',native_display_dpi=actual_dpi,method='Tk scaling simulation on the current Windows display; not a change to Windows display scaling',scales=rows))
     print('Tk layout and focus traversal PASS at 100/125/150/200% simulations')

@@ -1,6 +1,6 @@
-# Current source: v0.5 local release candidate
+# Current source: v0.6 local release candidate
 
-Current verification is tracked in [v0.5 verification](docs/V0_5_VERIFICATION.md). The v0.4 publication evidence below is preserved as release-specific history.
+Current verification is tracked in [v0.6 verification](docs/V0_6_VERIFICATION.md). [v0.5 verification](docs/V0_5_VERIFICATION.md) and the v0.4 publication evidence below are preserved as release-specific history.
 
 # Release verification: v0.4.0 experimental Windows release
 

@@ -1,48 +1,68 @@
 {
-  "version": "0.5.0",
-  "status": "local_review_candidate_standard_publication_gate_not_passed",
+  "version": "0.6.0",
+  "status": "local_experimental_review_candidate_standard_publication_gate_not_passed",
   "checks": [
     {
-      "name": "Full native regression",
+      "name": "Full native regression and setup",
       "status": "PASS",
-      "required": true,
-      "evidence": "161 tests; no failures, errors or skips"
+      "required": true
     },
     {
-      "name": "Cross-matchup cached/fresh and baseline parity",
+      "name": "Parent optimization parity and measured performance",
       "status": "PASS",
-      "required": true,
-      "evidence": "Both engines, three repetitions; tolerance 1e-12; measured reductions 84.74/94.48 percent"
+      "required": true
     },
     {
-      "name": "Controlled corrections, full rebuild and restore",
+      "name": "Initial/advanced/final and cancellation states",
       "status": "PASS",
-      "required": true,
-      "evidence": "Men and women W/L to NC/draw, complete native rebuilds; all 15 original hashes restored"
+      "required": true
     },
     {
-      "name": "Independent chronological feature rebuild comparison",
+      "name": "Both model-family portable matrices",
       "status": "PASS",
-      "required": true,
-      "evidence": "Five paired women bouts, 206 columns; bounded result agrees with full fresh fixture rebuild and later features change"
+      "required": true
     },
     {
-      "name": "Fresh portable offline predictions and historical cutoffs",
+      "name": "Guided history/preferences import, frozen exports and undo",
       "status": "PASS",
-      "required": true,
-      "evidence": "Both model families; normal/reversed order, worker settings, historical dates; original snapshot preserved"
+      "required": true
     },
     {
-      "name": "Frozen summaries, comparisons, cancellation and cache clearing",
+      "name": "Correction rebuild/promotion and complete restore",
       "status": "PASS",
-      "required": true,
-      "evidence": "Real workers/native UI; complete exports; 50-entry/50-MB history budget preserved"
+      "required": true
     },
     {
-      "name": "Reproducible retained-engine export",
+      "name": "Statistics, history, cache clear and saved-version comparison",
       "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Source/dependency/data audit and export reproduction",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Native/HTML rendering and saves",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Internal model methodology",
+      "status": "FAIL",
       "required": true,
-      "evidence": "All 30 engine files match the read-only research export"
+      "evidence": "Mirrored women bouts cross ensemble folds; calibration is also ungrouped."
+    },
+    {
+      "name": "Fresh portable workflows",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Final delivery archive/EXE checks",
+      "status": "RECORDED_EXTERNALLY",
+      "required": true,
+      "evidence": "See candidate_verification.json beside the delivery archives; an archive cannot contain its own final hash."
     },
     {
       "name": "Clean Windows 10/11 machine coverage",
@@ -56,20 +76,19 @@
     },
     {
       "name": "Dataset redistribution review",
-      "status": "BLOCKED",
+      "status": "UNVERIFIED",
       "required": true
     },
     {
-      "name": "Remote source CI",
+      "name": "Remote CI for final release revision",
       "status": "UNVERIFIED",
-      "required": false
+      "required": true
     },
     {
-      "name": "Published v0.5 portable download",
-      "status": "UNVERIFIED",
-      "required": true,
-      "phase": "after_publish"
+      "name": "Published asset download and verification",
+      "status": "NOT_REQUESTED",
+      "phase": "after_publish",
+      "required": true
     }
-  ],
-  "previous_release_checks": "docs/release_checks_v04.json"
+  ]
 }

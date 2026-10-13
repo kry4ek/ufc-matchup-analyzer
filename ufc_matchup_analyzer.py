@@ -70,8 +70,9 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
     validation_seconds=time.monotonic()-started_operation
     bad=[x for x in checks if x['status']=='FAIL']
     if bad:raise ValueError('Required data is not ready: '+bad[0]['path']+'; '+bad[0].get('message',''))
-    a,aid=resolve_fighter(args.fighter_a,sex,root,args.fighter_a_id,args.profiles)
-    b,bid=resolve_fighter(args.fighter_b,sex,root,args.fighter_b_id,args.profiles)
+    catalog=FighterCatalog(sex,root,args.profiles)
+    a,aid=catalog.resolve(args.fighter_a,args.fighter_a_id)
+    b,bid=catalog.resolve(args.fighter_b,args.fighter_b_id)
     if key(a)==key(b) and aid==bid:raise ValueError('Choose two different fighters')
     match=validate_matchup(sex,args.division,args.fight_date,(a,aid),(b,bid))
     cutoff=args.as_of_date or ((dt.date.fromisoformat(args.fight_date)-dt.timedelta(days=1)).isoformat() if args.fight_date<=dt.date.today().isoformat() else dt.date.today().isoformat()) if sex=='men' else args.fight_date
@@ -93,10 +94,14 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
                 return payload
         except (OSError,ValueError,KeyError) as exc:
             print('Saved result could not be reused: '+str(exc))
-    catalog=FighterCatalog(sex,root)
     from analyzer_fight_history import recent_fights
     frozen_history=recent_fights(root,sex,(a,aid),(b,bid),args.fight_date)
     coverage={side:catalog.coverage(identity,args.fight_date,match) for side,identity in [('a',(a,aid)),('b',(b,bid))]}
+    from analyzer_quick_comparison import build_quick
+    initial=build_quick(root,canonical,catalog,frozen_history,coverage,context,args.profiles)
+    initial['time_to_initial_seconds']=round(time.monotonic()-started_operation,3)
+    emit(event_type='initial_ready',payload=initial,cancellable=True)
+    check_cancel(cancel)
     coverage_warnings=[]
     for side,name in [('a',a),('b',b)]:
         info=coverage[side]
@@ -193,6 +198,8 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
         payload.update(matchup_summary=build_summary(payload),metric_records=metric_records(payload),
                        fight_evidence=fight_evidence(root,sex,(a,aid),(b,bid),args.fight_date))
         payload.setdefault('stage_timings_seconds',{})['validation']=round(validation_seconds,3)
+        payload['time_to_initial_seconds']=initial['time_to_initial_seconds']
+        payload['total_request_seconds']=round(time.monotonic()-started_operation,3)
         payload['worker_mode']='single' if args.workers==1 else 'automatic'
         payload['peak_process_tree_working_set_mib']=round(peak,1) if peak else None
         payload['memory_measurement_scope']='engine and descendant processes; sampled sum of working sets; shared pages may be counted more than once'

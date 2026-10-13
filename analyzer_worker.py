@@ -54,6 +54,8 @@ def execute(request,emit,cancel=None,root=ROOT):
         if operation in ('startup','doctor'):
             emit(stage='checking',message='Checking installation and dataset integrity',cancellable=False)
             recovered=recover_interrupted(root)
+            from analyzer_migration import recover as recover_imports
+            recover_imports(root)
             report=installation_report(root)
             report['recovered']=recovered
             if report['ready']:cleanup_history(root)
@@ -70,6 +72,12 @@ def execute(request,emit,cancel=None,root=ROOT):
             from analyzer_cache import clear_cache
             clear_cache(root)
             return dict(status='cleared')
+        if operation=='import_history':
+            from analyzer_migration import apply
+            return apply(root,request['preview_id'],request.get('import_preferences',False),cancel,request.get('selected_ids'))
+        if operation=='undo_import':
+            from analyzer_migration import undo
+            return undo(root)
         if operation=='recheck':
             from analyzer_corrections import preview
             recover_interrupted(root)

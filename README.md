@@ -1,22 +1,22 @@
 # UFC Matchup Analyzer
 
-The source includes the v0.5.0 improvements described below. The current public download remains v0.4.0 until the new candidate is published.
+Version **0.6.0** is an experimental Windows portable prerelease. Release-specific verification is recorded separately from historical checks.
 
 A small Windows app for analyzing one men's or women's UFC matchup. Enter the division, date and fighters, then get a detailed side-by-side comparison, win probabilities and data-quality information. Analysis runs locally using fight-history datasets.
 
-Version **0.4.0** adds consistent draw/no-contest updates, actionable maintenance errors, measured progress with captured-fight details, and a **Recent fights** tab.
+Version **0.6.0** adds initial profile/history evidence before prediction finishes, visual comparisons and Elo history, a dated model-validation view, and guided import of saved analyses/preferences with undo. It also includes the v0.5 calculation cache, saved-analysis comparison and summary improvements, plus the v0.4 draw/no-contest maintenance fixes.
 
 Recent fights lists each fighter's last five recorded UFC bouts strictly before the selected fight date, across all divisions. It includes draws and no-contests, and keeps the same history in saved analyses and TXT/HTML exports. Older saved analyses remain readable and ask you to recalculate if their recent bouts were not saved.
 
 ![Recent UFC bouts in a saved analysis](docs/images/recent-fights.png)
 
-**Experimental Windows portable candidate:** the complete app is provided as a separate ZIP under [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases). Download **ufc-matchup-analyzer-v0.4.0-windows.zip** for the app, runtime and all required datasets. GitHub's automatic source downloads and a Git clone contain source code only. There is no separate public dataset ZIP; source users obtain the matching data from the portable package.
+**Experimental Windows portable candidate:** the complete app is provided as a separate ZIP under [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases). Download **ufc-matchup-analyzer-v0.6.0-windows.zip** for the app, runtime and all required datasets. GitHub's automatic source downloads and a Git clone contain source code only. There is no separate public dataset ZIP; source users obtain the matching data from the portable package.
 
 Dataset redistribution rights remain unresolved. The owner has requested publication despite that uncertainty; this decision does not establish a data license. Clean Windows 10/11 and actual 100%, 150% and 200% display-scaling checks remain outstanding. This is a prerelease candidate, not a fully verified stable release. See [dataset provenance](DATA_NOTICE.md) and [release verification](RELEASE_VERIFICATION.md).
 
 ## Download and start the Windows app
 
-1. Open [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases/tag/v0.4.0) and download **ufc-matchup-analyzer-v0.4.0-windows.zip**.
+1. Open [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases/tag/v0.6.0) and download **ufc-matchup-analyzer-v0.6.0-windows.zip**.
 2. Right-click the ZIP and choose **Extract All**. Use a writable folder, such as Documents.
 3. Open the extracted **UFC Matchup Analyzer** folder.
 4. Double-click **UFC Matchup Analyzer.exe**.
@@ -60,6 +60,22 @@ The included snapshot produces approximately **82.3% / 17.7%** for the men's exa
 ![Men's detailed comparison](docs/images/men-comparison.png)
 
 ![Women's detailed comparison](docs/images/women-comparison.png)
+
+![Frozen paired bars and engine pre-bout Elo](docs/images/men-visual-v06.png)
+
+## Initial evidence and visual comparison
+
+After validating the selected model's datasets, the app shows an initial comparison with profile measurements, eligible recorded bout counts and recent fights while advanced preparation continues. This view is explicitly partial and contains no probability. Draws and no-contests count as recorded bouts. Cancellation or failure preserves a labelled partial report for copying/export; it is not saved as a completed analysis.
+
+The **Visual comparison** tab shows paired striking, grappling and activity metrics plus engine pre-bout Elo histories. Percentages share a 0–100% axis; other metrics share a zero-based axis per row. Missing values remain unavailable. Fight counts describe eligible history, while unavailable attempt denominators are stated explicitly. Men's trends use stored decisive-bout engine states; women's use prepared live histories. Division ratings in the evidence table refer to each bout's division. The charts, numeric table and offline HTML/TXT exports use the same frozen evidence. Older saved reports do not acquire current-source Elo histories.
+
+**Help → Model validation** opens the dated research report offline. It includes chronological holdout results, calibration counts, baseline comparisons and the internal-fold audit. A small historical evaluation and a failed methodology audit do not establish general accuracy or profitability. Installed-data/engine changes are reported against the evaluated snapshot.
+
+## Upgrade from another portable folder
+
+Extract the new portable app into a separate writable folder. Choose **Help → Import from previous installation…**, select the previous extracted app folder, and review the eligible/skipped records. Ctrl+click to choose a subset that fits the remaining capacity. Close the older app before applying the capture. Existing destination records remain; duplicates, conflicting IDs, invalid records and entries exceeding the 50-entry/50-MB budget are reported. Original source files remain unchanged.
+
+An optional checkbox imports text/window/collapsed-input preferences and remembered selections validated against the current fighter catalog. Obsolete or ambiguous fighter names are cleared. Current history-storage preferences remain in place. Datasets, executable files, caches, transaction state and machine-specific export paths are excluded. Imported analyses retain their original results and timestamps; compatibility determines whether they can be reused. **Help → Undo latest import…** reverses unchanged imported files/preferences, while retaining and reporting subsequent changes. Interrupted imports recover at the next launch.
 
 ## Copy and save
 

@@ -1,0 +1,75 @@
+{
+  "version": "0.5.0",
+  "status": "local_review_candidate_standard_publication_gate_not_passed",
+  "checks": [
+    {
+      "name": "Full native regression",
+      "status": "PASS",
+      "required": true,
+      "evidence": "161 tests; no failures, errors or skips"
+    },
+    {
+      "name": "Cross-matchup cached/fresh and baseline parity",
+      "status": "PASS",
+      "required": true,
+      "evidence": "Both engines, three repetitions; tolerance 1e-12; measured reductions 84.74/94.48 percent"
+    },
+    {
+      "name": "Controlled corrections, full rebuild and restore",
+      "status": "PASS",
+      "required": true,
+      "evidence": "Men and women W/L to NC/draw, complete native rebuilds; all 15 original hashes restored"
+    },
+    {
+      "name": "Independent chronological feature rebuild comparison",
+      "status": "PASS",
+      "required": true,
+      "evidence": "Five paired women bouts, 206 columns; bounded result agrees with full fresh fixture rebuild and later features change"
+    },
+    {
+      "name": "Fresh portable offline predictions and historical cutoffs",
+      "status": "PASS",
+      "required": true,
+      "evidence": "Both model families; normal/reversed order, worker settings, historical dates; original snapshot preserved"
+    },
+    {
+      "name": "Frozen summaries, comparisons, cancellation and cache clearing",
+      "status": "PASS",
+      "required": true,
+      "evidence": "Real workers/native UI; complete exports; 50-entry/50-MB history budget preserved"
+    },
+    {
+      "name": "Reproducible retained-engine export",
+      "status": "PASS",
+      "required": true,
+      "evidence": "All 30 engine files match the read-only research export"
+    },
+    {
+      "name": "Clean Windows 10/11 machine coverage",
+      "status": "UNVERIFIED",
+      "required": true
+    },
+    {
+      "name": "Physical OS scale 100/150/200 coverage",
+      "status": "UNVERIFIED",
+      "required": true
+    },
+    {
+      "name": "Dataset redistribution review",
+      "status": "BLOCKED",
+      "required": true
+    },
+    {
+      "name": "Remote source CI",
+      "status": "UNVERIFIED",
+      "required": false
+    },
+    {
+      "name": "Published v0.5 portable download",
+      "status": "UNVERIFIED",
+      "required": true,
+      "phase": "after_publish"
+    }
+  ],
+  "previous_release_checks": "docs/release_checks_v04.json"
+}
