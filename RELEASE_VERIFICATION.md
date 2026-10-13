@@ -1,3 +1,7 @@
+# Current source: v0.5 local release candidate
+
+Current verification is tracked in [v0.5 verification](docs/V0_5_VERIFICATION.md). The v0.4 publication evidence below is preserved as release-specific history.
+
 # Release verification: v0.4.0 experimental Windows release
 
 Implemented and verified locally on October 11, 2026. The four requested improvements are complete: consistent completed draw/NC capture in both update routes, actionable maintenance errors with retained diagnostics, measured phase progress and captured-fight details, and frozen recent UFC bouts throughout live and saved reports. Algorithms, feature definitions, calibration and engine-specific Elo policies are unchanged.

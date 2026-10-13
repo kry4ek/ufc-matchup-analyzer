@@ -8,6 +8,9 @@ PUBLIC=['ufc_matchup_analyzer.py','analyzer_support.py','analyzer_maintenance.py
 PUBLIC += ['runtime_inputs.json']
 PUBLIC += ['analyzer_history.py','analyzer_protocol.py','analyzer_reporting.py','analyzer_widgets.py','analyzer_engine_runner.py']
 PUBLIC += ['analyzer_errors.py','analyzer_fight_history.py','tools/engine_patches.json']
+PUBLIC += ['analyzer_cache.py','analyzer_summary.py','analyzer_comparison.py','analyzer_corrections.py']
+PUBLIC += ['tools/engine_patches_v05.json']
+PUBLIC += ['docs/verification_evidence_v04.json','docs/release_checks_v04.json']
 
 def archive(path,items,prefix='',base=ROOT):
     with zipfile.ZipFile(path,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=6) as z:

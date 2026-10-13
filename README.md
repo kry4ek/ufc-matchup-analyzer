@@ -1,5 +1,7 @@
 # UFC Matchup Analyzer
 
+The source includes the v0.5.0 improvements described below. The current public download remains v0.4.0 until the new candidate is published.
+
 A small Windows app for analyzing one men's or women's UFC matchup. Enter the division, date and fighters, then get a detailed side-by-side comparison, win probabilities and data-quality information. Analysis runs locally using fight-history datasets.
 
 Version **0.4.0** adds consistent draw/no-contest updates, actionable maintenance errors, measured progress with captured-fight details, and a **Recent fights** tab.
@@ -69,11 +71,17 @@ Changing input fields does not alter an existing result; a banner identifies a p
 
 **Recent analyses** keeps up to 50 completed predictions/statistics comparisons, capped at 50 MB, inside the app folder. Open or delete entries, or clear all history. A matching valid request automatically reopens its result with the original generation time and a reuse label. **Recalculate** bypasses saved-result reuse. The key includes fighter identities/order, division, dates/cutoff, calculation settings, dataset contents, implementation and runtime versions. Reversed matchups are computed separately.
 
+Different matchups can also reuse compatible prepared history and fitted models. This calculation cache is content-checked and capped at 1 GiB; it is separate from saved analyses. **Recalculate** bypasses both kinds of reuse. **Help → Clear calculation cache** shows its size and clears prepared work while retaining datasets and saved reports. The first calculation for a new dataset/date/configuration still performs preparation and training.
+
+In **Recent analyses**, Ctrl+click two entries and choose **Compare versions**. The view aligns fighter order by stable identities, shows probability changes in percentage points, compatible metric changes, and differences in calculation context. Full eligible-fight evidence identifies additions or changed records without mistaking a bout leaving the last-five panel for a deletion. Older analyses can be opened; unavailable comparison evidence is explained. Comparisons and their TXT/HTML exports work offline.
+
 Dataset changes or a new app version can make saved results outdated. They remain viewable, but cannot be reused for a current computation. A restored dataset can make an otherwise matching result valid again. Disable **Help → Keep recent analyses and reuse valid results** to stop new storage and reuse; existing entries remain until you clear them. Cancelled jobs and failed predictions are not saved as completed analyses. You can read and export older results while another operation runs; **Open new result** appears when the new analysis is ready.
 
 ## Update datasets
 
 Click **Update datasets** while connected to the internet. One click updates both models: download into staging → audit completed fights → rebuild changed features → validate → install successful changes. The app reports added-fight counts and freshness dates. With no changes it reports **Already up to date**.
+
+Use **Help → Recheck recent events** to look for source corrections to already recorded bouts. Choose an inclusive range (default: last 90 days, maximum 20 completed events), review the captured field-level changes, then choose **Apply captured corrections**. Apply installs the reviewed capture after revalidating the installed-data fingerprints; it does not silently fetch a different version. Known bouts missing from a response or conflicting fighter identities block replacement. A win overturned to a draw/no-contest retains its statistics and removes its binary training rows. Use the existing Restore action to undo an applied correction.
 
 Failures preserve your installed datasets. Do not move or delete the app folder during an operation. Updates can be cancelled before installation starts; the commit finishes or recovers safely. Interrupted transactions are checked at the next launch before analysis is enabled.
 
@@ -84,6 +92,10 @@ Updating fight data rebuilds features. Predictions train the selected algorithm 
 ## Understand the results
 
 The report compares **A** and **B** in aligned tables: physical attributes, overall/division **Elo**, opponent strength, UFC experience, striking, grappling, recent form, activity and available win/loss methods. Men's advanced comparison also includes refined opponent ratings, round experience, layoffs and division movement; women's includes opponent-Elo-weighted performance. Bayesian rate estimates and attempt counts explain how sparse histories are smoothed. Model details show men's raw/calibrated estimates or women's component probabilities, ensemble weights, disagreement and reliability factors.
+
+The **Matchup summary** above Overview's metrics highlights up to three supported observations and two data limitations. **View supporting metrics** filters the comparison to the cited evidence. Summary rules describe recorded statistics; they do not infer feature importance or explain why the model produced its probability. Saved results and exports retain the exact summary originally generated. Earlier saved reports identify a missing summary instead of regenerating one from current data.
+
+![Matchup summary and supporting comparison](docs/images/matchup-summary-v05.png)
 
 **A − B** is the numerical difference, not a verdict on who is better. Percentage differences use **percentage points (pp)**. **N/A** means unavailable; zero remains zero. Elo is an internal calculated rating starting at 1500, not an official ranking. Read the explanations beneath the comparison for metric definitions and differing history windows.
 

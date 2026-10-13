@@ -3312,18 +3312,24 @@ def predict_prepared_matchup(prepared, progress=None):
     X_pred_forward = pred_row_forward[feature_cols]
     X_pred_reverse = pred_row_reverse[feature_cols]
 
-    models = build_models(y_train)
-    pipelines = {
-        name: build_model_pipeline(model, numeric_features, categorical_features)
-        for name, model in models.items()
-    }
-    notify("cross_validation", "Cross-validating women’s ensemble weights")
-    ensemble_weights = compute_model_weights(pipelines, X_train, y_train)
+    cached_models = prepared.get('cached_models')
+    if cached_models:
+        pipelines, ensemble_weights = cached_models
+        notify("cache", "Using a compatible fitted women's ensemble")
+    else:
+        models = build_models(y_train)
+        pipelines = {
+            name: build_model_pipeline(model, numeric_features, categorical_features)
+            for name, model in models.items()
+        }
+        notify("cross_validation", "Cross-validating women’s ensemble weights")
+        ensemble_weights = compute_model_weights(pipelines, X_train, y_train)
     predictions = []
 
     for model_name, pipeline in pipelines.items():
-        notify("training", "Fitting women’s model: "+model_name, completed=len(predictions), total=len(pipelines))
-        pipeline.fit(X_train, y_train)
+        if not cached_models:
+            notify("training", "Fitting women’s model: "+model_name, completed=len(predictions), total=len(pipelines))
+            pipeline.fit(X_train, y_train)
 
         # Forward: fighter A vs fighter B.
         prob_a_forward = float(pipeline.predict_proba(X_pred_forward)[:, 1][0])
@@ -3348,6 +3354,7 @@ def predict_prepared_matchup(prepared, progress=None):
             }
         )
 
+    prepared['fitted_models'] = (pipelines, ensemble_weights)
     notify("prediction", "Combining forward/reverse estimates and reliability")
     pred_df = pd.DataFrame(predictions)
     base_probs = pred_df["fighter_a_win_probability"].astype(float)

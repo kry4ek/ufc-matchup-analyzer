@@ -1,0 +1,114 @@
+{
+  "version": "0.4.0",
+  "status": "experimental_prerelease_standard_gate_not_passed",
+  "checks": [
+    {
+      "name": "Full native regression",
+      "status": "PASS",
+      "required": true,
+      "evidence": "128 tests, no skips; work/v04-tests.log"
+    },
+    {
+      "name": "Mixed outcomes through actual full rebuild and recovery",
+      "status": "PASS",
+      "required": true,
+      "evidence": "Both targets: 3 captured fights, 1 decisive, 1 draw, 1 NC, 2 binary training rows; repeat no changes; 15 original hashes restored"
+    },
+    {
+      "name": "Live update and manual retry",
+      "status": "PASS",
+      "required": true,
+      "evidence": "work/v04-live-maintenance.json: actual network, captured summary, repeat, restore, forced HTTP failure and real dialog Retry"
+    },
+    {
+      "name": "Real model and historical parity",
+      "status": "PASS",
+      "required": true,
+      "evidence": "Fresh offline men, women and historical men GUI/worker predictions match baseline within 1e-12; frozen recent lists shared with previews"
+    },
+    {
+      "name": "Recent reports, statistics only, cancellation and exports",
+      "status": "PASS",
+      "required": true,
+      "evidence": "Native comparisons and cancelled preview preserve recent history; native TXT/HTML Save dialogs; full regression covers old and saved reports"
+    },
+    {
+      "name": "Progress, diagnostics and failure safety",
+      "status": "PASS",
+      "required": true,
+      "evidence": "Bounded JSON relay, actual counts, malformed records, final drain, rollback failures, retained paths and GUI actions tested"
+    },
+    {
+      "name": "Reproducible export and source/data/dependency audit",
+      "status": "PASS",
+      "required": true,
+      "evidence": "30 exact engine exports; 15 dataset hashes; 18 locked dependencies; work/v04-audit.json"
+    },
+    {
+      "name": "Native runtime closure and layout",
+      "status": "PASS",
+      "required": true,
+      "evidence": "299 AMD64 imports; four tabs and all font sizes; Tk scaling simulations at 100/125/150/200, actual OS 125%"
+    },
+    {
+      "name": "Fresh feature parity and leakage",
+      "status": "PASS",
+      "required": true,
+      "evidence": "20 fights, 270 features, 10800 comparisons, zero mismatches; same-date and target-fight leakage checks pass"
+    },
+    {
+      "name": "Fresh ZIP extraction and native launcher",
+      "status": "PASS",
+      "required": true,
+      "evidence": "work/v04-final-archive-verification.txt; work/v04-final-launch.json"
+    },
+    {
+      "name": "dataset redistribution permission",
+      "status": "BLOCKED",
+      "required": true,
+      "evidence": "Existing review_required status remains unresolved"
+    },
+    {
+      "name": "clean Windows 10/11 machines",
+      "status": "BLOCKED",
+      "required": true,
+      "evidence": "No separate clean machines available"
+    },
+    {
+      "name": "actual Windows 100/150/200 percent scaling",
+      "status": "BLOCKED",
+      "required": true,
+      "evidence": "Only actual 125% available; Tk simulation is separate"
+    },
+    {
+      "name": "automatic pinned dataset download",
+      "status": "BLOCKED",
+      "required": true,
+      "evidence": "No separate public dataset asset; automatic URL remains unset"
+    },
+    {
+      "name": "Remote source CI",
+      "status": "PASS",
+      "required": false,
+      "evidence": "https://github.com/kry4ek/ufc-matchup-analyzer/actions/runs/38144662396; Windows/Linux/macOS source-only checks pass for published release source commit 93184afd9b8ecde9a5c759f58db1e63578f8b214"
+    },
+    {
+      "name": "Published v0.4 portable download",
+      "status": "PASS",
+      "required": true,
+      "phase": "after_publish",
+      "evidence": "https://github.com/kry4ek/ufc-matchup-analyzer/releases/download/v0.4.0/POST_PUBLICATION_VERIFICATION.json; all 6 original public assets match uploaded hashes; fresh extracted native launch and both offline documented predictions pass"
+    }
+  ],
+  "publication_decision": {
+    "date": "2026-10-11",
+    "scope": "Owner explicitly authorized publishing the v0.4.0 full portable Windows app and source archive; separate dataset asset remains omitted",
+    "rights_clearance": "unresolved",
+    "standard_gate_passed": false,
+    "request": "Finish the job and publish the new portable app on GitHub",
+    "published": true,
+    "release_url": "https://github.com/kry4ek/ufc-matchup-analyzer/releases/tag/v0.4.0",
+    "release_source_commit": "93184afd9b8ecde9a5c759f58db1e63578f8b214",
+    "post_publication_verification": "https://github.com/kry4ek/ufc-matchup-analyzer/releases/download/v0.4.0/POST_PUBLICATION_VERIFICATION.json"
+  }
+}

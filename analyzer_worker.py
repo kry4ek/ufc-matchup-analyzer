@@ -66,6 +66,30 @@ def execute(request,emit,cancel=None,root=ROOT):
             args=parser().parse_args(argv)
             args.use_cache=request.get('use_cache',True);args.force_recalculate=request.get('force_recalculate',False)
             return predict(args,root,emit,cancel)
+        if operation=='clear_cache':
+            from analyzer_cache import clear_cache
+            clear_cache(root)
+            return dict(status='cleared')
+        if operation=='recheck':
+            from analyzer_corrections import preview
+            recover_interrupted(root)
+            value=preview(root,request.get('from_date'),request.get('to_date'),emit,cancel)
+            status={}
+            with contextlib.suppress(OSError,ValueError):status=json.loads((root/'.runtime/maintenance_status.json').read_text())
+            status.update(last_recheck=utc_now(),recheck_range=dict(start=value['start'],end=value['end']),recheck_preview=value['id'])
+            atomic_json(root/'.runtime/maintenance_status.json',status)
+            return dict(status='preview',preview=value,maintenance_status=status)
+        if operation=='apply_corrections':
+            from analyzer_corrections import apply
+            recover_interrupted(root)
+            outcome=apply(root,request['preview_id'],emit,cancel)
+            report=installation_report(root);report.update(outcome)
+            status=report.get('maintenance_status',{})
+            status.update(last_operation='corrections',last_successful_check=utc_now(),summary=outcome.get('summary',{}),transaction=outcome.get('transaction'),transaction_status=outcome['status'])
+            if outcome['status']=='committed':status['last_successful_change']=utc_now()
+            atomic_json(root/'.runtime/maintenance_status.json',status);report['maintenance_status']=status
+            cleanup_history(root)
+            return report
         if operation in ('update','rebuild'):
             recover_interrupted(root)
             transaction=maintenance(root,kind=operation,target='all',apply=True,max_events=request.get('max_events'),from_date=request.get('from_date'),progress=emit,cancel=cancel)

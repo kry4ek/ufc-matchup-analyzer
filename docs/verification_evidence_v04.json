@@ -1,0 +1,517 @@
+{
+  "version": "0.4.0",
+  "date": "2026-10-11",
+  "scope": "Fresh data-equipped portable v0.4 verification; owner-authorized experimental GitHub publication. Published-download checks are recorded separately after publication.",
+  "environment": {
+    "os": "Windows 10 Pro x64 build 19045",
+    "python": "3.14.7 x64",
+    "tcl_tk": "9.0.4",
+    "actual_windows_scale_percent": 125
+  },
+  "regression": {
+    "status": "PASS",
+    "tests": 128,
+    "seconds": 26.04,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "log": "work/v04-tests.log"
+  },
+  "native_dependencies": {
+    "status": "PASS",
+    "amd64_pe_files": 299,
+    "missing_imports": 0
+  },
+  "datasets": {
+    "files": 15,
+    "bytes": 206791890,
+    "snapshot_through": "2026-09-26",
+    "baseline_restored_after_all_maintenance": true
+  },
+  "checks": {
+    "mixed_outcomes": {
+      "status": "PASS",
+      "scope": "Controlled fixtures; actual updaters, feature rebuilds, validation, transaction and recovery",
+      "summary": {
+        "men": {
+          "added_fights": 3,
+          "changed": true,
+          "binary_training_rows_added": 2,
+          "events_inspected": 1,
+          "captured_fights": 3,
+          "decisive_fights": 1,
+          "draws": 1,
+          "no_contests": 1,
+          "proposed_binary_training_rows": 2,
+          "data_through": "2026-10-10"
+        },
+        "women": {
+          "added_fights": 3,
+          "changed": true,
+          "binary_training_rows_added": 2,
+          "events_inspected": 1,
+          "captured_fights": 3,
+          "decisive_fights": 1,
+          "draws": 1,
+          "no_contests": 1,
+          "proposed_binary_training_rows": 2,
+          "data_through": "2026-10-10"
+        }
+      },
+      "transaction": "20261011T085008-d23781c0",
+      "repeat": "20261011T090329-960f69a8",
+      "measured_progress_events": 1234,
+      "all_original_hashes_restored": true
+    },
+    "live_maintenance": {
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "real bounded all-target update",
+          "type": "result",
+          "code": null,
+          "transaction_status": "committed",
+          "seconds": 695.707,
+          "gui_ticks": 14867
+        },
+        {
+          "name": "real repeated update adds nothing",
+          "type": "result",
+          "code": null,
+          "transaction_status": "no_changes",
+          "seconds": 37.958,
+          "gui_ticks": 871
+        },
+        {
+          "name": "native restore previous datasets",
+          "type": "result",
+          "code": null,
+          "transaction_status": null,
+          "seconds": 22.466,
+          "gui_ticks": 465
+        },
+        {
+          "name": "native source fetch failure",
+          "type": "error",
+          "code": "source_fetch_failed",
+          "transaction_status": null,
+          "seconds": 48.661,
+          "gui_ticks": 1050
+        },
+        {
+          "name": "real dialog Retry with a fresh worker",
+          "type": "result",
+          "code": null,
+          "transaction_status": "no_changes",
+          "seconds": 40.399,
+          "gui_ticks": 906
+        }
+      ],
+      "summary": {
+        "men": {
+          "added_fights": 22,
+          "changed": true,
+          "binary_training_rows_added": 44,
+          "events_inspected": 2,
+          "captured_fights": 22,
+          "decisive_fights": 22,
+          "draws": 0,
+          "no_contests": 0,
+          "proposed_binary_training_rows": 44,
+          "data_through": "2026-10-10"
+        },
+        "women": {
+          "added_fights": 4,
+          "changed": true,
+          "binary_training_rows_added": 6,
+          "events_inspected": 2,
+          "captured_fights": 4,
+          "decisive_fights": 3,
+          "draws": 1,
+          "no_contests": 0,
+          "proposed_binary_training_rows": 6,
+          "data_through": "2026-10-10"
+        }
+      },
+      "measured_progress_events": 1282,
+      "updated_fights_dialog_rows": 26,
+      "all_original_hashes_restored": true,
+      "diagnostics_path_retained": true
+    },
+    "men": {
+      "python": "3.14.7",
+      "tk": "9.0.4",
+      "runs": [
+        {
+          "case": "forward",
+          "seconds": 107.55,
+          "gui_ticks": 1819,
+          "full_app_process_tree_working_set_mib": 516.7,
+          "visible_owned_console_windows": 0,
+          "probability": 0.8229788712684363,
+          "engine_seconds": 97.18,
+          "first_comparison_seconds": 95.254,
+          "comparison_navigation_seconds": 0.0786,
+          "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+          "stage_timings_seconds": {
+            "loading": 3.595,
+            "features": 3.95,
+            "rebuilding": 83.788,
+            "training": 1.009,
+            "prediction": 0.154,
+            "validation": 8.913
+          },
+          "render_seconds": 0.049,
+          "peak_working_set_mib": 343.7,
+          "model": "v3_bayes_smoothed",
+          "report_lines": 225,
+          "comparison_rows": 118,
+          "copy_and_save": "PASS"
+        }
+      ],
+      "offline": true,
+      "startup": {
+        "seconds": 21.8,
+        "gui_ticks": 372,
+        "full_app_process_tree_working_set_mib": 204.2,
+        "visible_owned_console_windows": 0
+      },
+      "freshness": "Datasets through: men 2026-09-26  ·  women 2026-09-26",
+      "status": "PASS"
+    },
+    "women": {
+      "python": "3.14.7",
+      "tk": "9.0.4",
+      "runs": [
+        {
+          "case": "forward",
+          "seconds": 87.21,
+          "gui_ticks": 1332,
+          "full_app_process_tree_working_set_mib": 973.9,
+          "visible_owned_console_windows": 0,
+          "probability": 0.485904994646593,
+          "engine_seconds": 85.78,
+          "first_comparison_seconds": 7.417,
+          "comparison_navigation_seconds": 0.0636,
+          "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+          "stage_timings_seconds": {
+            "loading": 1.34,
+            "features": 3.344,
+            "cross_validation": 55.913,
+            "training": 20.966,
+            "prediction": 0.049,
+            "validation": 0.371
+          },
+          "render_seconds": 0.029,
+          "peak_working_set_mib": 868.9,
+          "model": "v1_current_ensemble",
+          "report_lines": 254,
+          "comparison_rows": 124,
+          "copy_and_save": "PASS"
+        }
+      ],
+      "offline": true,
+      "startup": {
+        "seconds": 12.21,
+        "gui_ticks": 222,
+        "full_app_process_tree_working_set_mib": 199.7,
+        "visible_owned_console_windows": 0
+      },
+      "freshness": "Datasets through: men 2026-09-26  ·  women 2026-09-26",
+      "status": "PASS"
+    },
+    "historical": {
+      "python": "3.14.7",
+      "tk": "9.0.4",
+      "runs": [
+        {
+          "case": "forward",
+          "seconds": 93.87,
+          "gui_ticks": 1629,
+          "full_app_process_tree_working_set_mib": 530.2,
+          "visible_owned_console_windows": 0,
+          "probability": 0.8432395019728887,
+          "engine_seconds": 84.97,
+          "first_comparison_seconds": 82.681,
+          "comparison_navigation_seconds": 0.0724,
+          "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+          "stage_timings_seconds": {
+            "loading": 4.428,
+            "features": 5.29,
+            "rebuilding": 68.563,
+            "training": 1.205,
+            "prediction": 0.163,
+            "validation": 7.269
+          },
+          "render_seconds": 0.022,
+          "peak_working_set_mib": 343.5,
+          "model": "v3_bayes_smoothed",
+          "report_lines": 225,
+          "comparison_rows": 118,
+          "copy_and_save": "PASS"
+        }
+      ],
+      "offline": true,
+      "startup": {
+        "seconds": 20.13,
+        "gui_ticks": 365,
+        "full_app_process_tree_working_set_mib": 202.5,
+        "visible_owned_console_windows": 0
+      },
+      "freshness": "Datasets through: men 2026-09-26  ·  women 2026-09-26",
+      "status": "PASS"
+    },
+    "layout": {
+      "status": "PASS",
+      "native_display_dpi": 120,
+      "method": "Tk scaling simulation on the current Windows display; not a change to Windows display scaling",
+      "scales": [
+        {
+          "scale_percent": 100,
+          "width": 1126,
+          "height": 876,
+          "output_height": 575,
+          "status": "PASS"
+        },
+        {
+          "scale_percent": 125,
+          "width": 1126,
+          "height": 876,
+          "output_height": 498,
+          "status": "PASS"
+        },
+        {
+          "scale_percent": 150,
+          "width": 1349,
+          "height": 990,
+          "output_height": 602,
+          "status": "PASS"
+        },
+        {
+          "scale_percent": 200,
+          "width": 1800,
+          "height": 990,
+          "output_height": 560,
+          "status": "PASS"
+        }
+      ]
+    },
+    "native_text_save": {
+      "status": "PASS",
+      "checks": [
+        {
+          "scenario": "save",
+          "observations": [
+            "default filename confirmed"
+          ],
+          "status": "PASS"
+        },
+        {
+          "scenario": "overwrite-cancel",
+          "observations": [
+            "default filename confirmed",
+            "native overwrite confirmation displayed"
+          ],
+          "status": "PASS"
+        },
+        {
+          "scenario": "cancel",
+          "observations": [
+            "default filename confirmed"
+          ],
+          "status": "PASS"
+        }
+      ]
+    },
+    "native_html_save": {
+      "status": "PASS",
+      "observations": [
+        "Native HTML filename and file type confirmed"
+      ],
+      "filename": "Islam Makhachev vs Justin Gaethje.html",
+      "utf8_complete_html": true
+    },
+    "statistics_and_cancel": {
+      "status": "PASS",
+      "checks": [
+        {
+          "name": "men statistics-only without prediction fitting",
+          "status": "PASS",
+          "seconds": 129.674,
+          "first_comparison_seconds": 118.243,
+          "stages": [
+            "checking",
+            "loading",
+            "loading",
+            "features",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "rebuilding",
+            "report",
+            "complete"
+          ]
+        },
+        {
+          "name": "men existing statistics navigation without another worker",
+          "status": "PASS",
+          "seconds": 0.074,
+          "history_entries": 4
+        },
+        {
+          "name": "men filtered-view complete TXT/HTML/clipboard values",
+          "status": "PASS"
+        },
+        {
+          "name": "women statistics-only without prediction fitting",
+          "status": "PASS",
+          "seconds": 15.908,
+          "first_comparison_seconds": 12.645,
+          "stages": [
+            "checking",
+            "loading",
+            "loading",
+            "features",
+            "report",
+            "complete"
+          ]
+        },
+        {
+          "name": "women existing statistics navigation without another worker",
+          "status": "PASS",
+          "seconds": 0.003,
+          "history_entries": 5
+        },
+        {
+          "name": "women filtered-view complete TXT/HTML/clipboard values",
+          "status": "PASS"
+        },
+        {
+          "name": "zero dated history requires explicit confirmation",
+          "status": "PASS"
+        },
+        {
+          "name": "real comparison preview before training, then cancellation",
+          "status": "PASS",
+          "seconds": 16.546
+        },
+        {
+          "name": "history disabled stops both reuse and storage",
+          "status": "PASS"
+        }
+      ],
+      "offline": true
+    },
+    "source_export": {
+      "status": "PASS",
+      "files_verified": 30,
+      "mismatches": []
+    },
+    "audit": {
+      "status": "PASS",
+      "python_files": 73,
+      "public_files": 108,
+      "dependency_checks": 18,
+      "errors": []
+    }
+  },
+  "retained_prior_evidence": {
+    "commit": "abfcd3a0f4cc41cda5f13e5e685126d4cc11dade",
+    "scope": "Earlier feature parity and platform/publication history; not new v0.4 executions"
+  },
+  "remote_ci": {
+    "status": "PASS",
+    "commit": "7f9ee1ce02886b50778f3e9f3293af95ead0daf0",
+    "run_id": 38129389323,
+    "url": "https://github.com/kry4ek/ufc-matchup-analyzer/actions/runs/38129389323",
+    "scope": "Source-only CI on Windows, Linux and macOS; separate from data-equipped Windows checks.",
+    "jobs": [
+      {
+        "name": "safety (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "safety (windows-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "safety (macos-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "feature_parity": {
+    "status": "PASS",
+    "sampled_fights": 20,
+    "features": 270,
+    "comparisons": 10800,
+    "numeric_mismatches": 0,
+    "missing_features": 0,
+    "max_numeric_delta": 2.842170943040401e-14,
+    "same_date_leakage": "PASS",
+    "target_fight_leakage": "PASS",
+    "log": "work/v04-parity/report.md"
+  },
+  "developer_setup": {
+    "status": "PASS",
+    "checks": 8,
+    "scope": "Real supported Python discovery; absent/declined/unavailable installer branches are mocked"
+  },
+  "final_extraction_launch": {
+    "ready": true,
+    "version": "0.4.0",
+    "python": "3.14.7",
+    "tcl": "9.0.4",
+    "tk": "9.0.4",
+    "window_title": "UFC Matchup Analyzer",
+    "window_size": [
+      1126,
+      876
+    ],
+    "status": "Ready to analyze.",
+    "freshness": "Datasets through: men 2026-09-26  ·  women 2026-09-26",
+    "seconds": 22.84,
+    "dialogs": []
+  },
+  "archives": {
+    "status": "PASS",
+    "verification_log": "work/v04-final-archive-verification.txt",
+    "scope": "Exact ZIP inventory, member hashes, CRCs and archive checksums. Final checksum files are alongside the ZIPs."
+  },
+  "diagnostics_redaction": {
+    "status": "PASS",
+    "scope": "Full native regression rerun after adding Bearer, Basic and JSON authorization-header redaction checks"
+  },
+  "published_release": {
+    "version": "0.4.0",
+    "url": "https://github.com/kry4ek/ufc-matchup-analyzer/releases/tag/v0.4.0",
+    "source_commit": "93184afd9b8ecde9a5c759f58db1e63578f8b214",
+    "prerelease": true,
+    "source_ci": {
+      "status": "PASS",
+      "commit": "93184afd9b8ecde9a5c759f58db1e63578f8b214",
+      "run_id": 38144662396,
+      "url": "https://github.com/kry4ek/ufc-matchup-analyzer/actions/runs/38144662396"
+    },
+    "download_and_native_predictions_verification": "https://github.com/kry4ek/ufc-matchup-analyzer/releases/download/v0.4.0/POST_PUBLICATION_VERIFICATION.json",
+    "status": "PASS",
+    "standard_gate_passed": false
+  }
+}

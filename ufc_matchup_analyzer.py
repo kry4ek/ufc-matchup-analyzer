@@ -129,6 +129,10 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
             command+=['--division',"Women's "+match,'--json-out',str(out),'--profiles',str(pathlib.Path(args.profiles).resolve() if args.profiles else directory/'output_quality_fixed/ufc_womens_fighter_profiles.csv')]
             if args.profiles:command+=['--allow-manual-profile-fallback']
         env=runtime_environment(root)
+        computation_context=dict(context=context,settings={k:v for k,v in canonical.items() if k not in ('operation','fighter_a','fighter_b','fighter_a_id','fighter_b_id')})
+        config=temp/'compute-context.json'
+        atomic_json(config,dict(context=computation_context,read=not getattr(args,'force_recalculate',False)))
+        env['UFC_COMPUTE_CONTEXT']=str(config)
         env['UFC_ENGINE_EVENTS']=str(events)
         if args.workers==1:env['LOKY_MAX_CPU_COUNT']='1'
         emit(stage='loading',message='Loading the selected model and preparing fighter statistics',cancellable=True)
@@ -149,6 +153,8 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
                     kind=event.pop('type')
                     if kind=='comparison_ready':
                         preview=event['payload'];preview.update(recent_fights=frozen_history,coverage=coverage,coverage_warnings=coverage_warnings,fighter_a_id=aid,fighter_b_id=bid,analyzer_version=VERSION,generated_at=utc_now(),result_state='pending' if operation=='predict' else 'comparison')
+                        from analyzer_summary import build_summary,metric_records
+                        preview.update(matchup_summary=build_summary(preview),metric_records=metric_records(preview))
                         emit(event_type=kind,**event)
                     else:emit(**event)
             try:
@@ -182,6 +188,10 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
         payload.setdefault('fight_date',args.fight_date)
         payload['analyzer_version']=VERSION;payload['elapsed_seconds']=round(time.monotonic()-start,2)
         payload.update(recent_fights=frozen_history,result_state='comparison' if operation=='compare' else 'complete',coverage=coverage,coverage_warnings=coverage_warnings,fighter_a_id=aid,fighter_b_id=bid,generated_at=utc_now(),reused=False,calculation_request=canonical,calculation_fingerprint=__import__('analyzer_history').fingerprint(context))
+        from analyzer_summary import build_summary,metric_records
+        from analyzer_fight_history import fight_evidence
+        payload.update(matchup_summary=build_summary(payload),metric_records=metric_records(payload),
+                       fight_evidence=fight_evidence(root,sex,(a,aid),(b,bid),args.fight_date))
         payload.setdefault('stage_timings_seconds',{})['validation']=round(validation_seconds,3)
         payload['worker_mode']='single' if args.workers==1 else 'automatic'
         payload['peak_process_tree_working_set_mib']=round(peak,1) if peak else None

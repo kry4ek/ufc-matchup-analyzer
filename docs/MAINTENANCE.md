@@ -1,5 +1,15 @@
 # Data maintenance and recovery
 
+## Recheck recorded events
+
+**Help → Recheck recent events** fetches an inclusive completed-event range (default 90 days, maximum 20 events) and retains a correction preview. It reports the actual selected events and field-level differences. Oversized ranges, missing known bouts, malformed captures and conflicting identities stop the operation; nothing is deleted because a source response omitted a bout.
+
+**Apply captured corrections** validates the preview digest and baseline dataset hashes under the operation lock, replaces complete paired source records, rebuilds affected advanced/Bayesian features, validates and installs both changed targets atomically. It uses the captured source rather than fetching again. Windows interrupted-transaction recovery and **Restore previous datasets** also apply to corrections. The women's advanced rows are rebuilt from the earliest changed old/new event date onward before Bayesian rebuilding.
+
+Correction summaries distinguish bouts corrected/added, binary rows added, binary rows removed, and signed net change. Last recheck time/range are recorded separately from the last data change. Historical cutoffs exclude later event dates but use the installed source; they do not reconstruct what the source reported on that historical day.
+
+Prepared calculations are stored separately under `.runtime/compute_cache`, bounded to 1 GiB. Changed source contents, dates, settings, implementation or runtime fingerprints prevent incompatible reuse. Clear the calculation cache through Help if needed; this does not delete saved analyses or recovery backups.
+
 Portable users click **Update datasets**. It automatically updates both models using private staging, audits, rebuilding of changed data and validation before installation. No changes means no unnecessary rebuild. Failures preserve installed data. Progress and elapsed time are shown; cancellation stops before commit. Once committing starts, allow it to finish.
 
 The footer refreshes dates and fighter suggestions after success. **Help → Rebuild local features** works offline. **Help → Restore previous datasets** undoes the latest successful update/rebuild after confirmation. Startup checks unfinished journals and recovers inconsistent data before analysis. A still-running maintenance process blocks recovery.

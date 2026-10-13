@@ -45,7 +45,7 @@ def visible_owned_consoles():
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--target',choices=['men','women','quick'],default='quick');p.add_argument('--out',type=Path,required=True);p.add_argument('--screenshots',type=Path);p.add_argument('--full',action='store_true');p.add_argument('--baseline',type=Path);p.add_argument('--offline',action='store_true')
-    p.add_argument('--fighter-a');p.add_argument('--fighter-b');p.add_argument('--division');p.add_argument('--fight-date',default='2026-10-10');p.add_argument('--startup-timeout',type=float,default=300,help='Seconds allowed for first-use integrity and native-library checks');args=p.parse_args()
+    p.add_argument('--fighter-a');p.add_argument('--fighter-b');p.add_argument('--division');p.add_argument('--fight-date',default='2026-10-10');p.add_argument('--workers',type=int);p.add_argument('--resume',action='store_true');p.add_argument('--startup-timeout',type=float,default=300,help='Seconds allowed for first-use integrity and native-library checks');args=p.parse_args()
     args.out.parent.mkdir(parents=True,exist_ok=True)
     package=ROOT.parent.resolve()
     assert Path(sys.executable).resolve().is_relative_to(package)
@@ -80,9 +80,16 @@ def main():
         sex=args.target;division='Lightweight' if sex=='men' else 'Flyweight'
         a,b=('Islam Makhachev','Justin Gaethje') if sex=='men' else ('Valentina Shevchenko','Manon Fiorot')
         a=args.fighter_a or a;b=args.fighter_b or b;division=args.division or division
-        cases=[('forward',a,b,args.fight_date,None)]
-        if args.full:cases += [('reverse',b,a,'2026-10-10',None),('single-worker',a,b,'2026-10-10',1),('historical',a,b,'2025-01-18' if sex=='men' else '2025-05-10',1)]
+        cases=[('forward',a,b,args.fight_date,args.workers)]
+        if args.full:
+            cases += [('reverse',b,a,'2026-10-10',None)]
+            if args.workers!=1:cases += [('single-worker',a,b,'2026-10-10',1)]
+            cases += [('historical',a,b,'2025-01-18' if sex=='men' else '2025-05-10',1)]
         forward=None
+        if args.resume:
+            prior=json.loads(args.out.read_text(encoding='utf-8'));report['runs']=prior['runs']
+            completed={r['case'] for r in report['runs']};cases=[case for case in cases if case[0] not in completed]
+            forward=json.loads((args.out.parent/(sex+'-forward.json')).read_text(encoding='utf-8'))
         for label,fighter_a,fighter_b,date,workers in cases:
             dialogs.clear();app.division.set(('Men' if sex=='men' else 'Women')+' — '+division);app.change_division()
             app.names['a'].set(fighter_a);app.names['b'].set(fighter_b);app.date.set(date)

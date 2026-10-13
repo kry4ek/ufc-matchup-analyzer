@@ -62,6 +62,17 @@ def recent_fights(root, sex, fighter_a, fighter_b, fight_date, limit=5):
     else:raise ValueError('Unknown fighter history category')
     return dict(schema_version=1,history_cutoff=fight_date,**{side:sorted(rows.values(),key=lambda r:(r['event_date'],r['fight_id']),reverse=True)[:limit] for side,rows in histories.items()})
 
+def fight_evidence(root, sex, fighter_a, fighter_b, fight_date):
+    from analyzer_history import fingerprint
+    history=recent_fights(root,sex,fighter_a,fighter_b,fight_date,limit=None)
+    path=Path(root)/('mens_ufc_model/data/raw/ufcstats_men/fight_stats.csv' if sex=='men' else 'womens_ufc_model/output_td_repaired/ufc_womens_fighter_fight_stats_td_control_repaired.csv')
+    stats={}
+    for row in records(path):stats.setdefault(row.get('fight_id'),[]).append(row)
+    for side in ('fighter_a','fighter_b'):
+        for row in history[side]:
+            row['content_fingerprint']=fingerprint(dict(metadata=row,stats=sorted(stats.get(row['fight_id'],[]),key=lambda r:str(r.get('fighter_id',r.get('profile_url',r.get('fighter','')))))))
+    return history
+
 def display_row(row):
     return tuple(str(row.get(field) or 'N/A') if field != 'result' else RESULT_LABELS.get(row.get(field),'N/A') for field in ('event_date','opponent','result','division','method'))
 

@@ -355,12 +355,21 @@ class AnalyzerApp(LegacyAnalyzerApp):
         for tab,label in ((self.overview,'Overview'),(self.comparison,'Fighter comparison'),(full,'Full report')):self.notebook.add(tab,text=label)
         self.recent_tab=ttk.Frame(self.notebook,padding=10);self.notebook.add(self.recent_tab,text='Recent fights')
         self.build_recent_tab()
-        self.overview.columnconfigure(0,weight=1);self.overview.rowconfigure(3,weight=1)
+        self.overview.columnconfigure(0,weight=1);self.overview.rowconfigure(4,weight=1)
         self.summary=tk.StringVar(value='Enter a matchup and choose Analyze or Compare statistics only.')
         ttk.Label(self.overview,textvariable=self.summary,font=('Segoe UI',11),wraplength=900).grid(row=0,column=0,sticky='w')
         self.probability=tk.Canvas(self.overview,height=32,background='white',highlightthickness=0);self.probability.grid(row=1,column=0,sticky='ew',pady=8);self.probability.bind('<Configure>',lambda e:self.draw_probability())
         self.result_warning=tk.StringVar();ttk.Label(self.overview,textvariable=self.result_warning,foreground='#725200',wraplength=900).grid(row=2,column=0,sticky='w',pady=(0,6))
-        self.overview_tree=self.table(self.overview,3)
+        self.overview_tree=self.table(self.overview,4)
+        summary_frame=ttk.Frame(self.overview);summary_frame.grid(row=3,column=0,sticky='ew',pady=(0,6));summary_frame.columnconfigure(0,weight=1)
+        self.matchup_observations=tk.StringVar()
+        self.summary_text=ScrolledText(summary_frame,height=4,wrap='word',font=('Segoe UI',10),background='#f7f8fa')
+        self.summary_text.grid(row=0,column=0,sticky='ew');self.summary_text.configure(state='disabled')
+        def update_summary(*unused):
+            self.summary_text.configure(state='normal');self.summary_text.delete('1.0','end');self.summary_text.insert('1.0',self.matchup_observations.get());self.summary_text.configure(state='disabled')
+        self.matchup_observations.trace_add('write',update_summary)
+        self.summary_metrics_button=ttk.Button(summary_frame,text='View supporting metrics',command=self.summary_metrics)
+        self.summary_metrics_button.grid(row=1,column=0,sticky='w')
         self.comparison.columnconfigure(0,weight=1);self.comparison.rowconfigure(1,weight=1)
         navigation=ttk.Frame(self.comparison);navigation.grid(row=0,column=0,sticky='ew',pady=(0,8));navigation.columnconfigure(3,weight=1)
         ttk.Label(navigation,text='Section').grid(row=0,column=0)
@@ -383,6 +392,8 @@ class AnalyzerApp(LegacyAnalyzerApp):
         self.open_new_button=ttk.Button(footer,text='Open new result',command=self.open_new)
         help_button=ttk.Menubutton(footer,text='Help');help_button.pack(side='right');self.help_menu=tk.Menu(help_button,tearoff=False);help_button['menu']=self.help_menu
         for label,command in [('Quick instructions',self.help),('Check installation',lambda:self.start_operation('doctor')),('Open diagnostics',self.open_diagnostics),('Rebuild local features',lambda:self.start_operation('rebuild')),('Restore previous datasets',self.restore),('Dataset status and update details',self.maintenance_details)]:self.help_menu.add_command(label=label,command=command)
+        self.help_menu.add_command(label='Recheck recent events…',command=self.recheck_dialog)
+        self.help_menu.add_command(label='Clear calculation cache…',command=self.clear_calculation_cache)
         self.help_menu.add_separator();self.help_menu.add_checkbutton(label='Keep recent analyses and reuse valid results',variable=self.history_setting,command=self.save_history_setting)
         self.progress=ttk.Progressbar(self.frame,mode='indeterminate');self.progress.grid(row=6,column=0,sticky='ew',pady=(0,4))
         ttk.Label(self.frame,textvariable=self.status,wraplength=900).grid(row=7,column=0,sticky='w')
@@ -442,6 +453,7 @@ class AnalyzerApp(LegacyAnalyzerApp):
     def change_font(self,event=None):
         points={'Small':9,'Medium':10,'Large':12}.get(self.font_size.get(),10)
         self.output.configure(font=('Consolas',points));self.details.configure(font=('Segoe UI',points))
+        if hasattr(self,'summary_text'):self.summary_text.configure(font=('Segoe UI',points))
         from tkinter import font
         line_height=font.Font(self.window,family='Segoe UI',size=points).metrics('linespace')
         style=ttk.Style(self.window)
@@ -600,6 +612,7 @@ class AnalyzerApp(LegacyAnalyzerApp):
         self.recalculate_button.configure(state='normal' if self.result and self.result.get('calculation_request') and self.ready and not busy else 'disabled')
         for index in (1,3):self.set_help_entry_state(index,'disabled' if busy else 'normal')
         self.set_help_entry_state(4,'normal' if self.backup_available and not busy else 'disabled')
+        for index in (6,7):self.set_help_entry_state(index,'normal' if self.ready and not busy else 'disabled')
         if busy and self.pending_stage and self.pending_stage.get('total'):
             if self.progress_running:self.progress.stop();self.progress_running=False
             total=self.pending_stage['total'];self.progress.configure(mode='determinate',maximum=total,value=self.pending_stage.get('completed',0))
@@ -636,12 +649,16 @@ class AnalyzerApp(LegacyAnalyzerApp):
                 if self.viewing_other:
                     self.new_result=self.preview;self.open_new_button.pack(side='left',padx=8)
                 else:self.display_result(self.preview)
-            if ((self.last_request or {}).get('operation') in ('update','rebuild','recover') or event.get('maintenance_error')) and event.get('code')!='cancelled':
+            if ((self.last_request or {}).get('operation') in ('update','rebuild','recover','recheck','apply_corrections') or event.get('maintenance_error')) and event.get('code')!='cancelled':
                 self.last_log=event.get('log');self.status.set(event.get('message','Dataset operation could not finish.'))
                 if not self.closing:self.maintenance_error_dialog(event)
                 return
             return super().handle_terminal(event)
         operation=event['operation'];payload=event['payload']
+        if operation=='recheck':
+            self.maintenance_status=payload.get('maintenance_status',getattr(self,'maintenance_status',{}))
+            self.status.set('Recheck complete. Review the captured corrections.');self.corrections_dialog(payload['preview']);return
+        if operation=='clear_cache':self.status.set('Calculation cache cleared. Saved analyses retained.');return
         if operation in ('predict','compare'):
             if self.viewing_other:
                 self.new_result=payload;self.open_new_button.pack(side='left',padx=8);self.status.set('New analysis complete. Click Open new result.')
@@ -669,7 +686,10 @@ class AnalyzerApp(LegacyAnalyzerApp):
         description+='\nGenerated: '+str(payload.get('generated_at','Unknown'))
         if payload.get('reused'):description+=' · Reused saved analysis'
         self.summary.set(description);self.result_warning.set('\n'.join(payload.get('coverage_warnings',[]) + payload.get('warnings',[])) or 'Read the full report for model limitations and data support.')
-        self.sections=report_sections(payload);self.section_box['values']=['All sections']+[s['title'] for s in self.sections]
+        from analyzer_summary import format_summary
+        self.matchup_observations.set(format_summary(payload))
+        self.summary_metrics_button.configure(state='normal' if any(x.get('metric_id') for x in payload.get('matchup_summary',{}).get('observations',[])) else 'disabled')
+        self.sections=report_sections(payload);self.section_box['values']=['All sections','Summary supporting metrics']+[s['title'] for s in self.sections]
         if self.section.get() not in self.section_box['values']:self.section.set('All sections')
         self.fill_table(self.overview_tree,overview_rows(payload));self.render_comparison();self.draw_probability()
         self.copy_button.configure(state='normal');self.save_button.configure(state='normal');self.update_stale()
@@ -697,7 +717,11 @@ class AnalyzerApp(LegacyAnalyzerApp):
     def render_comparison(self):
         if not hasattr(self,'comparison_tree'):return
         needle=key(self.filter.get());rows=[]
+        summary_ids={x.get('metric_id') for x in (self.result or {}).get('matchup_summary',{}).get('observations',[])}
+        summary_ids.update(x['support']['id'] for x in (self.result or {}).get('matchup_summary',{}).get('observations',[]) if x.get('support'))
         for section in getattr(self,'sections',[]):
+            if self.section.get()=='Summary supporting metrics':
+                rows.extend(row for row in section['rows'] if row['fields'] in summary_ids and needle in key(row['label']));continue
             if self.section.get() not in ('All sections',section['title']):continue
             rows.extend(row for row in section['rows'] if needle in key(row['label']))
         self.fill_table(self.comparison_tree,rows)
@@ -753,7 +777,7 @@ class AnalyzerApp(LegacyAnalyzerApp):
         dialog=tk.Toplevel(self.window);dialog.title('Recent analyses');dialog.geometry('880x430');dialog.transient(self.window)
         frame=ttk.Frame(dialog,padding=12);frame.pack(fill='both',expand=True);frame.columnconfigure(0,weight=1);frame.rowconfigure(1,weight=1)
         ttk.Label(frame,text='Completed analyses stored on this computer. Outdated results remain viewable.').grid(row=0,column=0,sticky='w')
-        tree=ttk.Treeview(frame,columns=('matchup','division','date','type','created','status'),show='headings',selectmode='browse');tree.grid(row=1,column=0,sticky='nsew',pady=8)
+        tree=ttk.Treeview(frame,columns=('matchup','division','date','type','created','status'),show='headings',selectmode='extended');tree.grid(row=1,column=0,sticky='nsew',pady=8)
         for column,label,width in [('matchup','Matchup',280),('division','Division',100),('date','Fight date',90),('type','Type',90),('created','Created',150),('status','Status',80)]:tree.heading(column,text=label);tree.column(column,width=width,minwidth=70)
         scrollbar=ttk.Scrollbar(frame,command=tree.yview);scrollbar.grid(row=1,column=1,sticky='ns');tree.configure(yscrollcommand=scrollbar.set)
         entries={}
@@ -776,6 +800,15 @@ class AnalyzerApp(LegacyAnalyzerApp):
                 try:self.history.clear();refresh()
                 except OSError as exc:messagebox.showerror('Could not clear history',str(exc),parent=dialog)
         buttons=ttk.Frame(frame);buttons.grid(row=2,column=0,sticky='w')
+        def compare_versions():
+            selected=tree.selection()
+            if len(selected)!=2:messagebox.showinfo('Select two analyses','Use Ctrl+click to select two saved versions of the same matchup.',parent=dialog);return
+            try:
+                from analyzer_comparison import compare_entries
+                pair=sorted((entries[i] for i in selected),key=lambda e:e['created_at'])
+                self.comparison_dialog(compare_entries(*pair))
+            except ValueError as exc:messagebox.showerror('Cannot compare these analyses',str(exc),parent=dialog)
+        ttk.Button(buttons,text='Compare versions',command=compare_versions).pack(side='left',padx=(0,8))
         for label,command in [('Open',open_entry),('Delete selected',remove),('Clear history',clear),('Close',dialog.destroy)]:ttk.Button(buttons,text=label,command=command).pack(side='left',padx=(0,8))
         tree.bind('<Return>',open_entry);tree.bind('<Double-1>',open_entry);dialog.bind('<Escape>',lambda e:dialog.destroy());refresh();tree.focus_set()
 
@@ -784,14 +817,86 @@ class AnalyzerApp(LegacyAnalyzerApp):
         try:atomic_json(self.preferences_path,self.preferences)
         except OSError as exc:messagebox.showerror('Setting could not be saved',str(exc),parent=self.window)
 
+    def summary_metrics(self):
+        self.notebook.select(self.comparison);self.section.set('Summary supporting metrics');self.filter.set('');self.render_comparison()
+        ids={x.get('metric_id') for x in (self.result or {}).get('matchup_summary',{}).get('observations',[])}
+        ids.update(x['support']['id'] for x in (self.result or {}).get('matchup_summary',{}).get('observations',[]) if x.get('support'))
+        items=[item for item in self.comparison_tree.get_children() if self.rows.get((str(self.comparison_tree),item),{}).get('fields') in ids]
+        if items:self.comparison_tree.selection_set(items[0]);self.comparison_tree.see(items[0]);self.metric_details(self.comparison_tree)
+
+    def clear_calculation_cache(self):
+        if self.controller.busy:return
+        from analyzer_cache import cache_size
+        size=cache_size(self.root)/1048576
+        if messagebox.askyesno('Clear calculation cache',f'Clear {size:.1f} MiB of prepared calculations? Saved analyses and datasets are retained.',parent=self.window):self.start(dict(operation='clear_cache'))
+
+    def recheck_dialog(self):
+        if self.controller.busy:return
+        dialog=tk.Toplevel(self.window);dialog.title('Recheck recorded events');dialog.transient(self.window)
+        frame=ttk.Frame(dialog,padding=16);frame.pack(fill='both',expand=True)
+        start=tk.StringVar(value=(dt.date.today()-dt.timedelta(days=90)).isoformat());end=tk.StringVar(value=dt.date.today().isoformat())
+        ttk.Label(frame,text='Re-fetch completed events and preview corrections. Maximum 20 events.').pack(anchor='w')
+        for label,var in (('From date (inclusive)',start),('To date (inclusive)',end)):
+            ttk.Label(frame,text=label).pack(anchor='w',pady=(8,0));ttk.Entry(frame,textvariable=var).pack(fill='x')
+        error=tk.StringVar();ttk.Label(frame,textvariable=error,foreground='#a12622').pack(anchor='w')
+        def run():
+            try:
+                a,b=iso_date(start.get()),iso_date(end.get())
+                if a>b or b>dt.date.today().isoformat():raise ValueError('Choose an ordered range ending no later than today.')
+                dialog.destroy();self.start(dict(operation='recheck',from_date=a,to_date=b))
+            except (ValueError,argparse.ArgumentTypeError) as exc:error.set(str(exc))
+        ttk.Button(frame,text='Recheck and preview',command=run).pack(pady=10)
+
+    def corrections_dialog(self,value):
+        dialog=tk.Toplevel(self.window);dialog.title('Review recorded-fight corrections');dialog.geometry('900x560');dialog.transient(self.window)
+        text=ScrolledText(dialog,wrap='word',padx=12,pady=12);text.pack(fill='both',expand=True)
+        lines=['Checked '+value['start']+' through '+value['end'],'Preview captured: '+value['created_at']]
+        for sex,capture in value['captures'].items():
+            lines+=['',sex.title()+' events:']+[e['event_date']+' '+e['event_name'] for e in capture['events']]
+        for c in value['changes']:
+            rows=[r for r in value['captures'][c['sex']]['tables'][c['path']] if r['fight_id']==c['fight_id']]
+            lines+=['',c['sex'].title()+' '+c['fight_id']+' ('+c['kind']+')']
+            if rows:
+                event=next((e for e in value['captures'][c['sex']]['events'] if e.get('event_id')==rows[0].get('event_id') or e['event_date']==rows[0]['event_date'][:10]),{})
+                names=[r.get('fighter_name',r.get('fighter','')) for r in rows]
+                lines += [event.get('event_date',rows[0]['event_date'][:10])+' '+event.get('event_name',rows[0].get('event_name','')),' vs '.join(n for n in names if n)]
+            lines += [str(d['identity'])+' / '+d['field']+': '+str(d['before'])+' → '+str(d['after']) for d in c['differences']]
+        if value['changes']:lines+=['','Applying replaces the captured complete bout records and rebuilds affected history. Draw/no-contest records retain their statistics and are excluded from binary training.']
+        if not value['changes']:lines+=['','No source differences found. Installed datasets are unchanged.']
+        text.insert('1.0','\n'.join(lines));text.configure(state='disabled')
+        buttons=ttk.Frame(dialog);buttons.pack(pady=8)
+        def apply():
+            if self.controller.busy:return
+            dialog.destroy();self.start(dict(operation='apply_corrections',preview_id=value['id']))
+        if value['changes']:ttk.Button(buttons,text='Apply captured corrections',command=apply).pack(side='left',padx=8)
+        ttk.Button(buttons,text='Close',command=dialog.destroy).pack(side='left',padx=8)
+
+    def comparison_dialog(self,value):
+        from analyzer_comparison import format_comparison,comparison_html
+        dialog=tk.Toplevel(self.window);dialog.title('Compare saved versions');dialog.geometry('900x600');dialog.transient(self.window)
+        text=ScrolledText(dialog,wrap='word',padx=12,pady=12);text.pack(fill='both',expand=True)
+        report=format_comparison(value);text.insert('1.0',report);text.configure(state='disabled')
+        buttons=ttk.Frame(dialog);buttons.pack(pady=8)
+        def save(kind):
+            path=filedialog.asksaveasfilename(parent=dialog,initialfile='Matchup comparison.'+kind,defaultextension='.'+kind,filetypes=[(kind.upper(),'*.'+kind)])
+            if path:
+                try:Path(path).write_text(comparison_html(value) if kind=='html' else report,encoding='utf-8')
+                except OSError as exc:messagebox.showerror('Could not save',str(exc),parent=dialog)
+        def open_report(which):
+            self.viewing_other=self.controller.busy;self.display_result(value[which]['payload'])
+        for label,command in [('Open original',lambda:open_report('original')),('Open newer',lambda:open_report('newer')),('Save TXT',lambda:save('txt')),('Save HTML',lambda:save('html')),('Close',dialog.destroy)]:ttk.Button(buttons,text=label,command=command).pack(side='left',padx=6)
+
     def maintenance_details(self):
         status=getattr(self,'maintenance_status',{})
         text=self.freshness.get()+'\n\nLast successful update check: '+status.get('last_successful_check','Never')+'\nLast successful data change: '+status.get('last_successful_change','Bundled snapshot')+'\nBackup available: '+('Yes' if self.backup_available else 'No')
+        if status.get('last_recheck'):
+            checked=status.get('recheck_range',{})
+            text+='\nLast event recheck: '+status['last_recheck']+' ('+checked.get('start','')+' through '+checked.get('end','')+')'
         if status.get('last_operation'):
             text+='\n\nLast operation: '+status['last_operation']+' · '+status.get('transaction_status','')+'\n'+status.get('stages','')
             for sex,value in status.get('summary',{}).items():
                 text+='\n\n'+sex.title()+': '+str(value.get('added_fights',0))+' added fights'
-                for field,label in [('events_inspected','Events inspected'),('decisive_fights','Decisive bouts'),('draws','Draws'),('no_contests','No contests'),('binary_training_rows_added','Binary training rows added'),('data_through','Data through')]:
+                for field,label in [('events_inspected','Events inspected'),('decisive_fights','Decisive bouts'),('draws','Draws'),('no_contests','No contests'),('corrected_fights','Corrected bouts'),('binary_training_rows_added','Binary training rows added'),('binary_training_rows_removed','Binary training rows removed'),('binary_training_rows_net','Binary training row net change'),('data_through','Data through')]:
                     if field in value:text+='\n'+label+': '+str(value[field])
         dialog=tk.Toplevel(self.window);dialog.title('Dataset status and update details');dialog.geometry('650x380');dialog.transient(self.window)
         details=ScrolledText(dialog,wrap='word',font=('Segoe UI',10),padx=12,pady=12)

@@ -82,6 +82,31 @@ def main():
         assert not app.result.get('reused') and len(app.history.entries())==count
         record('history disabled stops both reuse and storage')
         app.history_setting.set(True);app.save_history_setting()
+        # v0.5 comparisons use immutable complete history records. Opening either
+        # source report or clearing computation artifacts preserves those records.
+        from analyzer_comparison import compare_entries,format_comparison,comparison_html
+        from analyzer_cache import cache_size
+        from analyzer_support import digest,manifest
+        rows=[e for e in app.history.entries() if e['request']['sex']=='men' and e['payload'].get('result_state')=='complete']
+        assert len(rows)>=2,'Run the full portable prediction matrix first'
+        value=compare_entries(rows[-1],rows[0]);app.comparison_dialog(value);window.update()
+        before_text=format_comparison(value)
+        for suffix,text in [('txt',before_text),('html',comparison_html(value))]:
+            path=args.out.parent/('saved-version-comparison.'+suffix);path.write_text(text,encoding='utf-8')
+            assert path.read_text(encoding='utf-8')==text
+        record('saved historical/current versions compare and export offline',context_changes=len(value['context_changes']),probability_deltas=len(value['probability']),metric_changes=len(value['metrics']))
+        app.display_result(value['original']['payload']);frozen=app.result_text
+        assert app.result['matchup_summary']['observations'][0]['text'] in frozen
+        originals={e['id']:e['integrity'] for e in app.history.entries()}
+        datasets={e['path']:digest(ROOT/e['path']) for e in manifest()['files']}
+        previous_bytes=cache_size(ROOT);assert previous_bytes>0
+        app.start(dict(operation='clear_cache'));wait()
+        assert cache_size(ROOT)==0 and app.result_text==frozen
+        assert originals=={e['id']:e['integrity'] for e in app.history.entries()}
+        assert datasets=={e['path']:digest(ROOT/e['path']) for e in manifest()['files']}
+        assert format_comparison(value)==before_text
+        record('actual cache-clear worker preserves reports, datasets and open comparison',removed_bytes=previous_bytes,history_entries=len(originals))
+        record('frozen history remains within storage budget',json_bytes=sum(p.stat().st_size for p in app.history.directory.glob('*.json')))
         report.update(status='PASS',offline=True);atomic_json(args.out,report)
     finally:
         if app.controller.busy:app.controller.terminate()

@@ -3,7 +3,7 @@ from __future__ import annotations
 import csv, datetime as dt, hashlib, importlib, importlib.metadata, json, os, pathlib, struct, sys, tempfile, urllib.request, zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent
-VERSION = '0.4.0'
+VERSION = '0.5.0'
 
 def digest(path):
     with pathlib.Path(path).open('rb') as stream:

@@ -1,3 +1,11 @@
+# v0.5.0 local release candidate
+
+- Reuse compatible dated history, parsed resources and fitted models across different matchups. Calculation artifacts are checked by content and bounded to 1 GiB. Recalculate bypasses all cache reads; Help can clear calculations independently of saved analyses.
+- Recheck a bounded completed-event range and inspect frozen field-level corrections before applying. Complete paired records replace older source records, affected features are rebuilt, binary additions/removals are reported separately, and the previous datasets remain recoverable.
+- Overview now includes a concise deterministic summary with supporting metric navigation, explicit evidence limits and identical saved/TXT/HTML text.
+- Select two Recent analyses to compare probabilities, compatible metrics, context fingerprints and full eligible-fight evidence. Reversed fighter order is aligned by stable identity. Older reports explain unavailable evidence.
+- Men's v3 and women's existing ensemble algorithms, calibration and feature definitions are retained. Historical calculations use the installed source history, which can include later corrections.
+
 # v0.4.0 experimental prerelease
 
 - Both dataset updaters accept consistent completed draws and no-contests. They retain two source-stat rows and exclude these bouts from new binary training labels. Contradictory results and incomplete identities remain blocked.

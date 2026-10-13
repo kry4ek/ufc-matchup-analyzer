@@ -1,0 +1,26 @@
+{
+  "womens_ufc_model/predict_matchup_advanced.py": {
+    "base_sha256": "a0a484fb447e90b92bb09a5b672f9061d6f3878790a35d2dade6010020d164c2",
+    "result_sha256": "470ff8197ea564c6a33fee5c9503f0837ef7d0daa4ea40bd37e908764b80a879",
+    "edits": [
+      {
+        "start": 3314,
+        "end": 3321,
+        "old": "    models = build_models(y_train)\n    pipelines = {\n        name: build_model_pipeline(model, numeric_features, categorical_features)\n        for name, model in models.items()\n    }\n    notify(\"cross_validation\", \"Cross-validating women\u2019s ensemble weights\")\n    ensemble_weights = compute_model_weights(pipelines, X_train, y_train)\n",
+        "new": "    cached_models = prepared.get('cached_models')\n    if cached_models:\n        pipelines, ensemble_weights = cached_models\n        notify(\"cache\", \"Using a compatible fitted women's ensemble\")\n    else:\n        models = build_models(y_train)\n        pipelines = {\n            name: build_model_pipeline(model, numeric_features, categorical_features)\n            for name, model in models.items()\n        }\n        notify(\"cross_validation\", \"Cross-validating women\u2019s ensemble weights\")\n        ensemble_weights = compute_model_weights(pipelines, X_train, y_train)\n"
+      },
+      {
+        "start": 3324,
+        "end": 3326,
+        "old": "        notify(\"training\", \"Fitting women\u2019s model: \"+model_name, completed=len(predictions), total=len(pipelines))\n        pipeline.fit(X_train, y_train)\n",
+        "new": "        if not cached_models:\n            notify(\"training\", \"Fitting women\u2019s model: \"+model_name, completed=len(predictions), total=len(pipelines))\n            pipeline.fit(X_train, y_train)\n"
+      },
+      {
+        "start": 3350,
+        "end": 3350,
+        "old": "",
+        "new": "    prepared['fitted_models'] = (pipelines, ensemble_weights)\n"
+      }
+    ]
+  }
+}

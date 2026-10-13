@@ -176,7 +176,7 @@
     {
       "path": "womens_ufc_model/predict_matchup_advanced.py",
       "source_sha256": "32a549cd9c083381fa1cfe761bdcad0f8ce608f260b608fb319be70373a3fb7a",
-      "exported_sha256": "a0a484fb447e90b92bb09a5b672f9061d6f3878790a35d2dade6010020d164c2"
+      "exported_sha256": "470ff8197ea564c6a33fee5c9503f0837ef7d0daa4ea40bd37e908764b80a879"
     },
     {
       "path": "womens_ufc_model/update_ufc_womens_dataset_incremental.py",
@@ -193,6 +193,7 @@
     "UTF-8 and LF line endings for portable checkout hashes",
     "prediction JSON exposes computed live comparison values, women ensemble weights and full reliability details without changing calculations",
     "v0.3 prepares dated comparison once before unchanged prediction fitting and exposes structured progress",
-    "v0.4 checked maintenance patches retain completed draws/NCs without binary labels and emit measured progress; staging explicitly copies app protocol helpers"
+    "v0.4 checked maintenance patches retain completed draws/NCs without binary labels and emit measured progress; staging explicitly copies app protocol helpers",
+    "v0.5 accepts compatible locally fitted women models without changing fitting, ensemble weights or inference"
   ]
 }

@@ -213,10 +213,13 @@ def main():
         if rel in files:
             from tools.adapt_maintenance import apply_patch
             dest.write_text(apply_patch(rel,dest.read_text(encoding='utf-8')),encoding='utf-8',newline='\n')
+            v05=json.loads(Path(__file__).with_name('engine_patches_v05.json').read_text(encoding='utf-8'))
+            dest.write_text(apply_patch(rel,dest.read_text(encoding='utf-8'),v05),encoding='utf-8',newline='\n')
             records.append(dict(path=rel,source_sha256=sha(src),exported_sha256=sha(dest)))
     provenance=dict(source_commit=subprocess.check_output(['git','-C',str(a.source),'rev-parse','HEAD'],text=True).strip(),allowlist=files,files=records,adaptations=['public men default v3','feature manifest relocated','updaters reject empty or malformed event listings','updaters filter future events before applying inspection limits','women cross-validation failures stop prediction instead of silently changing ensemble weights','prediction JSON exposes computed live comparison values, women ensemble weights and full reliability details without changing calculations','UTF-8 and LF line endings for portable checkout hashes'])
     provenance['adaptations'].append('v0.3 prepares dated comparison once before unchanged prediction fitting and exposes structured progress')
     provenance['adaptations'].append('v0.4 checked maintenance patches retain completed draws/NCs without binary labels and emit measured progress; staging explicitly copies app protocol helpers')
+    provenance['adaptations'].append('v0.5 accepts compatible locally fitted women models without changing fitting, ensemble weights or inference')
     (a.destination/'source_manifest.json').write_text(json.dumps(provenance,indent=2)+'\n',encoding='utf-8',newline='\n')
     dataset=[]
     for rel in DATA:

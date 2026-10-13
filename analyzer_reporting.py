@@ -76,6 +76,8 @@ def format_html(payload):
     html = ['<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>'+escape(title)+'</title>',
         '<style>body{font:15px Segoe UI,Arial,sans-serif;max-width:1100px;margin:30px auto;padding:0 20px;color:#182230}table{border-collapse:collapse;width:100%;margin:12px 0 24px}th,td{padding:8px;border-bottom:1px solid #ddd;text-align:right}th:first-child,td:first-child{text-align:left}h2{font-size:18px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px Consolas,monospace}.note{color:#725200}@media print{body{margin:0}tr{break-inside:avoid}h2{break-after:avoid}}</style>',
         '<body><h1>'+escape(title)+'</h1><p>'+escape(str(payload['fight_date'])+' · '+str(payload.get('division','')))+'<br>'+escape(str(payload.get('generated_at','')))+' · '+escape(str(payload.get('result_state','complete')))+'</p>']
+    from analyzer_summary import format_summary
+    html.append('<h2>Matchup summary</h2><p>'+escape(format_summary(payload)).replace('\n','<br>')+'</p>')
     for section in report_sections(payload):
         html += ['<h2>'+escape(section['title'])+'</h2><table><thead><tr><th>Metric</th><th>'+escape(payload['fighter_a'])+'</th><th>'+escape(payload['fighter_b'])+'</th><th>A−B</th></tr></thead><tbody>']
         for row in section['rows']:
