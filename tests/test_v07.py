@@ -1,6 +1,7 @@
 """Saved evidence, evaluation provenance, export and native UI contracts."""
 import copy
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
@@ -111,6 +112,7 @@ class EvidenceTests(unittest.TestCase):
             (root/'women.csv').write_text('evaluated snapshot');adapter.write_text('changed adapter')
             with self.assertRaisesRegex(ValueError,'live adapter'):verify_snapshot(root,protocols)
 
+@unittest.skipUnless(os.name=='nt' or os.environ.get('DISPLAY'),'Native Tk display required')
 class EvidenceWindowTests(unittest.TestCase):
     def test_overview_uses_the_displayed_saved_report(self):
         import analyzer_gui as gui
