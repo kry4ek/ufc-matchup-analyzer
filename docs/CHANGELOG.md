@@ -1,3 +1,26 @@
+# v0.8.0 experimental prerelease
+
+- Render a lightweight application while startup recovery and content validation run; expose saved reports after recovery and use a rebuildable history metadata index.
+- Retain byte hashing while reusing bounded content-keyed structural dataset scans. Avoid repeated raw-history reads within a request and defer chart drawing until its tab opens.
+- Export an audited parent optimization that constructs dated rows without one pandas Series per row and reuses rows across the two advanced-history passes. Model policies and arithmetic remain unchanged.
+- Freeze recent bout statistics, paired opponent values, duration and available engine pre-bout opponent Elo. Add keyboard-accessible expandable details.
+- Add Last 3/Last 5 versus UFC career metrics with pooled denominators, actual bout counts, missing support and neutral differences.
+- Refresh an old analysis with its original date by default, capture a new result, protect the original and open the before/after comparison. Compatible computation caches may be reused; full Recalculate still bypasses them.
+- Export self-contained compact HTML with explicit Last 3/Last 5 selection, captured evidence limitations and A4/Letter print styles.
+- Keep datasets/model policies from v0.7. Prospective tracking is excluded; clean Windows 10/11 and real alternate-DPI checks are deferred. Published as an experimental prerelease with separate CI and public-download evidence; rights and signing gates remain open.
+
+# v0.7.0 local experimental candidate
+
+- Polish all five tabs with a prominent matchup panel, labelled frozen evidence, shared typography and fighter colors, dedicated maintenance commands, readable timestamps and operation-only progress. Add named chart legends, Elo axes and keyboard point inspection, plus scrolling for larger text and smaller windows.
+
+- Correct women's nested fit/calibration/weighting boundaries with complete preprocessing inside dated folds, mirrored-pair grouping, explicit minimum support and no random/fallback policy.
+- Review 237 women's and 1,278 men's bouts under frozen protocols. Preserve the v0.6 report, exposure limits, uncertainty and the distinction between evaluated September data and the refreshed October installation.
+- Freeze coverage, cutoffs, observed attempt support and evaluation compatibility in a shared evidence block for native, clipboard, TXT and HTML reports. Population priors are not observed attempts; unsupported women's reliability grades are withheld.
+- Optimize men's numeric history conversion without changing arithmetic: the controlled representative median fell from 90.720 to 50.851 seconds; other matchups and system loads can differ.
+- Refresh both datasets through 10 October: 22 new men's bouts and four women's bouts, including one draw excluded from binary training. Verify parent/app hashes, repeated-update idempotence, correction rebuilding and complete restore.
+- Persist correction journals before rebuilding, and add a local research ledger with append-only lifecycle checks. Synthetic ledger tests do not establish prospective results.
+- Prepare source and portable archives locally. Clean OS/actual DPI, rights, unsigned-launcher and publication checks remain explicit limitations.
+
 # v0.6.0 implementation
 
 - Initial profile/coverage/recent-history evidence appears before advanced engine preparation; partial cancellation/failure reports remain exportable without entering completed history.

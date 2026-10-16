@@ -91,6 +91,11 @@ def stance_matchup(a_stance: Any, b_stance: Any) -> str:
 
 
 def _num(value: Any, default: float = 0.0) -> float:
+    # Parsed CSV statistics already contain numeric scalars. Avoid constructing
+    # a one-element pandas Series for every value in every historical bout.
+    # Preserve the original parser for strings and other nonnumeric objects.
+    if isinstance(value, (int, float, np.integer, np.floating)):
+        return default if pd.isna(value) else float(value)
     parsed = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
     return default if pd.isna(parsed) else float(parsed)
 

@@ -239,6 +239,9 @@ class CorrectionTransactionTests(unittest.TestCase):
                 def source(stage,sex,*unused):
                     (stage/maintenance.ENGINE[sex]/'data/example.csv').write_text('event_date,value\n2020-01-01,2\n')
                 def rebuild(stage,sex,*unused):
+                    staged_journal=json.loads((stage.parent/'journal.json').read_text())
+                    self.assertEqual(staged_journal['status'],'staging')
+                    self.assertEqual(staged_journal['promotions'],[])
                     if phase=='second_target' and sex=='women':raise RuntimeError('second target failed')
                 def promotion(root,stage,txn,journal,files):
                     actual_promote(root,stage,txn,journal,[next(rel for rel in files if rel.endswith('example.csv'))])

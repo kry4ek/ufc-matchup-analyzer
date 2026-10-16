@@ -11,9 +11,14 @@ PUBLIC += ['analyzer_errors.py','analyzer_fight_history.py','tools/engine_patche
 PUBLIC += ['analyzer_cache.py','analyzer_summary.py','analyzer_comparison.py','analyzer_corrections.py']
 PUBLIC += ['tools/engine_patches_v05.json']
 PUBLIC += ['analyzer_quick_comparison.py','analyzer_visuals.py','analyzer_migration.py','analyzer_validation.py','docs/model_validation.json']
+PUBLIC += ['analyzer_evidence.py','analyzer_theme.py','analyzer_presentation.py']
+PUBLIC += ['analyzer_bout_context.py','analyzer_context_widgets.py','analyzer_compact_report.py','analyzer_refresh.py']
+PUBLIC += ['docs/verification_evidence_v07.json','docs/release_checks_v07.json','tools/render_v08_reports.cjs']
 PUBLIC += ['docs/MODEL_VALIDATION.html']
+PUBLIC += ['docs/model_validation_v06.json','docs/MODEL_VALIDATION_V06.html']
 PUBLIC += ['docs/verification_evidence_v04.json','docs/release_checks_v04.json']
 PUBLIC += ['docs/verification_evidence_v05.json','docs/release_checks_v05.json']
+PUBLIC += ['docs/verification_evidence_v06.json','docs/release_checks_v06.json']
 
 def archive(path,items,prefix='',base=ROOT):
     with zipfile.ZipFile(path,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=6) as z:
@@ -51,11 +56,10 @@ def main():
         spec=manifest();spec['release_repository']=a.repository;atomic_json(ROOT/'dataset_manifest.json',spec)
     if a.check_publication:gate();print('Publication gate PASS');return
     refresh_export_hashes();files=public_files()
-    data=[x['path'] for x in manifest()['files']]
     for item in manifest()['files']:
         if digest(ROOT/item['path'])!=item['sha256']:raise ValueError('Release datasets differ from original snapshot: '+item['path'])
     a.out_dir.mkdir(parents=True,exist_ok=True)
-    archives=[(f'ufc-matchup-analyzer-source-v{VERSION}.zip',files,'ufc-matchup-analyzer/',ROOT),(f'ufc-matchup-analyzer-datasets-v{VERSION}.zip',data,'',ROOT)]
+    archives=[(f'ufc-matchup-analyzer-source-v{VERSION}.zip',files,'ufc-matchup-analyzer/',ROOT)]
     if a.portable_folder:
         spec=json.loads((a.portable_folder/'PACKAGE_MANIFEST.json').read_text(encoding='utf-8'))
         if spec['version']!=VERSION:raise ValueError('Portable app version mismatch')

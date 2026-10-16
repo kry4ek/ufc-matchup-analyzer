@@ -64,6 +64,12 @@ def prepare_live_v2_context(fights: pd.DataFrame, fight_stats: pd.DataFrame) -> 
     )
 
 
+def _record_rows(frame):
+    # Preserve column order and scalar values without constructing a Series per row.
+    columns = tuple(frame.columns)
+    return (dict(zip(columns, values)) for values in frame.to_numpy(dtype=object))
+
+
 def _process_date_group(
     *,
     context: LiveV2Context,
@@ -74,8 +80,9 @@ def _process_date_group(
 ) -> None:
     # Only opponent pre-date win percentage is consumed by the update pass.
     # Preserve the frozen date boundary without constructing unused full snapshots.
+    rows = tuple(_record_rows(date_group))
     date_snapshots: dict[tuple[str, str], dict[str, Any]] = {}
-    for _, row in date_group.iterrows():
+    for row in rows:
         fighter_id = _clean_id(row.get("fighter_id"))
         if not fighter_id:
             continue
@@ -85,7 +92,7 @@ def _process_date_group(
         rate = float(wins / completed) if completed > 0 else np.nan
         date_snapshots[(_clean_id(row.get("fight_id")), fighter_id)] = {"ufc_win_pct_before": rate}
 
-    for _, row in date_group.iterrows():
+    for row in rows:
         fighter_id = _clean_id(row.get("fighter_id"))
         opponent_id = _clean_id(row.get("opponent_id"))
         if not fighter_id:

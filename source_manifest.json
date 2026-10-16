@@ -28,6 +28,7 @@
     "mens_ufc_model/src/validation/validate_mens_dataset.py",
     "mens_ufc_model/update_ufc_mens_dataset_incremental.py",
     "womens_ufc_model/build_prefight_bayesian_smoothing_v1_REBUILT.py",
+    "womens_ufc_model/chronological_ensemble.py",
     "womens_ufc_model/compute_live_bayes_smoothing_features_v1.py",
     "womens_ufc_model/predict_matchup_advanced.py",
     "womens_ufc_model/update_ufc_womens_dataset_incremental.py"
@@ -95,18 +96,18 @@
     },
     {
       "path": "mens_ufc_model/src/features/mens_features.py",
-      "source_sha256": "e6f5afd3a4a0b55822fcd6480d0382cf6ff4d93d093d9c4ef5d2c60b683a646a",
-      "exported_sha256": "37db4582030349d3e65f8ceae8267b901ff10ccd59eed860fe9377a869fb7b35"
+      "source_sha256": "1719039c53233f4aa65adcb3e0a59cf47e83698def07942c8193e44454a86c55",
+      "exported_sha256": "95714fbe39572e1fb2639e40e460d682044e5d4a36c3dedfdd1b34f85e2c2e90"
     },
     {
       "path": "mens_ufc_model/src/features/mens_live_v2_features.py",
-      "source_sha256": "152ec1db1e69ee849a5945da7ed5ecc742aa12e8bb3160ab2f2f6380a1ba0592",
-      "exported_sha256": "9bfc516b0e23388139275764355e9226d554c2f4f32063a3c8a22dc6d5ddb7e3"
+      "source_sha256": "38d020c2512876ebcb0f7557fd64525da86eea887ac44afe145f7fc9d99ee870",
+      "exported_sha256": "f06a85543bd30841d7a1535a1d8b1ad99def394650fbfb0fb5deca849ce9decb"
     },
     {
       "path": "mens_ufc_model/src/features/mens_live_v3_bayes_features.py",
-      "source_sha256": "1605695915a467cc5575cce5918d2e0a85a8fd66797c97312254eb4ac0a3125c",
-      "exported_sha256": "bf3518dd8786603c473997fbd5fdfaa459d64758677d5c3f76d52e82adb72f81"
+      "source_sha256": "9cd779122e1827c4514afc716cdbd3fa94cbfa98506c5d97015d4da737fada68",
+      "exported_sha256": "3f343c05647afa940d361748fb7750cf8731a2342a0c203157438acc8c49075a"
     },
     {
       "path": "mens_ufc_model/src/models/__init__.py",
@@ -169,14 +170,19 @@
       "exported_sha256": "46f382ec7556ff5306b8f45b8b0e24fb980e4f35d1c390d42d43e266ccc62998"
     },
     {
+      "path": "womens_ufc_model/chronological_ensemble.py",
+      "source_sha256": "67d6b416a37b8a08d0fadacccb4947eed6ac20f7598ddc091046a35a032da26b",
+      "exported_sha256": "67d6b416a37b8a08d0fadacccb4947eed6ac20f7598ddc091046a35a032da26b"
+    },
+    {
       "path": "womens_ufc_model/compute_live_bayes_smoothing_features_v1.py",
       "source_sha256": "65168122ce9537aac733761e3807689925ca962f8011523abee5f98679797800",
       "exported_sha256": "65168122ce9537aac733761e3807689925ca962f8011523abee5f98679797800"
     },
     {
       "path": "womens_ufc_model/predict_matchup_advanced.py",
-      "source_sha256": "32a549cd9c083381fa1cfe761bdcad0f8ce608f260b608fb319be70373a3fb7a",
-      "exported_sha256": "470ff8197ea564c6a33fee5c9503f0837ef7d0daa4ea40bd37e908764b80a879"
+      "source_sha256": "e0808478e31da70b945a30e1878901b9520bd0cba3f5b38fe6728c92812c6103",
+      "exported_sha256": "727df17bde5e0a44985e1f99f3f8c0145fabd8206ac61e4e45dd6a1202d5f0e9"
     },
     {
       "path": "womens_ufc_model/update_ufc_womens_dataset_incremental.py",
@@ -194,6 +200,13 @@
     "UTF-8 and LF line endings for portable checkout hashes",
     "v0.3 prepares dated comparison once before unchanged prediction fitting and exposes structured progress",
     "v0.4 checked maintenance patches retain completed draws/NCs without binary labels and emit measured progress; staging explicitly copies app protocol helpers",
-    "v0.5 accepts compatible locally fitted women models without changing fitting, ensemble weights or inference"
-  ]
+    "v0.5 accepts compatible locally fitted women models without changing fitting, ensemble weights or inference",
+    "v0.7 parent chronological policy exports complete preprocessing/calibration boundaries and compatible audit-bearing cached models",
+    "v0.8 audited parent row iteration preserves dated histories and totals while avoiding per-row Series construction"
+  ],
+  "model_policies": {
+    "men": "v3_bayes_smoothed",
+    "women": "v2_chronological_calibrated_ensemble"
+  },
+  "source_working_tree_modified": true
 }

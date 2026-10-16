@@ -233,27 +233,30 @@ class WindowTests(unittest.TestCase):
         self.app.names['a'].set('José Alpha');self.app.names['b'].set('Other Fighter');self.app.analyze()
         request=dict(self.controller.request);self.app.analyze();self.assertEqual(self.controller.request,request)
         self.controller.cancellable=False;self.app.controls();self.assertEqual(str(self.app.cancel_button['state']),'disabled')
-    def test_idle_polling_does_not_reconfigure_help_menu(self):
-        # A redundant native menu configuration redraws an open Windows popup.
-        with mock.patch.object(self.app.help_menu,'entryconfigure',wraps=self.app.help_menu.entryconfigure) as configure:
+    def test_idle_polling_does_not_reconfigure_menus(self):
+        self.app.controls()
+        with mock.patch.object(self.app.data_menu,'entryconfigure',wraps=self.app.data_menu.entryconfigure) as configure:
             for _ in range(20):
-                self.window.after_cancel(self.app.poll_id)
-                self.app.poll()
+                self.window.after_cancel(self.app.poll_id);self.app.poll()
         configure.assert_not_called()
-    def test_help_menu_updates_once_per_busy_or_backup_change(self):
+
+    def test_commands_follow_busy_and_backup_state(self):
         self.app.backup_available=True;self.app.controls()
-        self.assertEqual(self.app.help_menu.entrycget(4,'state'),'normal')
+        self.assertEqual(self.app.command_state('restore'),'normal')
         self.controller.busy=True;self.controller.started=time.monotonic()
-        with mock.patch.object(self.app.help_menu,'entryconfigure',wraps=self.app.help_menu.entryconfigure) as configure:
-            self.app.controls();self.assertEqual(configure.call_count,7)
-            for index in (1,3,4,9,10):self.assertEqual(self.app.help_menu.entrycget(index,'state'),'disabled')
+        with mock.patch.object(self.app.data_menu,'entryconfigure',wraps=self.app.data_menu.entryconfigure) as configure:
+            self.app.controls()
+            for key in ('doctor','rebuild','restore','import','undo','update','recheck','cache'):
+                self.assertEqual(self.app.command_state(key),'disabled')
             configure.reset_mock()
             for _ in range(20):self.app.controls()
             configure.assert_not_called()
-            self.controller.busy=False;self.app.controls();self.assertEqual(configure.call_count,7)
-            for index in (1,3,4,9,10):self.assertEqual(self.app.help_menu.entrycget(index,'state'),'normal')
+            self.controller.busy=False;self.app.controls()
+            for key in ('doctor','rebuild','restore','import','undo','update','recheck','cache'):
+                self.assertEqual(self.app.command_state(key),'normal')
             configure.reset_mock();self.app.backup_available=False;self.app.controls()
-            self.assertEqual(configure.call_count,1);self.assertEqual(self.app.help_menu.entrycget(4,'state'),'disabled')
+            self.assertEqual(configure.call_count,1);self.assertEqual(self.app.command_state('restore'),'disabled')
+
     def test_worker_permission_retry_preserves_original_request(self):
         self.app.last_request=dict(operation='predict',sex='men',fighter_a='A',fighter_b='B')
         with mock.patch.object(self.gui.messagebox,'askyesno',return_value=True):

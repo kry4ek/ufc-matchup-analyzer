@@ -81,8 +81,13 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
         from analyzer_support import digest
         canonical['profiles_sha256']=digest(args.profiles)
     context=calculation_context(root,sex,checks)
+    from analyzer_evidence import build_evidence
+    from analyzer_validation import load_report
+    evaluation_report=None;evaluation_error=None
+    try:evaluation_report=load_report(root)
+    except (OSError,ValueError,KeyError,TypeError):evaluation_error='Reviewed evaluation artifact is missing or invalid. Open Model validation for details.'
     history=History(root)
-    if getattr(args,'use_cache',False) and not getattr(args,'force_recalculate',False) and history_enabled(root):
+    if getattr(args,'use_cache',False) and not getattr(args,'force_recalculate',False) and not getattr(args,'skip_saved_result',False) and history_enabled(root):
         try:
             entry=history.lookup(canonical,context)
             if entry:
@@ -95,10 +100,14 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
         except (OSError,ValueError,KeyError) as exc:
             print('Saved result could not be reused: '+str(exc))
     from analyzer_fight_history import recent_fights
-    frozen_history=recent_fights(root,sex,(a,aid),(b,bid),args.fight_date)
+    from analyzer_bout_context import FightSource, capture
+    source=FightSource(root,sex,{'fighter_a':(a,aid),'fighter_b':(b,bid)})
+    full_history=recent_fights(root,sex,(a,aid),(b,bid),args.fight_date,limit=None,source=source)
+    frozen_history={**full_history,'fighter_a':full_history['fighter_a'][:5],'fighter_b':full_history['fighter_b'][:5]}
     coverage={side:catalog.coverage(identity,args.fight_date,match) for side,identity in [('a',(a,aid)),('b',(b,bid))]}
     from analyzer_quick_comparison import build_quick
     initial=build_quick(root,canonical,catalog,frozen_history,coverage,context,args.profiles)
+    initial['evidence_quality']=build_evidence(initial,context,checks,evaluation_report,evaluation_error)
     initial['time_to_initial_seconds']=round(time.monotonic()-started_operation,3)
     emit(event_type='initial_ready',payload=initial,cancellable=True)
     check_cancel(cancel)
@@ -134,7 +143,7 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
             command+=['--division',"Women's "+match,'--json-out',str(out),'--profiles',str(pathlib.Path(args.profiles).resolve() if args.profiles else directory/'output_quality_fixed/ufc_womens_fighter_profiles.csv')]
             if args.profiles:command+=['--allow-manual-profile-fallback']
         env=runtime_environment(root)
-        computation_context=dict(context=context,settings={k:v for k,v in canonical.items() if k not in ('operation','fighter_a','fighter_b','fighter_a_id','fighter_b_id')})
+        computation_context=dict(context={k:v for k,v in context.items() if k!='validation_artifact_sha256'},settings={k:v for k,v in canonical.items() if k not in ('operation','fighter_a','fighter_b','fighter_a_id','fighter_b_id')})
         config=temp/'compute-context.json'
         atomic_json(config,dict(context=computation_context,read=not getattr(args,'force_recalculate',False)))
         env['UFC_COMPUTE_CONTEXT']=str(config)
@@ -158,6 +167,8 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
                     kind=event.pop('type')
                     if kind=='comparison_ready':
                         preview=event['payload'];preview.update(recent_fights=frozen_history,coverage=coverage,coverage_warnings=coverage_warnings,fighter_a_id=aid,fighter_b_id=bid,analyzer_version=VERSION,generated_at=utc_now(),result_state='pending' if operation=='predict' else 'comparison')
+                        preview['calculation_request']=canonical
+                        preview['evidence_quality']=build_evidence(preview,context,checks,evaluation_report,evaluation_error)
                         from analyzer_summary import build_summary,metric_records
                         preview.update(matchup_summary=build_summary(preview),metric_records=metric_records(preview))
                         emit(event_type=kind,**event)
@@ -185,7 +196,13 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
         if sex=='men' and operation=='predict':
             payload['fighter_a_win_probability']=payload['fighter_a_final_probability'];payload['fighter_b_win_probability']=payload['fighter_b_final_probability']
         elif sex=='women':
-            payload['model_version']='v1_current_ensemble'
+            if payload.get('model_version') and payload['model_version']!=context['engine']:raise ValueError('Engine policy differs from installed provenance')
+            payload['model_version']=context['engine']
+            if context['engine']=='v2_chronological_calibrated_ensemble' and operation=='predict':
+                payload['legacy_reliability_assessment']=dict(label=payload.get('reliability_label'),score=payload.get('reliability_score'))
+                payload['reliability_label']='Not validated for this policy'
+                payload.pop('reliability_score',None)
+                payload['reliability_meaning']='Legacy reliability thresholds have not been evaluated for this policy. Component agreement and history support remain diagnostic evidence.'
             training=directory/'output_bayesian_prefight_smoothing_sig_fixed_v1/ufc_womens_model_training_rows_advanced_plus_bayes_prefight_smoothing_v1.csv'
             with training.open(encoding='utf-8-sig',newline='') as stream:
                 payload['actual_max_training_event_date_used']=max((row['event_date'] for row in csv.DictReader(stream) if row.get('fighter_a_won') in ('0','1','0.0','1.0') and row.get('fight_id') and row['event_date']<args.fight_date),default=None)
@@ -193,10 +210,17 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
         payload.setdefault('fight_date',args.fight_date)
         payload['analyzer_version']=VERSION;payload['elapsed_seconds']=round(time.monotonic()-start,2)
         payload.update(recent_fights=frozen_history,result_state='comparison' if operation=='compare' else 'complete',coverage=coverage,coverage_warnings=coverage_warnings,fighter_a_id=aid,fighter_b_id=bid,generated_at=utc_now(),reused=False,calculation_request=canonical,calculation_fingerprint=__import__('analyzer_history').fingerprint(context))
+        payload['evidence_quality']=build_evidence(payload,context,checks,evaluation_report,evaluation_error)
         from analyzer_summary import build_summary,metric_records
         from analyzer_fight_history import fight_evidence
         payload.update(matchup_summary=build_summary(payload),metric_records=metric_records(payload),
-                       fight_evidence=fight_evidence(root,sex,(a,aid),(b,bid),args.fight_date))
+                       fight_evidence=fight_evidence(root,sex,(a,aid),(b,bid),args.fight_date,source=source,history=full_history))
+        evidence_started=time.monotonic()
+        payload.update(capture(source,full_history,payload.get('visual_evidence')))
+        expected={c['path']:c['sha256'] for c in checks if c['status']=='PASS'}
+        if any(expected.get(path.relative_to(root).as_posix())!=sha for path,sha in source.hashes.items()):
+            raise ValueError('Captured source differs from validated datasets; retry after maintenance completes.')
+        payload.setdefault('stage_timings_seconds',{})['bout_context']=round(time.monotonic()-evidence_started,3)
         payload.setdefault('stage_timings_seconds',{})['validation']=round(validation_seconds,3)
         payload['time_to_initial_seconds']=initial['time_to_initial_seconds']
         payload['total_request_seconds']=round(time.monotonic()-started_operation,3)
@@ -205,7 +229,7 @@ def _predict(args,root=ROOT,progress=None,cancel=None):
         payload['memory_measurement_scope']='engine and descendant processes; sampled sum of working sets; shared pages may be counted more than once'
         if operation=='predict':validate_prediction(payload)
         if history_enabled(root):
-            try:payload['history_id']=history.save(canonical,context,payload)
+            try:payload['history_id']=history.save(canonical,context,payload,preserve_id=getattr(args,'preserve_history_id',None))
             except (OSError,ValueError) as exc:payload['history_notice']='Analysis completed, but local history could not be saved: '+str(exc)
         emit(stage='complete',message='Analysis complete',cancellable=False)
         print(format_result(payload))

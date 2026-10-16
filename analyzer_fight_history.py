@@ -15,21 +15,22 @@ def records(path):
 def identity_id(url):
     return (url or '').rstrip('/').rsplit('/',1)[-1]
 
-def recent_fights(root, sex, fighter_a, fighter_b, fight_date, limit=5):
+def recent_fights(root, sex, fighter_a, fighter_b, fight_date, limit=5, source=None):
     dt.date.fromisoformat(fight_date)
+    read = source.records if source else records
     identities = {'fighter_a':fighter_a,'fighter_b':fighter_b}
     histories = {side:{} for side in identities}
     root = Path(root)
     if sex == 'men':
         base = root/'mens_ufc_model/data/raw/ufcstats_men'
-        names = {r['fighter_id']:r.get('fighter_name','') for r in records(base/'fighters.csv')}
-        events = {r['event_id']:r.get('event_name','') for r in records(base/'events.csv')}
+        names = {r['fighter_id']:r.get('fighter_name','') for r in read(base/'fighters.csv')}
+        events = {r['event_id']:r.get('event_name','') for r in read(base/'events.csv')}
         wanted = {str(identity[1]) for identity in identities.values()}
         stats = {}
-        for row in records(base/'fight_stats.csv'):
+        for row in read(base/'fight_stats.csv'):
             if row.get('fighter_name') and not names.get(row.get('fighter_id')):names[row.get('fighter_id')]=row['fighter_name']
             if row.get('fighter_id') in wanted:stats[(row['fight_id'],row['fighter_id'])] = row
-        for row in records(base/'fights.csv'):
+        for row in read(base/'fights.csv'):
             date = row.get('event_date','')[:10]
             if not date or date >= fight_date:continue
             for side, (name, fighter_id) in identities.items():
@@ -43,7 +44,7 @@ def recent_fights(root, sex, fighter_a, fighter_b, fight_date, limit=5):
                 histories[side][row['fight_id']] = dict(fight_id=row['fight_id'],event_date=date,event_name=events.get(row.get('event_id'),''),opponent=stat.get('opponent_name') or names.get(opponent_id) or opponent_id or 'N/A',opponent_id=opponent_id,division=row.get('weight_class',''),result=result,method=row.get('method',''),round=row.get('round',''),time=row.get('time',''))
     elif sex == 'women':
         path = root/'womens_ufc_model/output_td_repaired/ufc_womens_fighter_fight_stats_td_control_repaired.csv'
-        source_rows = list(records(path))
+        source_rows = list(read(path))
         opponents = {}
         for row in source_rows:
             identifier=identity_id(row.get('profile_url'))
@@ -62,12 +63,13 @@ def recent_fights(root, sex, fighter_a, fighter_b, fight_date, limit=5):
     else:raise ValueError('Unknown fighter history category')
     return dict(schema_version=1,history_cutoff=fight_date,**{side:sorted(rows.values(),key=lambda r:(r['event_date'],r['fight_id']),reverse=True)[:limit] for side,rows in histories.items()})
 
-def fight_evidence(root, sex, fighter_a, fighter_b, fight_date):
+def fight_evidence(root, sex, fighter_a, fighter_b, fight_date, source=None, history=None):
     from analyzer_history import fingerprint
-    history=recent_fights(root,sex,fighter_a,fighter_b,fight_date,limit=None)
+    import copy
+    history=copy.deepcopy(history) if history is not None else recent_fights(root,sex,fighter_a,fighter_b,fight_date,limit=None,source=source)
     path=Path(root)/('mens_ufc_model/data/raw/ufcstats_men/fight_stats.csv' if sex=='men' else 'womens_ufc_model/output_td_repaired/ufc_womens_fighter_fight_stats_td_control_repaired.csv')
     stats={}
-    for row in records(path):stats.setdefault(row.get('fight_id'),[]).append(row)
+    for row in (source.records(path) if source else records(path)):stats.setdefault(row.get('fight_id'),[]).append(row)
     for side in ('fighter_a','fighter_b'):
         for row in history[side]:
             row['content_fingerprint']=fingerprint(dict(metadata=row,stats=sorted(stats.get(row['fight_id'],[]),key=lambda r:str(r.get('fighter_id',r.get('profile_url',r.get('fighter','')))))))

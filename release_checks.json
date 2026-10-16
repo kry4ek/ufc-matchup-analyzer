@@ -1,94 +1,104 @@
 {
-  "version": "0.6.0",
-  "status": "local_experimental_review_candidate_standard_publication_gate_not_passed",
+  "version": "0.8.0",
+  "status": "experimental_prerelease_local_verification_snapshot",
   "checks": [
     {
-      "name": "Full native regression and setup",
+      "name": "Integrated native regression",
       "status": "PASS",
       "required": true
     },
     {
-      "name": "Parent optimization parity and measured performance",
+      "name": "Source-only regression",
       "status": "PASS",
       "required": true
     },
     {
-      "name": "Initial/advanced/final and cancellation states",
+      "name": "Parent full-history parity",
       "status": "PASS",
       "required": true
     },
     {
-      "name": "Both model-family portable matrices",
+      "name": "Native v0.8 interactions",
       "status": "PASS",
       "required": true
     },
     {
-      "name": "Guided history/preferences import, frozen exports and undo",
+      "name": "Near-capacity history",
       "status": "PASS",
       "required": true
     },
     {
-      "name": "Correction rebuild/promotion and complete restore",
+      "name": "Native compact Save dialog",
       "status": "PASS",
       "required": true
     },
     {
-      "name": "Statistics, history, cache clear and saved-version comparison",
+      "name": "Final end-to-end benchmarks and prediction parity",
       "status": "PASS",
       "required": true
     },
     {
-      "name": "Source/dependency/data audit and export reproduction",
+      "name": "Offline portable men workflow",
       "status": "PASS",
       "required": true
     },
     {
-      "name": "Native/HTML rendering and saves",
+      "name": "Offline portable women workflow",
       "status": "PASS",
       "required": true
     },
     {
-      "name": "Internal model methodology",
-      "status": "FAIL",
-      "required": true,
-      "evidence": "Mirrored women bouts cross ensemble folds; calibration is also ungrouped."
-    },
-    {
-      "name": "Fresh portable workflows",
+      "name": "Native EXE startup",
       "status": "PASS",
       "required": true
     },
     {
-      "name": "Final delivery archive/EXE checks",
+      "name": "Genuine legacy import/view/export/undo",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Native dependency closure",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Source and data audit",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Archive inventory/hash/CRC checks",
       "status": "RECORDED_EXTERNALLY",
-      "required": true,
-      "evidence": "See candidate_verification.json beside the delivery archives; an archive cannot contain its own final hash."
+      "required": false
     },
     {
-      "name": "Clean Windows 10/11 machine coverage",
-      "status": "UNVERIFIED",
+      "name": "Clean Windows 10/11",
+      "status": "DEFERRED",
       "required": true
     },
     {
-      "name": "Physical OS scale 100/150/200 coverage",
-      "status": "UNVERIFIED",
+      "name": "Actual alternate Windows display scaling",
+      "status": "DEFERRED",
       "required": true
     },
     {
-      "name": "Dataset redistribution review",
-      "status": "UNVERIFIED",
+      "name": "Dataset rights",
+      "status": "review_required",
       "required": true
     },
     {
-      "name": "Remote CI for final release revision",
-      "status": "UNVERIFIED",
+      "name": "Signing / stable release",
+      "status": "PENDING",
       "required": true
     },
     {
-      "name": "Published asset download and verification",
-      "status": "NOT_REQUESTED",
+      "name": "Publication and remote CI",
+      "status": "RECORDED_EXTERNALLY",
       "phase": "after_publish",
-      "required": true
+      "required": true,
+      "evidence": "Release assets PUBLISH_PREPARATION.json and POST_PUBLICATION_VERIFICATION.json record exact-commit CI and anonymous-download results after this snapshot."
     }
-  ]
+  ],
+  "publication_authorization": "Owner requested GitHub publication on 16 October 2026."
 }

@@ -1,0 +1,467 @@
+{
+  "version": "0.7.0",
+  "date": "2026-10-15",
+  "scope": "Local experimental candidate; no v0.7 publication or remote CI claimed",
+  "environment": {
+    "python": "3.14.7",
+    "windows": [
+      "10",
+      "10.0.19045",
+      "SP0",
+      "Multiprocessor Free"
+    ],
+    "native_display_dpi": 120
+  },
+  "regression": {
+    "status": "PASS",
+    "tests": 204,
+    "seconds": 19.777,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0
+  },
+  "setup": {
+    "status": "PASS",
+    "checks": 8,
+    "scope": "Installer branches mocked; no clean-machine claim"
+  },
+  "model": {
+    "status": "LIMITED_RETROSPECTIVE_EVALUATION",
+    "integrity": "8cfa07cdf32e7312afba0d75ea1ed3933a4cf073aa51afc6a56af8b26e0d092a",
+    "promotion": {
+      "performance_gate": "PASS",
+      "live_parent_export_parity": "PASS",
+      "parity_evidence_sha256": "e717265750f296d8fbc008d54506718c7a5682c299cb15ec5150573fb98677bd",
+      "decision": "PROMOTE_WITH_LIMITED_RETROSPECTIVE_EVIDENCE"
+    },
+    "models": {
+      "men": {
+        "model_version": "v3_bayes_smoothed",
+        "evaluated": 1278,
+        "excluded": 20,
+        "failed": 0,
+        "remaining": 0,
+        "scores": {
+          "Model holdout": {
+            "accuracy": 0.6387665198237885,
+            "brier": 0.2287653505015013,
+            "log_loss": 0.6493958051577187
+          },
+          "Frozen reference": {
+            "accuracy": 0.6387665198237885,
+            "brier": 0.2287653505015013,
+            "log_loss": 0.6493958051577187
+          },
+          "50/50 holdout": {
+            "accuracy": 0.486784140969163,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453
+          },
+          "Elo holdout": {
+            "accuracy": 0.5550660792951542,
+            "brier": 0.24781916121352957,
+            "log_loss": 0.6888765202245969
+          }
+        },
+        "uncertainty": {
+          "method": "1000 paired event-date bootstrap replicates; seed 42; descriptive 95% interval",
+          "clusters": 42,
+          "candidate_minus_reference_log_loss_low": 0.0,
+          "candidate_minus_reference_log_loss_high": 0.0
+        }
+      },
+      "women": {
+        "model_version": "v2_chronological_calibrated_ensemble",
+        "evaluated": 237,
+        "excluded": 4,
+        "failed": 0,
+        "remaining": 0,
+        "scores": {
+          "Model holdout": {
+            "accuracy": 0.6805555555555556,
+            "brier": 0.21201954250509972,
+            "log_loss": 0.6130528982798855
+          },
+          "Frozen reference": {
+            "accuracy": 0.6527777777777778,
+            "brier": 0.2178642662489507,
+            "log_loss": 0.6273135170337936
+          },
+          "50/50 holdout": {
+            "accuracy": 0.4305555555555556,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453
+          },
+          "Elo holdout": {
+            "accuracy": 0.6388888888888888,
+            "brier": 0.24540518617488832,
+            "log_loss": 0.6839941225201351
+          }
+        },
+        "uncertainty": {
+          "method": "1000 paired event-date bootstrap replicates; seed 42; descriptive 95% interval",
+          "clusters": 34,
+          "candidate_minus_reference_log_loss_low": -0.03592988172254352,
+          "candidate_minus_reference_log_loss_high": 0.007899051116600941
+        }
+      }
+    },
+    "cv_audit": {
+      "status": "PASS",
+      "audited_event_dates": 110,
+      "boundaries": 1650
+    },
+    "evaluated_snapshot_through": "2026-09-26"
+  },
+  "datasets": {
+    "status": "PASS",
+    "files": 15,
+    "size_bytes": 207401438,
+    "through": "2026-10-10",
+    "summary": {
+      "men": {
+        "added_fights": 22,
+        "changed": true,
+        "binary_training_rows_added": 44,
+        "events_inspected": 2,
+        "captured_fights": 22,
+        "decisive_fights": 22,
+        "draws": 0,
+        "no_contests": 0,
+        "proposed_binary_training_rows": 44,
+        "data_through": "2026-10-10"
+      },
+      "women": {
+        "added_fights": 4,
+        "changed": true,
+        "binary_training_rows_added": 6,
+        "events_inspected": 2,
+        "captured_fights": 4,
+        "decisive_fights": 3,
+        "draws": 1,
+        "no_contests": 0,
+        "proposed_binary_training_rows": 6,
+        "data_through": "2026-10-10"
+      }
+    },
+    "all_parent_app_hashes_equal": true,
+    "repeat_live_update": {
+      "status": "PASS",
+      "transaction_status": "no_changes",
+      "all_15_hashes_unchanged": true
+    },
+    "rights": "review_required"
+  },
+  "performance": {
+    "family": "men",
+    "status": "PASS",
+    "model_semantics": "Same promoted policy; only performance implementation differs",
+    "conditions": "No competing evaluation jobs; same reference machine/runtime/data, OS file cache not controlled",
+    "medians": {
+      "reference": 90.72,
+      "candidate": 50.851
+    },
+    "reduction_percent": 43.947310405643734
+  },
+  "portable": {
+    "status": "PASS",
+    "offline": true,
+    "men": [
+      {
+        "case": "forward",
+        "seconds": 76.65,
+        "gui_ticks": 1140,
+        "full_app_process_tree_working_set_mib": 535.5,
+        "visible_owned_console_windows": 0,
+        "probability": 0.8209906573772752,
+        "engine_seconds": 68.29,
+        "first_comparison_seconds": 63.794,
+        "comparison_navigation_seconds": 0.0851,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 3.358,
+          "features": 2.412,
+          "rebuilding": 49.68,
+          "training": 2.389,
+          "prediction": 0.314,
+          "validation": 5.036
+        },
+        "render_seconds": 0.05,
+        "peak_working_set_mib": 450.5,
+        "model": "v3_bayes_smoothed",
+        "report_lines": 309,
+        "comparison_rows": 153,
+        "copy_and_save": "PASS"
+      },
+      {
+        "case": "reverse",
+        "seconds": 72.87,
+        "gui_ticks": 1279,
+        "full_app_process_tree_working_set_mib": 526.3,
+        "visible_owned_console_windows": 0,
+        "probability": 0.1790093426227249,
+        "engine_seconds": 52.22,
+        "first_comparison_seconds": 50.783,
+        "comparison_navigation_seconds": 0.0029,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 3.567,
+          "features": 1.989,
+          "rebuilding": 30.005,
+          "training": 0.666,
+          "prediction": 0.064,
+          "validation": 17.859
+        },
+        "render_seconds": 0.029,
+        "peak_working_set_mib": 346.4,
+        "model": "v3_bayes_smoothed",
+        "report_lines": 309,
+        "comparison_rows": 153,
+        "copy_and_save": "PASS"
+      },
+      {
+        "case": "single-worker",
+        "seconds": 50.59,
+        "gui_ticks": 920,
+        "full_app_process_tree_working_set_mib": 541.3,
+        "visible_owned_console_windows": 0,
+        "probability": 0.8209906573772752,
+        "engine_seconds": 43.5,
+        "first_comparison_seconds": 42.077,
+        "comparison_navigation_seconds": 0.0028,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 3.79,
+          "features": 2.332,
+          "rebuilding": 28.518,
+          "training": 0.704,
+          "prediction": 0.058,
+          "validation": 5.529
+        },
+        "render_seconds": 0.038,
+        "peak_working_set_mib": 362.8,
+        "model": "v3_bayes_smoothed",
+        "report_lines": 309,
+        "comparison_rows": 153,
+        "copy_and_save": "PASS"
+      },
+      {
+        "case": "historical",
+        "seconds": 55.29,
+        "gui_ticks": 981,
+        "full_app_process_tree_working_set_mib": 453.5,
+        "visible_owned_console_windows": 0,
+        "probability": 0.8432395019728887,
+        "engine_seconds": 44.42,
+        "first_comparison_seconds": 43.044,
+        "comparison_navigation_seconds": 0.0022,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 3.367,
+          "features": 1.944,
+          "rebuilding": 29.653,
+          "training": 0.656,
+          "prediction": 0.053,
+          "validation": 9.272
+        },
+        "render_seconds": 0.027,
+        "peak_working_set_mib": 337.3,
+        "model": "v3_bayes_smoothed",
+        "report_lines": 302,
+        "comparison_rows": 147,
+        "copy_and_save": "PASS"
+      }
+    ],
+    "women": [
+      {
+        "case": "forward",
+        "seconds": 30.31,
+        "gui_ticks": 543,
+        "full_app_process_tree_working_set_mib": 300.4,
+        "visible_owned_console_windows": 0,
+        "probability": 0.3649274233223568,
+        "engine_seconds": 29.09,
+        "first_comparison_seconds": 11.921,
+        "comparison_navigation_seconds": 0.0625,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 1.28,
+          "features": 3.875,
+          "cross_validation": 10.193,
+          "training": 5.462,
+          "prediction": 0.109,
+          "validation": 0.249
+        },
+        "render_seconds": 0.025,
+        "peak_working_set_mib": 195.0,
+        "model": "v2_chronological_calibrated_ensemble",
+        "report_lines": 331,
+        "comparison_rows": 153,
+        "copy_and_save": "PASS"
+      },
+      {
+        "case": "reverse",
+        "seconds": 33.94,
+        "gui_ticks": 605,
+        "full_app_process_tree_working_set_mib": 302.2,
+        "visible_owned_console_windows": 0,
+        "probability": 0.6350725766776432,
+        "engine_seconds": 32.72,
+        "first_comparison_seconds": 13.75,
+        "comparison_navigation_seconds": 0.0022,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 1.298,
+          "features": 5.272,
+          "cross_validation": 12.0,
+          "training": 5.651,
+          "prediction": 0.128,
+          "validation": 0.288
+        },
+        "render_seconds": 0.03,
+        "peak_working_set_mib": 197.1,
+        "model": "v2_chronological_calibrated_ensemble",
+        "report_lines": 331,
+        "comparison_rows": 153,
+        "copy_and_save": "PASS"
+      },
+      {
+        "case": "single-worker",
+        "seconds": 34.12,
+        "gui_ticks": 588,
+        "full_app_process_tree_working_set_mib": 302.9,
+        "visible_owned_console_windows": 0,
+        "probability": 0.3649274233223568,
+        "engine_seconds": 32.92,
+        "first_comparison_seconds": 15.21,
+        "comparison_navigation_seconds": 0.0056,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 1.337,
+          "features": 7.534,
+          "cross_validation": 9.8,
+          "training": 5.109,
+          "prediction": 0.133,
+          "validation": 0.292
+        },
+        "render_seconds": 0.026,
+        "peak_working_set_mib": 197.0,
+        "model": "v2_chronological_calibrated_ensemble",
+        "report_lines": 331,
+        "comparison_rows": 153,
+        "copy_and_save": "PASS"
+      },
+      {
+        "case": "historical",
+        "seconds": 38.46,
+        "gui_ticks": 645,
+        "full_app_process_tree_working_set_mib": 303.7,
+        "visible_owned_console_windows": 0,
+        "probability": 0.4777117414622766,
+        "engine_seconds": 37.12,
+        "first_comparison_seconds": 13.097,
+        "comparison_navigation_seconds": 0.0062,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 1.259,
+          "features": 4.653,
+          "cross_validation": 15.097,
+          "training": 7.648,
+          "prediction": 0.106,
+          "validation": 0.255
+        },
+        "render_seconds": 0.068,
+        "peak_working_set_mib": 195.4,
+        "model": "v2_chronological_calibrated_ensemble",
+        "report_lines": 326,
+        "comparison_rows": 148,
+        "copy_and_save": "PASS"
+      }
+    ],
+    "native_console_windows": 0,
+    "scope": "Fresh disposable portable; delivery archive extraction verified separately"
+  },
+  "layout": {
+    "status": "PASS",
+    "native_display_dpi": 120,
+    "method": "Tk scaling simulation on the current Windows display; not a change to Windows display scaling",
+    "scales": [
+      {
+        "scale_percent": 100,
+        "width": 1040,
+        "height": 820,
+        "output_height": 519,
+        "status": "PASS"
+      },
+      {
+        "scale_percent": 125,
+        "width": 1126,
+        "height": 876,
+        "output_height": 498,
+        "status": "PASS"
+      },
+      {
+        "scale_percent": 150,
+        "width": 1349,
+        "height": 990,
+        "output_height": 602,
+        "status": "PASS"
+      },
+      {
+        "scale_percent": 200,
+        "width": 1800,
+        "height": 990,
+        "output_height": 560,
+        "status": "PASS"
+      }
+    ]
+  },
+  "native_dependencies": {
+    "status": "PASS",
+    "amd64_pe_files": 299,
+    "missing": []
+  },
+  "correction_restore": {
+    "status": "PASS",
+    "cases": [
+      "no_contest",
+      "draw"
+    ],
+    "all_15_hashes_restored": true
+  },
+  "old_policy_import": {
+    "status": "PASS",
+    "original_version": "0.6.0",
+    "original_policy": "v1_current_ensemble",
+    "probability_preserved": 0.485904994646593,
+    "original_payload_unchanged": true,
+    "legacy_missing_evidence_explicit": true,
+    "clipboard_matches": true,
+    "new_policy_reuse_prevented": true,
+    "undo_restores_destination": true,
+    "source_unchanged": true
+  },
+  "native_save": {
+    "txt": "PASS",
+    "html": "PASS"
+  },
+  "ledger": {
+    "status": "PASS",
+    "records": 6,
+    "scope": "Synthetic local lifecycle only; no prospective performance claim"
+  },
+  "delivery": {
+    "status": "RECORDED_EXTERNALLY",
+    "evidence": "candidate_verification.json beside delivery archives"
+  },
+  "unavailable": [
+    "Clean Windows 10 and Windows 11",
+    "Actual OS scale 100/150/200 on both OS versions"
+  ],
+  "limitations": [
+    "Retrospective exposure, later corrections and repeated-fighter dependence",
+    "Legacy reliability thresholds unvalidated for corrected women policy",
+    "Dataset redistribution review_required",
+    "Unsigned launcher"
+  ]
+}

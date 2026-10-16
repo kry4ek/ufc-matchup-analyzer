@@ -28,8 +28,8 @@ def main():
         for size in ('Medium','Large'):
             app.font_size.set(size);app.change_font();window.update();app.notebook.select(app.overview);window.update()
             assert app.overview_tree.winfo_height()>50,app.overview_tree.winfo_height()
-            assert app.summary_text.winfo_height()>50
-            assert payload['matchup_summary']['observations'][0]['text'] in app.summary_text.get('1.0','end')
+            assert app.evidence_panel.winfo_height()>50
+            assert payload['matchup_summary']['observations'][0]['text'] in app.matchup_observations.get()
             app.summary_metrics();window.update();assert app.notebook.select()==str(app.comparison)
             checks.append('Overview summary and supporting metric navigation: '+size)
         app.font_size.set('Medium');app.change_font();app.notebook.select(app.overview);window.update()
@@ -48,7 +48,7 @@ def main():
         assert controller.request['operation']=='apply_corrections' and controller.request['preview_id']==preview['id']
         controller.busy=False;checks.append('Apply sends the reviewed preview identity, without another fetch')
         app.controls();controller.busy=True;app.controls()
-        for index in (6,7):assert app.help_menu.entrycget(index,'state')=='disabled'
+        for key in ('recheck','cache'):assert app.command_state(key)=='disabled'
         controller.busy=False;checks.append('Recheck and cache clearing disabled during an active job')
         atomic_json(args.out,dict(status='PASS',checks=checks,actual_window_size=[window.winfo_width(),window.winfo_height()]))
     finally:controller.busy=False;app.destroy()

@@ -47,7 +47,6 @@ def installation_report(root=ROOT):
 
 def execute(request,emit,cancel=None,root=ROOT):
     from analyzer_maintenance import cleanup_history,maintenance,recover,recover_interrupted
-    from ufc_matchup_analyzer import parser,predict
     root=Path(root)
     operation=request['operation']
     with operation_lock(root,operation):
@@ -56,17 +55,21 @@ def execute(request,emit,cancel=None,root=ROOT):
             recovered=recover_interrupted(root)
             from analyzer_migration import recover as recover_imports
             recover_imports(root)
+            emit(event_type='history_ready',message='Recovery finished. Saved reports are available while datasets are checked.')
             report=installation_report(root)
             report['recovered']=recovered
             if report['ready']:cleanup_history(root)
             else:print(json.dumps(report,indent=2,ensure_ascii=False))
             return report
         if operation in ('predict','compare'):
+            from ufc_matchup_analyzer import parser,predict
             argv=[operation,request['sex'],'--fighter-a',request['fighter_a'],'--fighter-b',request['fighter_b'],'--division',request['division'],'--fight-date',request['fight_date']]
             for field in ('fighter_a_id','fighter_b_id','workers','as_of_date'):
                 if request.get(field):argv.extend(['--'+field.replace('_','-'),str(request[field])])
             args=parser().parse_args(argv)
             args.use_cache=request.get('use_cache',True);args.force_recalculate=request.get('force_recalculate',False)
+            args.skip_saved_result=request.get('skip_saved_result',False)
+            args.preserve_history_id=request.get('preserve_history_id')
             return predict(args,root,emit,cancel)
         if operation=='clear_cache':
             from analyzer_cache import clear_cache

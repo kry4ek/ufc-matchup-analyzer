@@ -1,0 +1,94 @@
+{
+  "version": "0.6.0",
+  "status": "local_experimental_review_candidate_standard_publication_gate_not_passed",
+  "checks": [
+    {
+      "name": "Full native regression and setup",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Parent optimization parity and measured performance",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Initial/advanced/final and cancellation states",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Both model-family portable matrices",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Guided history/preferences import, frozen exports and undo",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Correction rebuild/promotion and complete restore",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Statistics, history, cache clear and saved-version comparison",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Source/dependency/data audit and export reproduction",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Native/HTML rendering and saves",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Internal model methodology",
+      "status": "FAIL",
+      "required": true,
+      "evidence": "Mirrored women bouts cross ensemble folds; calibration is also ungrouped."
+    },
+    {
+      "name": "Fresh portable workflows",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Final delivery archive/EXE checks",
+      "status": "RECORDED_EXTERNALLY",
+      "required": true,
+      "evidence": "See candidate_verification.json beside the delivery archives; an archive cannot contain its own final hash."
+    },
+    {
+      "name": "Clean Windows 10/11 machine coverage",
+      "status": "UNVERIFIED",
+      "required": true
+    },
+    {
+      "name": "Physical OS scale 100/150/200 coverage",
+      "status": "UNVERIFIED",
+      "required": true
+    },
+    {
+      "name": "Dataset redistribution review",
+      "status": "UNVERIFIED",
+      "required": true
+    },
+    {
+      "name": "Remote CI for final release revision",
+      "status": "UNVERIFIED",
+      "required": true
+    },
+    {
+      "name": "Published asset download and verification",
+      "status": "NOT_REQUESTED",
+      "phase": "after_publish",
+      "required": true
+    }
+  ]
+}

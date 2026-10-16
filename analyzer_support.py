@@ -3,7 +3,7 @@ from __future__ import annotations
 import csv, datetime as dt, hashlib, importlib, importlib.metadata, json, os, pathlib, struct, sys, tempfile, urllib.request, zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent
-VERSION = '0.6.0'
+VERSION = '0.8.0'
 
 def digest(path):
     with pathlib.Path(path).open('rb') as stream:
@@ -55,14 +55,41 @@ def data_health(root=ROOT, verify_hashes=True, targets=('men','women')):
         path=safe_path(root,rel); entry=expected.get(rel,original)
         if not path.is_file(): checks.append(dict(path=rel,status='FAIL',message='Missing; run setup or supply the matching dataset archive.'));continue
         try:
-            info=csv_info(path)
+            # Always hash the current bytes. Reuse only a content-keyed structural
+            # scan, never a file size/mtime verdict about dataset validity.
+            actual_hash=digest(path) if verify_hashes else None
+            if verify_hashes and actual_hash!=entry['sha256']: raise ValueError('Checksum changed outside a validated update; restore or rebuild explicitly.')
+            info=None; cache=root/'.runtime/validation_cache'/((actual_hash or 'uncached')+'.json')
+            if verify_hashes:
+                try:
+                    saved=json.loads(cache.read_text(encoding='utf-8'))
+                    signature=hashlib.sha256(json.dumps(saved['info'],sort_keys=True).encode()).hexdigest()
+                    if saved.get('schema')==1 and saved.get('sha256')==actual_hash and saved.get('day')==dt.date.today().isoformat() and saved.get('integrity')==signature:
+                        candidate=saved['info']
+                        if (isinstance(candidate,dict) and set(candidate)=={'rows','columns','latest_date','invalid_or_future_dates'}
+                            and type(candidate.get('rows'))==int and candidate['rows']>=0
+                            and isinstance(candidate.get('columns'),list) and all(isinstance(v,str) for v in candidate['columns'])
+                            and (candidate.get('latest_date') is None or isinstance(candidate.get('latest_date'),str))
+                            and type(candidate.get('invalid_or_future_dates'))==int and candidate['invalid_or_future_dates']>=0):info=candidate
+                except (OSError,ValueError,TypeError,KeyError):pass
+            if info is None:
+                info=csv_info(path)
+                if verify_hashes:
+                    if digest(path)!=actual_hash:raise ValueError('Dataset changed during validation; retry after maintenance completes.')
+                    try:atomic_json(cache,dict(schema=1,sha256=actual_hash,day=dt.date.today().isoformat(),info=info,integrity=hashlib.sha256(json.dumps(info,sort_keys=True).encode()).hexdigest()))
+                    except OSError:pass
             if not info['rows']: raise ValueError('Dataset is empty')
             missing=set(original['columns'])-set(info['columns'])
             if missing: raise ValueError('Missing columns: '+', '.join(sorted(missing)))
             if info['invalid_or_future_dates']: raise ValueError('Invalid or future event dates')
-            if verify_hashes and digest(path)!=entry['sha256']: raise ValueError('Checksum changed outside a validated update; restore or rebuild explicitly.')
             checks.append(dict(path=rel,status='PASS',sha256=entry['sha256'] if verify_hashes else None,**info))
         except (ValueError,OSError,csv.Error) as exc:checks.append(dict(path=rel,status='FAIL',message=str(exc)))
+    if verify_hashes:
+        # A bounded, disposable structural cache; all current bytes are still hashed.
+        cache_files=sorted((root/'.runtime/validation_cache').glob('*.json'),key=lambda p:p.stat().st_mtime_ns,reverse=True)
+        for old in cache_files[64:]:
+            try:old.unlink()
+            except OSError:pass
     return checks
 
 def dataset_state(root=ROOT):

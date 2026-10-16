@@ -265,7 +265,7 @@ class EnhancedWindowTests(unittest.TestCase):
         self.app.comparison_tree.selection_set(item);self.app.metric_details(self.app.comparison_tree)
         self.assertIn('Profile measurement',self.app.details.get('1.0','end'))
         self.app.font_size.set('Large');self.app.change_font();self.assertIn('12',str(self.app.output['font']))
-        self.app.controls();self.assertEqual(self.app.help_menu.entrycget(4,'state'),'disabled')
+        self.app.controls();self.assertEqual(self.app.command_state('restore'),'disabled')
 
     def test_history_preference_persists_without_deleting_results(self):
         self.app.history.save(dict(operation='predict',sex='men'),{},sample())

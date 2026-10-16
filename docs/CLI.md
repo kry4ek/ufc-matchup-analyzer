@@ -1,6 +1,6 @@
 # CLI and manual source setup
 
-The portable Windows candidate needs no setup. These commands are for source users. Git history and automatic source downloads exclude datasets. There is no separate public dataset ZIP. Extract the Windows app ZIP from [Releases](https://github.com/kry4ek/ufc-matchup-analyzer/releases/tag/v0.3.0), then copy every file listed in `dataset_manifest.json` from **UFC Matchup Analyzer/app/** into the corresponding paths in a fresh source checkout. Do not replace your source code or existing datasets. Cloning alone is insufficient. Dataset redistribution rights remain unresolved, as explained in [DATA_NOTICE.md](../DATA_NOTICE.md).
+The portable Windows candidate needs no setup. These commands are for source users. Git history and automatic source downloads exclude datasets. Extract the matching v0.8 portable ZIP supplied with the local candidate, then copy every file listed in `dataset_manifest.json` from **UFC Matchup Analyzer/app/** into a fresh source checkout. The v0.8 data contents match v0.7; published v0.6 datasets differ. Copy only the data into that fresh checkout; preserve existing installations. There is no separate dataset ZIP. See [DATA_NOTICE.md](../DATA_NOTICE.md).
 
 ## Windows
 
@@ -18,9 +18,9 @@ Setup creates `.venv` and is rerunnable without overwriting data. `run.bat` uses
 
 `--fighter-a-id` / `--fighter-b-id` resolve supported duplicate men's names. `--profiles` supplies explicit advanced CLI profiles. Women's duplicate names cannot safely be resolved by ID with the current engine. Unknown identities are never guessed.
 
-`compare men|women` prepares the same dated comparison and Bayesian inputs without fitting prediction models. Its JSON has `result_state: comparison` and no probability/winner/reliability fields. Existing prediction JSON fields are retained. Predictions emit an early comparison event internally for the GUI, then finish with the unchanged model policies.
+`compare men|women` prepares the dated comparison and Bayesian inputs without fitting prediction models. Its JSON has `result_state: comparison` and no probability/winner/reliability fields. Predictions emit an early comparison for the GUI, then fit the selected versioned policy: men's v3 model or women's v2 chronological ensemble.
 
-CLI commands compute afresh by default. `--use-cache` explicitly allows exact content-matched saved-result reuse; `--force-recalculate` explicitly bypasses it. These options are mutually exclusive. Completed commands participate in local history unless the GUI history setting is disabled. Fitted model binaries are not cached. Historical cutoffs, manual-profile hashes, fighter order and worker mode are part of compatibility. A manual-profile CLI analysis can be viewed/exported in the GUI, but must be recalculated with its original profile file through the CLI.
+CLI commands compute afresh by default. `--use-cache` explicitly allows exact content-matched saved-result reuse; `--force-recalculate` bypasses saved-result reuse and calculation-cache reads. These options are mutually exclusive. Completed commands participate in local history unless the GUI history setting is disabled. Compatible prepared histories and locally fitted women's models can be reused from the bounded calculation cache; these binaries are never distributed or imported. Historical cutoffs, manual-profile hashes, fighter order and worker mode are part of compatibility. A manual-profile CLI analysis can be viewed/exported in the GUI, but must be recalculated with its original profile file through the CLI.
 
 ```bat
 run.bat update --target all

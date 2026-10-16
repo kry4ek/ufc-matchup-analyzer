@@ -1,14 +1,14 @@
 {
-  "version": "0.4.0",
+  "version": "0.8.0",
   "source": "UFCStats; derived features from retained engines",
   "redistribution_status": "review_required",
   "release_repository": null,
   "files": [
     {
       "path": "mens_ufc_model/data/raw/ufcstats_men/events.csv",
-      "sha256": "c873a9a0dbc768c3f664dc23b161efc07cd282b84facd35b404ef4e1ccdb5eae",
-      "size_bytes": 111128,
-      "rows": 791,
+      "sha256": "a071f6aa3ea3c57a750112df376239d1f3651ec8055b2269ecef05e3f70c5a1f",
+      "size_bytes": 111399,
+      "rows": 793,
       "columns": [
         "event_id",
         "event_name",
@@ -16,13 +16,13 @@
         "location",
         "source_url"
       ],
-      "latest_date": "2026-09-26"
+      "latest_date": "2026-10-10"
     },
     {
       "path": "mens_ufc_model/data/raw/ufcstats_men/fights.csv",
-      "sha256": "e94c16cc5061f8b2f736795ccfa912dd47db06d4aacc80caac2600f80c6cfe42",
-      "size_bytes": 1960371,
-      "rows": 7965,
+      "sha256": "93db348c6a7ece3a48c86a22331c7af257aeae0857f2a26b7c1edb161fd790b9",
+      "size_bytes": 1965675,
+      "rows": 7987,
       "columns": [
         "fight_id",
         "event_id",
@@ -42,13 +42,13 @@
         "referee",
         "source_url"
       ],
-      "latest_date": "2026-09-26"
+      "latest_date": "2026-10-10"
     },
     {
       "path": "mens_ufc_model/data/raw/ufcstats_men/fight_stats.csv",
-      "sha256": "0fffbd3496c4810da7fc20c6dcecf4f23d9b5ba99236f84283ac2e63fd5a1fe5",
-      "size_bytes": 4270999,
-      "rows": 15930,
+      "sha256": "1647ae70a168537f62cdf4a048eeab03bde9107e30eb012451579ea6b5490ce1",
+      "size_bytes": 4280987,
+      "rows": 15974,
       "columns": [
         "fight_id",
         "event_id",
@@ -85,13 +85,13 @@
         "elapsed_seconds",
         "source_url"
       ],
-      "latest_date": "2026-09-26"
+      "latest_date": "2026-10-10"
     },
     {
       "path": "mens_ufc_model/data/raw/ufcstats_men/fighters.csv",
-      "sha256": "95305f69bf04470d1f98228fe8c05cf201955e0e5becc7b3d7ac2605bb33b810",
-      "size_bytes": 367712,
-      "rows": 2510,
+      "sha256": "302f8b4586b2e870f4a083828984ca0a96df90a2eb6321b954531c6ec00c4651",
+      "size_bytes": 368302,
+      "rows": 2514,
       "columns": [
         "fighter_id",
         "fighter_name",
@@ -109,9 +109,9 @@
     },
     {
       "path": "mens_ufc_model/data/interim/mens_prefight_snapshots.csv",
-      "sha256": "d0831a51a0e20a30b09481c30e8eb2fbe56e69190730802cc05652bad8cd1b5a",
-      "size_bytes": 7394578,
-      "rows": 15930,
+      "sha256": "4370ab2eaa2a96280611941a816d0c6940b21962fef72a58eb222677ee3a30e0",
+      "size_bytes": 7415956,
+      "rows": 15974,
       "columns": [
         "fight_id",
         "event_id",
@@ -161,13 +161,13 @@
         "last_5_td_diff_per15",
         "history_max_event_date_before"
       ],
-      "latest_date": "2026-09-26"
+      "latest_date": "2026-10-10"
     },
     {
       "path": "mens_ufc_model/data/interim/mens_model_ready_matchups.csv",
-      "sha256": "f7f3b4ed205fa6ad12cba10d27da95aad99e7c7f43177bacaeb2a31e15667406",
-      "size_bytes": 8566754,
-      "rows": 7965,
+      "sha256": "bb4907782098f764c8010d19675e252bb4e790f7b0c4b3c61edc6bcadf786534",
+      "size_bytes": 8592102,
+      "rows": 7987,
       "columns": [
         "fight_id",
         "event_id",
@@ -272,13 +272,13 @@
         "fighter_a_last_5_td_diff_per15",
         "fighter_b_last_5_td_diff_per15"
       ],
-      "latest_date": "2026-09-26"
+      "latest_date": "2026-10-10"
     },
     {
       "path": "mens_ufc_model/data/processed/mens_training_rows.csv",
-      "sha256": "8ff04cef6968821ff2a7d5cc7464cdbf5f47b26c125f0dc96e0d43f9b018ae93",
-      "size_bytes": 16946206,
-      "rows": 15636,
+      "sha256": "fc4744fe7aa71551c6940a7bb5141c29fb8318cdc440590e61c65b10bcbafa33",
+      "size_bytes": 16997266,
+      "rows": 15680,
       "columns": [
         "fight_id",
         "event_id",
@@ -384,13 +384,13 @@
         "fighter_b_last_5_td_diff_per15",
         "row_direction"
       ],
-      "latest_date": "2026-09-26"
+      "latest_date": "2026-10-10"
     },
     {
       "path": "mens_ufc_model/data/processed/mens_training_rows_with_elo.csv",
-      "sha256": "fb13db6b333201e68395977ab0c1947c5ec6343a4d7bc53391bd47af3203b1cd",
-      "size_bytes": 19874107,
-      "rows": 15636,
+      "sha256": "922132b12cde247247fe7eede21ffc1e796345708d5cada257caf1472f3a4040",
+      "size_bytes": 19933633,
+      "rows": 15680,
       "columns": [
         "fight_id",
         "event_id",
@@ -511,13 +511,13 @@
         "days_since_elo_update_diff",
         "avg_opponent_elo_diff"
       ],
-      "latest_date": "2026-09-26"
+      "latest_date": "2026-10-10"
     },
     {
       "path": "mens_ufc_model/data/processed/mens_training_rows_v2_advanced.csv",
-      "sha256": "11357e66c38101bebe3a56d8b2661fdde6c61127f7513095034dcfe2b2b22867",
-      "size_bytes": 43948410,
-      "rows": 15636,
+      "sha256": "8d35cc846681cb1a26537db2cedfa3b03db9346021598ef51221a02895298507",
+      "size_bytes": 44077622,
+      "rows": 15680,
       "columns": [
         "fight_id",
         "event_id",
@@ -795,13 +795,13 @@
         "one_ufc_debut",
         "debutant_status"
       ],
-      "latest_date": "2026-09-26"
+      "latest_date": "2026-10-10"
     },
     {
       "path": "mens_ufc_model/data/processed/mens_training_rows_v3_bayes_smoothing_candidate.csv",
-      "sha256": "5c15420f6b37ca17eb42f080cdcd9c357c34b5248d7fdc1f9d402d3866fc2f98",
-      "size_bytes": 93682184,
-      "rows": 15636,
+      "sha256": "7d0d075c4a8e50c4464a19539daa35f4e5329aa3a792a3f91ceedc37c22eb777",
+      "size_bytes": 93955080,
+      "rows": 15680,
       "columns": [
         "fight_id",
         "event_id",
@@ -1349,13 +1349,13 @@
         "v3_bayes_td_def_both_low_support_flag",
         "v3_bayes_td_def_either_prior_only_flag"
       ],
-      "latest_date": "2026-09-26"
+      "latest_date": "2026-10-10"
     },
     {
       "path": "womens_ufc_model/output_td_repaired/ufc_womens_fighter_fight_stats_td_control_repaired.csv",
-      "sha256": "69a9492fed7e48bbdc9c496741c3c16896b0b8398d2f2299675511b2fece435a",
-      "size_bytes": 972164,
-      "rows": 1890,
+      "sha256": "65b44b98d49bb3ff90bb7bd88428a383f3821871bc6ad6d997f6c00c23b5f583",
+      "size_bytes": 977001,
+      "rows": 1898,
       "columns": [
         "fight_id",
         "fight_url",
@@ -1427,13 +1427,13 @@
         "opponent_control_time_seconds",
         "minutes"
       ],
-      "latest_date": "2026-09-26"
+      "latest_date": "2026-10-10"
     },
     {
       "path": "womens_ufc_model/output_advanced_features_sig_fixed/ufc_womens_model_training_rows_advanced_sig_fixed.csv",
-      "sha256": "5271fe8540d54d69ad9e21154594174f3cce85885b38d2ceb052e63a959d33a3",
-      "size_bytes": 3674159,
-      "rows": 1890,
+      "sha256": "606107b1c7dc910fc5f7927426f433662aa5a861edc6da8da53df58886430267",
+      "size_bytes": 3687434,
+      "rows": 1896,
       "columns": [
         "fight_id",
         "event_date",
@@ -1642,13 +1642,13 @@
         "prime_26_34_diff",
         "reach_height_ratio_diff"
       ],
-      "latest_date": "2026-09-26"
+      "latest_date": "2026-10-10"
     },
     {
       "path": "womens_ufc_model/output_bayesian_prefight_smoothing_sig_fixed_v1/ufc_womens_model_training_rows_advanced_plus_bayes_prefight_smoothing_v1.csv",
-      "sha256": "717613548af82ff2ea9f3d2ef4df917c0a1b42abb2313c46b29e4f23928b1932",
-      "size_bytes": 4451232,
-      "rows": 1890,
+      "sha256": "ce1d3d8c939b55009b327be430de310d9f0e0277649df140915a867ff02c934d",
+      "size_bytes": 4467095,
+      "rows": 1896,
       "columns": [
         "fight_id",
         "event_date",
@@ -1887,7 +1887,7 @@
         "career_td_accuracy_before_bayes_s20_diff",
         "career_td_allowed_accuracy_before_bayes_s20_diff"
       ],
-      "latest_date": "2026-09-26"
+      "latest_date": "2026-10-10"
     },
     {
       "path": "womens_ufc_model/output_advanced_features/advanced_prefight_snapshots.csv",
@@ -1957,5 +1957,6 @@
       ],
       "latest_date": null
     }
-  ]
+  ],
+  "snapshot_refreshed_at": "2026-10-15T07:13:30.806822+00:00"
 }

@@ -16,7 +16,7 @@ def compare_entries(original, newer):
     context_changes = []
     for field in ('division','fight_date','model_version','worker_mode','actual_max_training_event_date_used'):
         if a.get(field)!=b.get(field): context_changes.append(dict(field=field,before=a.get(field),after=b.get(field)))
-    for field in ('datasets','code','dependencies','python','engine','report_version'):
+    for field in ('datasets','code','dependencies','python','engine','report_version','validation_artifact_sha256'):
         if left['context'].get(field)!=right['context'].get(field):
             context_changes.append(dict(field=field,before=left['context'].get(field),after=right['context'].get(field)))
     for field in ('as_of_date','effective_cutoff','workers','profiles_sha256'):
@@ -56,12 +56,27 @@ def compare_entries(original, newer):
                 if old.get(fid)!=new.get(fid):
                     fights.append(dict(fighter=a['fighter_'+side],fight_id=fid,change='newly eligible' if fid not in old else 'no longer eligible' if fid not in new else 'record changed',before=old.get(fid),after=new.get(fid)))
     limitations=[]
+    recent_changes=[]
+    if a.get('recent_form') and b.get('recent_form'):
+        for side,other in (('a','b' if reversed_sides else 'a'),('b','a' if reversed_sides else 'b')):
+            for window in ('3','5','career'):
+                old=a['recent_form']['fighter_'+side]['windows'][window]
+                new=b['recent_form']['fighter_'+other]['windows'][window]
+                for x,y in zip(old['metrics'],new['metrics']):
+                    if x!=y:
+                        compatible=all(x.get(k)==y.get(k) for k in ('id','semantic_version','unit'))
+                        delta=(y['value']-x['value'])*(100 if x['unit']=='percent' else 1) if compatible and x['value'] is not None and y['value'] is not None else None
+                        recent_changes.append(dict(fighter=a['fighter_'+side],window=window,label=x['label'],before=x,after=y,delta=delta))
+    else:limitations.append('Recent-form evidence was not captured in both reports; recent-form changes are unavailable.')
     if not ar or not br:limitations.append('Compatible metric definitions were not saved in both reports; metric deltas are unavailable.')
     if not evidence_a or not evidence_b:limitations.append('Full eligible-fight evidence was not saved in both reports; fight changes are unavailable.')
     if not probability:limitations.append('Probability comparison requires two completed predictions.')
     if context_changes:limitations.append('Changed inputs are shown; this comparison does not attribute a probability shift to any single cause.')
+    if a.get('fight_date')!=b.get('fight_date'):
+        limitations.append('The matchup date changed. Newly/no longer eligible bouts reflect cutoff changes; record-changed entries describe source differences for shared bouts.')
+    if not left.get('context') or not right.get('context'):limitations.append('Full saved calculation provenance is unavailable for a transient report.')
     return dict(schema=1,original=left,newer=right,reversed_sides=reversed_sides,context_changes=context_changes,
-                probability=probability,metrics=metrics,fights=fights,coverage_changes=coverage_changes,limitations=limitations)
+                probability=probability,metrics=metrics,fights=fights,coverage_changes=coverage_changes,limitations=limitations,recent_changes=recent_changes)
 
 def format_comparison(value):
     a,b=value['original']['payload'],value['newer']['payload']
@@ -69,6 +84,11 @@ def format_comparison(value):
            'Original: '+str(a.get('generated_at','Unknown'))+' / '+str(a.get('division','Unavailable'))+' / fight date '+a['fight_date'],
            'Newer: '+str(b.get('generated_at','Unknown'))+' / '+str(b.get('division','Unavailable'))+' / fight date '+b['fight_date']]
     if value['reversed_sides']:lines.append('Newer fighter order aligned to the original report.')
+    if value['probability']:
+        lines+=['','PROBABILITIES — before → after']
+        for r in value['probability']:lines.append(f"{r['fighter']}: {r['before']:.1%} → {r['after']:.1%}; {r['delta_pp']:+.2f} pp")
+    if not any(r['delta_pp'] for r in value['probability']) and not any(value[k] for k in ('metrics','fights','coverage_changes')) and not value.get('recent_changes'):
+        lines+=['','No material result changes. Generation times can differ; calculation-context changes appear below.']
     lines += ['','CONTEXT CHANGES']
     for row in value['context_changes']:
         if row['field'] in ('datasets','code','dependencies'):
@@ -77,8 +97,6 @@ def format_comparison(value):
             for name in sorted(set(old)|set(new)):
                 if old.get(name)!=new.get(name):lines.append('  '+name+': '+str(old.get(name,'Unavailable'))+' → '+str(new.get(name,'Unavailable')))
         else:lines.append(row['field']+': '+str(row['before'])+' → '+str(row['after']))
-    lines += ['','PROBABILITIES']
-    for r in value['probability']:lines.append(f"{r['fighter']}: {r['before']:.1%} → {r['after']:.1%}; {r['delta_pp']:+.2f} pp")
     lines += ['','METRIC CHANGES']
     for r in value['metrics']:
         delta='N/A' if r['delta'] is None else f"{r['delta']:+.4g}"+(' pp' if r['unit']=='percent' else '')
@@ -91,6 +109,9 @@ def format_comparison(value):
             lines.append('  '+label+': '+('Unavailable' if record is None else '; '.join(str(k)+'='+str(v) for k,v in record.items())))
     lines += ['','COVERAGE CHANGES']
     for r in value.get('coverage_changes',[]):lines.append(r['fighter']+': '+str(r['before'])+' → '+str(r['after']))
+    lines+=['','RECENT FORM CHANGES']
+    for r in value.get('recent_changes',[]):
+        lines.append(r['fighter']+' / '+r['window']+' / '+r['label']+': '+str(r['before']['value'])+' → '+str(r['after']['value'])+'; delta '+str(r['delta'])+(' pp' if r['before']['unit']=='percent' else '')+'; support '+str(r['before']['eligible_bouts'])+' → '+str(r['after']['eligible_bouts'])+' bouts')
     return '\n'.join(lines+['','LIMITATIONS']+value['limitations'])+'\n'
 
 def comparison_html(value):

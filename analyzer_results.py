@@ -309,10 +309,13 @@ def format_result(payload):
     from analyzer_fight_history import format_recent_fights
     from analyzer_summary import format_summary
     from analyzer_visuals import format_visuals
+    from analyzer_evidence import format_evidence
+    from analyzer_bout_context import format_context
+    text+='\nEVIDENCE QUALITY\n'+format_evidence(payload)+'\n'
     if payload.get('quick_comparison'):
         from analyzer_quick_comparison import format_quick
         return text+'\n'+format_quick(payload)+'\n'+format_recent_fights(payload)
-    return text+'\nMATCHUP SUMMARY\n'+format_summary(payload)+'\n'+('\n'+'\n'.join(dict.fromkeys(additions))+'\n' if additions else '')+'\n'+format_recent_fights(payload)+'\n'+format_visuals(payload)+'\n'
+    return text+'\nMATCHUP SUMMARY\n'+format_summary(payload)+'\n'+('\n'+'\n'.join(dict.fromkeys(additions))+'\n' if additions else '')+'\n'+format_recent_fights(payload)+'\n'+format_context(payload)+'\n'+format_visuals(payload)+'\n'
 
 def result_filename(payload):
     name = payload['fighter_a'] + ' vs ' + payload['fighter_b']

@@ -10,6 +10,7 @@ import time
 # In the embeddable runtime, explicit _pth entries select the packaged app.
 import analyzer_gui as gui
 from analyzer_support import ROOT,atomic_json
+from analyzer_history import engine_policy
 from analyzer_results import result_filename
 from ufc_matchup_analyzer import process_peak_mib
 
@@ -118,7 +119,11 @@ def main():
                 for side in ('a','b'):
                     original=baseline['fighter_'+side+'_comparison'];current=payload['fighter_'+side+'_comparison']
                     assert all(current.get(name)==value for name,value in original.items()),(label,side,'comparison changed')
-            assert payload['model_version']==('v3_bayes_smoothed' if sex=='men' else 'v1_current_ensemble')
+            assert payload['model_version']==engine_policy(ROOT,sex)
+            if sex=='women' and payload['model_version']=='v2_chronological_calibrated_ensemble':
+                assert payload['fold_audit']['status']=='PASS'
+                assert payload['reliability_label']=='Not validated for this policy'
+                assert 'reliability_score' not in payload
             assert 0<=payload['fighter_a_win_probability']<=1 and abs(payload['fighter_a_win_probability']+payload['fighter_b_win_probability']-1)<1e-8
             assert all(section in app.result_text for section in ('Overall Elo','Division Elo','Avg opponent Elo','STRIKING','GRAPPLING','RECENT FORM AND ACTIVITY','BAYESIAN MODEL RATE ESTIMATES','MODEL DETAILS','RELIABILITY AND DATA QUALITY'))
             if sex=='women':
@@ -157,7 +162,7 @@ def main():
                     capture(window,args.screenshots/(sex+'.png'))
                     app.notebook.select(app.comparison);window.update()
                     capture(window,args.screenshots/(sex+'-comparison.png'))
-                    app.notebook.select(app.notebook.tabs()[2]);window.update()
+                    app.notebook.select(app.report_tab);window.update()
                     capture(window,args.screenshots/(sex+'-full-report.png'))
                     app.output.yview_moveto(0)
                     app.notebook.select(app.overview)

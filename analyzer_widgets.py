@@ -55,10 +55,13 @@ class SuggestPopup:
         self.hide();self.choices=list(choices)
         if not self.entry.winfo_viewable():return
         self.window=tk.Toplevel(self.entry);self.window.overrideredirect(True)
-        self.list=tk.Listbox(self.window,height=max(1,min(7,len(labels))),exportselection=False,font=('Segoe UI',10),activestyle='dotbox')
+        self.list=tk.Listbox(self.window,height=max(1,min(7,len(labels))),exportselection=False,font='TkDefaultFont',activestyle='dotbox')
         self.list.pack(fill='both',expand=True)
         for label in labels or ['No matching fighter']:self.list.insert('end',label)
-        width=max(self.entry.winfo_width(),min(680,self.entry.winfo_screenwidth()-50))
+        from tkinter import font
+        measure=font.Font(self.list,font=self.list.cget('font'))
+        requested=max([measure.measure(label) for label in labels]+[280])+32
+        width=min(self.entry.winfo_screenwidth()-40,max(self.entry.winfo_width(),requested))
         x=min(self.entry.winfo_rootx(),self.entry.winfo_screenwidth()-width-10)
         y=self.entry.winfo_rooty()+self.entry.winfo_height()
         self.window.update_idletasks();height=self.list.winfo_reqheight()

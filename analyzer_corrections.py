@@ -281,6 +281,7 @@ def apply(root,identifier,progress=None,cancel=None,runner=None,validator=None):
         journal=dict(id=transaction,targets=targets,pid=os.getpid(),status='staging',kind='corrections',promotions=[],summary={})
         with maintenance_lock(root,transaction):
             try:
+                atomic_json(txn/'journal.json',journal)
                 stage.mkdir();shutil.copy2(root/'dataset_manifest.json',stage/'dataset_manifest.json')
                 for helper in ('analyzer_protocol.py','analyzer_errors.py'):shutil.copy2(root/helper,stage/helper)
                 files=[]

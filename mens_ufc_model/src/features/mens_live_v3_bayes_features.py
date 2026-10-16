@@ -164,10 +164,16 @@ def _numeric_min(a_value: Any, b_value: Any) -> float:
     return float(min(values))
 
 
+def _record_rows(frame):
+    # Preserve column order and scalar values without constructing a Series per row.
+    columns = tuple(frame.columns)
+    return (dict(zip(columns, values)) for values in frame.to_numpy(dtype=object))
+
+
 def _identity_maps(stats: pd.DataFrame) -> tuple[dict[str, str], dict[str, list[str]]]:
     id_to_name: dict[str, str] = {}
     name_counts: dict[str, Counter[str]] = defaultdict(Counter)
-    for _, row in stats.iterrows():
+    for row in _record_rows(stats):
         fighter_id = _clean_id(row.get("fighter_id"))
         fighter_name = _clean_text(row.get("fighter_name"))
         if not fighter_id:
@@ -229,7 +235,7 @@ def _process_base_date_group(
     date_group: pd.DataFrame,
     histories: dict[str, dict[str, Any]],
 ) -> None:
-    for _, row in date_group.iterrows():
+    for row in _record_rows(date_group):
         fighter_id = _clean_id(row.get("fighter_id"))
         if not fighter_id:
             continue

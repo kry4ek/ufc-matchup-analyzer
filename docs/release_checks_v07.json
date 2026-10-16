@@ -1,0 +1,91 @@
+{
+  "version": "0.7.0",
+  "status": "local_experimental_candidate_standard_release_gate_not_passed",
+  "checks": [
+    {
+      "name": "Native regression and setup",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Reviewed nested model boundaries and complete evaluation",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Parent/export and profile/debut parity",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Frozen evidence, old-policy import/export/undo",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Both offline portable model matrices",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Live dataset update and no-change repeat",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "NC/draw correction rebuild and complete restore",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Native TXT/HTML saves and simulated layout",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Verified runtime and native import closure",
+      "status": "PASS",
+      "required": true
+    },
+    {
+      "name": "Final source/portable archive and extracted EXE proof",
+      "status": "RECORDED_EXTERNALLY",
+      "required": true,
+      "evidence": "candidate_verification.json beside delivery archives"
+    },
+    {
+      "name": "Clean Windows 10/11",
+      "status": "UNAVAILABLE",
+      "required": true,
+      "evidence": "User accepted outstanding release check; no environments available"
+    },
+    {
+      "name": "Actual OS display scaling 100/150/200",
+      "status": "UNAVAILABLE",
+      "required": true,
+      "evidence": "Tk simulations are supplemental"
+    },
+    {
+      "name": "Dataset redistribution review",
+      "status": "UNVERIFIED",
+      "required": true
+    },
+    {
+      "name": "Signed launcher",
+      "status": "UNSIGNED",
+      "required": false
+    },
+    {
+      "name": "Remote CI on release commit",
+      "status": "NOT_REQUESTED",
+      "required": true,
+      "phase": "publication"
+    },
+    {
+      "name": "Published asset download verification",
+      "status": "NOT_REQUESTED",
+      "required": true,
+      "phase": "after_publish"
+    }
+  ]
+}

@@ -8,7 +8,7 @@ import sys
 import time
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--app-root',type=Path);p.add_argument('--out',type=Path,required=True);p.add_argument('--baseline-dir',type=Path,required=True);p.add_argument('--resume',action='store_true');args=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--app-root',type=Path);p.add_argument('--out',type=Path,required=True);p.add_argument('--baseline-dir',type=Path,required=True);p.add_argument('--resume',action='store_true');p.add_argument('--fight-date',default='2026-10-10');p.add_argument('--as-of-date');args=p.parse_args()
     if args.app_root:sys.path.insert(0,str(args.app_root.resolve()))
     import analyzer_gui as gui
     from analyzer_support import ROOT,atomic_json,digest
@@ -38,8 +38,9 @@ def main():
         window.update();wait()
         for sex,names,division in [('men',('Islam Makhachev','Justin Gaethje'),'Lightweight'),('women',('Valentina Shevchenko','Manon Fiorot'),'Flyweight')]:
             if sex in completed:continue
-            app.division.set(('Men' if sex=='men' else 'Women')+' — '+division);app.change_division();app.names['a'].set(names[0]);app.names['b'].set(names[1]);app.date.set('2026-10-10');window.update()
+            app.division.set(('Men' if sex=='men' else 'Women')+' — '+division);app.change_division();app.names['a'].set(names[0]);app.names['b'].set(names[1]);app.date.set(args.fight_date);window.update()
             request=app.prediction_request(1);request.update(force_recalculate=True,use_cache=False)
+            if sex=='men' and args.as_of_date:request['as_of_date']=args.as_of_date
             app.start(request);seconds=wait();value=copy.deepcopy(app.result)
             assert value['result_state']=='complete',app.status.get()
             baseline=json.loads((args.baseline_dir/('baseline-'+sex+'.json')).read_text(encoding='utf-8'))

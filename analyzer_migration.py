@@ -45,6 +45,11 @@ def valid_entry(value, name):
     if 'visual_evidence' in payload:
         record=payload['visual_evidence']
         if not isinstance(record,dict) or record.get('schema')!=1:raise ValueError('Unsupported visual evidence schema')
+    if 'evidence_quality' in payload:
+        from analyzer_evidence import validate_evidence
+        validate_evidence(payload['evidence_quality'])
+    from analyzer_bout_context import validate_context
+    validate_context(payload)
     # Integrity alone does not establish that a record has a readable payload.
     # Rendering uses only captured JSON; it does not consult today's datasets.
     from analyzer_results import format_result

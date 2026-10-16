@@ -138,6 +138,22 @@ def predict_prepared_matchup(prepared, progress=None):
 '''
     new = text[:start]+prelude+'    return locals()\n\n'+helper+'    notify = progress or stage_progress\n'+bindings+tail.replace('stage_progress(', 'notify(')+'\n    return json_safe_value(summary)\n\n\ndef main():\n    prepared = prepare_matchup(parse_args())\n    return predict_prepared_matchup(prepared)\n'+text[ending:]
     new = new.replace('def prepare_matchup(args, progress=None):', 'from analyzer_protocol import progress as stage_progress\n\n\ndef prepare_matchup(args, progress=None):', 1)
+    if 'from chronological_ensemble import fit_ensemble, POLICY' in new:
+        old = '''    from chronological_ensemble import fit_ensemble, POLICY
+    pipelines, ensemble_weights, fold_audit = fit_ensemble(
+        model_train_df, feature_cols, numeric_features, categorical_features, build_model_pipeline)'''
+        replacement = '''    from chronological_ensemble import fit_ensemble, POLICY
+    cached_models = prepared.get('cached_models')
+    if cached_models:
+        pipelines, ensemble_weights, fold_audit = cached_models
+        notify("cache", "Using a compatible chronological women's ensemble")
+    else:
+        pipelines, ensemble_weights, fold_audit = fit_ensemble(
+            model_train_df, feature_cols, numeric_features, categorical_features, build_model_pipeline, progress=notify)
+    prepared['fitted_models'] = (pipelines, ensemble_weights, fold_audit)'''
+        if new.count(old) != 1:raise ValueError('Chronological parent fit context changed')
+        new = new.replace(old,replacement)
+        new = new.replace("model_version='v1_current_ensemble'", "model_version='v2_chronological_calibrated_ensemble'")
     return new
 
 def adapt(root):

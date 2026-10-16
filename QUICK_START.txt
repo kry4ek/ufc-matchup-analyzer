@@ -1,5 +1,16 @@
 UFC MATCHUP ANALYZER — QUICK START
 
+v0.8 experimental prerelease. Clean Windows 10/11 and actual alternative
+display-scaling checks are deferred; see RELEASE_VERIFICATION.md.
+
+NEW IN v0.8
+Recent fights: select a bout, then Show bout details (or Enter/double-click).
+Statistics: expand Recent form versus UFC career and choose Last 3 or Last 5.
+Recent analyses: Refresh and compare captures a new report with the original
+matchup date by default, using installed data. It preserves the original.
+Save report: Compact summary exports offline HTML for A4/Letter printing.
+Full Recalculate bypasses caches; Refresh can reuse compatible calculations.
+
 1. Right-click the downloaded ZIP and choose Extract All.
 2. Open the extracted UFC Matchup Analyzer folder.
 3. Double-click UFC Matchup Analyzer.exe.
@@ -21,45 +32,49 @@ Compare statistics only skips prediction training and produces no probability.
 An analysis usually takes a few minutes. The window remains usable and shows
 elapsed time. Cancel stops the analysis. Predictions work without internet.
 
-Copy complete report copies the whole displayed analysis. Select text in Full
-report and press Ctrl+C to copy a portion. Save TXT / HTML offers text or HTML,
+Copy report copies the whole displayed analysis. Select text in Report and press Ctrl+C to copy a portion. Save report offers text or HTML,
 then opens a normal dialog with the matching filename entered for you.
 Changing inputs does not change a completed result.
 
-Overview shows probabilities, warnings and key statistics. Fighter comparison
+Overview shows probabilities, warnings and key statistics. Statistics
 contains grouped statistics, section selection, filtering and metric definitions.
-Full report contains all text and model notes. A/B follow your fighter order.
+Report contains all text and model notes. A/B follow your fighter order.
 Recent fights shows the last five recorded UFC bouts before the selected date,
 including draws/no-contests and bouts in other divisions. Select a row for event,
 round and time. Saved reports keep this list after dataset updates.
 Use the bottom scrollbar for wide tables. N/A means unavailable; pp means
 percentage points. Copy and Save include the entire report, not just visible rows.
-Visual comparison shows paired statistics and stored pre-bout Elo history.
+Charts shows paired statistics and stored pre-bout Elo history.
 Charts and their numeric evidence are included in offline HTML/TXT exports.
 
 Recent analyses automatically keeps the latest 50 completed analyses, capped
 at 50 MB, inside the app folder. Identical valid requests can reuse a result;
 the original time is shown. Recalculate runs afresh. Outdated results remain
-viewable. Help can disable history; Recent analyses can delete/clear entries.
+viewable. View can disable history; Recent analyses can delete/clear entries.
 HTML exports open offline and can be printed from a browser.
-Edit matchup reopens collapsed inputs. Text size and window size are remembered.
-Help > Import from previous installation previews saved analyses from a previous
+Edit matchup reopens collapsed inputs. View selects Small/Medium/Large text.
+Inputs and result sections scroll when space is limited; window size is remembered.
+Data & maintenance > Import from previous installation previews saved analyses from a previous
 extracted app folder. Select entries and optionally import display preferences.
-Existing analyses are preserved. Help > Undo latest import reverses matching
+Existing analyses are preserved. Data & maintenance > Undo latest import reverses matching
 imported entries. Original installations and calculation caches are not changed.
 Help > Model validation shows a dated retrospective report and its limitations.
-The women model's internal folds overlap mirrored bouts; this report does not
-establish clean model validation or general prediction accuracy.
+The women model uses disjoint chronological fitting and calibration boundaries.
+The report is limited retrospective evidence, not general prediction assurance.
+Its September snapshot differs from the refreshed October installation data.
 Keyboard: Ctrl+Enter analyzes; Ctrl+S saves; Ctrl+Shift+C copies; Ctrl+F finds
-a metric; Ctrl+Plus/Minus adjusts report text size.
+a metric; Ctrl+Plus/Minus adjusts interface text size.
+Focus the Elo chart and use Left/Right to inspect saved point details.
+Generated times show a readable local date and explicit UTC offset.
+Progress and Cancel appear during work; installation may not allow cancellation.
 
-Update datasets needs internet. It checks both models, stages new completed
+Data & maintenance > Update datasets needs internet. It checks both models, stages new completed
 fights, rebuilds features, validates and safely applies changes. On failure,
 your current datasets are preserved. Keep at least 1 GB free for updates.
 Do not move or delete the app folder while an operation is running.
 
-Help contains instructions, installation checks, diagnostics, local feature
-rebuilding and restoration of the previous datasets. An interrupted update
+Help contains instructions and model validation. Data & maintenance contains
+installation checks, diagnostics, local feature rebuilding and dataset restore. An interrupted update
 is checked and recovered at the next launch before analysis is enabled.
 
 Probabilities are estimates, not guarantees. Historical fight statistics exclude

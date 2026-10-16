@@ -1,0 +1,5255 @@
+{
+  "version": "0.6.0",
+  "date": "2026-10-13",
+  "scope": "Local experimental review candidate. No publication, public download or remote CI is claimed.",
+  "implementation_branch": "codex/v0.6-improvements",
+  "environment": {
+    "python": "3.14.7",
+    "windows": [
+      "10",
+      "10.0.19045",
+      "SP0",
+      "Multiprocessor Free"
+    ],
+    "native_display_dpi": 120
+  },
+  "regression": {
+    "status": "PASS",
+    "tests": 180,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 30.375
+  },
+  "setup": {
+    "status": "PASS",
+    "checks": 8,
+    "installation_branches": "Mocked; not a clean machine"
+  },
+  "extracted_source_only": {
+    "status": "PASS",
+    "tests": 180,
+    "failures": 0,
+    "errors": 0,
+    "skips": 3,
+    "seconds": 21.172,
+    "scope": "Dataset-dependent cases skipped by the source-only CI configuration."
+  },
+  "datasets": {
+    "files": 15,
+    "bytes": 206791890,
+    "all_original_hashes_preserved": true
+  },
+  "parent_performance": {
+    "status": "PASS",
+    "repetitions": [
+      {
+        "date": "2020-01-01",
+        "repeat": 1,
+        "method": "original",
+        "seconds": 7.614
+      },
+      {
+        "date": "2020-01-01",
+        "repeat": 1,
+        "method": "optimized",
+        "seconds": 4.832
+      },
+      {
+        "date": "2020-01-01",
+        "repeat": 2,
+        "method": "optimized",
+        "seconds": 4.766
+      },
+      {
+        "date": "2020-01-01",
+        "repeat": 2,
+        "method": "original",
+        "seconds": 7.688
+      },
+      {
+        "date": "2020-01-01",
+        "repeat": 3,
+        "method": "original",
+        "seconds": 8.986
+      },
+      {
+        "date": "2020-01-01",
+        "repeat": 3,
+        "method": "optimized",
+        "seconds": 6.218
+      },
+      {
+        "date": "2026-10-10",
+        "repeat": 1,
+        "method": "original",
+        "seconds": 15.602
+      },
+      {
+        "date": "2026-10-10",
+        "repeat": 1,
+        "method": "optimized",
+        "seconds": 7.778
+      },
+      {
+        "date": "2026-10-10",
+        "repeat": 2,
+        "method": "optimized",
+        "seconds": 8.872
+      },
+      {
+        "date": "2026-10-10",
+        "repeat": 2,
+        "method": "original",
+        "seconds": 12.979
+      },
+      {
+        "date": "2026-10-10",
+        "repeat": 3,
+        "method": "original",
+        "seconds": 12.686
+      },
+      {
+        "date": "2026-10-10",
+        "repeat": 3,
+        "method": "optimized",
+        "seconds": 8.303
+      }
+    ],
+    "baseline_sha256": "5ad4fcd91a04d29abf1ded043bf5004554bd538e1ed5cd0ca05c0d33fa231def",
+    "optimized_sha256": "152ec1db1e69ee849a5945da7ed5ecc742aa12e8bb3160ab2f2f6380a1ba0592",
+    "parity": [
+      {
+        "date": "2020-01-01",
+        "repeat": 1,
+        "status": "PASS",
+        "scope": "All fighter histories, global and division totals"
+      },
+      {
+        "date": "2020-01-01",
+        "repeat": 2,
+        "status": "PASS",
+        "scope": "All fighter histories, global and division totals"
+      },
+      {
+        "date": "2020-01-01",
+        "repeat": 3,
+        "status": "PASS",
+        "scope": "All fighter histories, global and division totals"
+      },
+      {
+        "date": "2026-10-10",
+        "repeat": 1,
+        "status": "PASS",
+        "scope": "All fighter histories, global and division totals"
+      },
+      {
+        "date": "2026-10-10",
+        "repeat": 2,
+        "status": "PASS",
+        "scope": "All fighter histories, global and division totals"
+      },
+      {
+        "date": "2026-10-10",
+        "repeat": 3,
+        "status": "PASS",
+        "scope": "All fighter histories, global and division totals"
+      }
+    ],
+    "summary": [
+      {
+        "date": "2020-01-01",
+        "original": 7.688,
+        "optimized": 4.832,
+        "reduction_percent": 37.15
+      },
+      {
+        "date": "2026-10-10",
+        "original": 12.979,
+        "optimized": 8.303,
+        "reduction_percent": 36.03
+      }
+    ]
+  },
+  "metadata_scan": {
+    "status": "PASS",
+    "runs": [
+      {
+        "repetition": 1,
+        "method": "old",
+        "seconds": 7.222
+      },
+      {
+        "repetition": 1,
+        "method": "new",
+        "seconds": 7.838
+      },
+      {
+        "repetition": 2,
+        "method": "new",
+        "seconds": 6.311
+      },
+      {
+        "repetition": 2,
+        "method": "old",
+        "seconds": 7.213
+      },
+      {
+        "repetition": 3,
+        "method": "old",
+        "seconds": 7.027
+      },
+      {
+        "repetition": 3,
+        "method": "new",
+        "seconds": 4.441
+      }
+    ],
+    "medians": {
+      "old": 7.213,
+      "new": 6.311
+    },
+    "scope": "All 15 CSV metadata results identical; all source hashes preserved. OS file cache may be warm."
+  },
+  "initial_cancellation": {
+    "status": "PASS",
+    "runs": [
+      {
+        "sex": "men",
+        "initial_seen_seconds": 6.673,
+        "request_time_to_initial": 6.338,
+        "cancelled_partial_export": "PASS"
+      },
+      {
+        "sex": "women",
+        "initial_seen_seconds": 0.908,
+        "request_time_to_initial": 0.518,
+        "cancelled_partial_export": "PASS"
+      }
+    ],
+    "measurement_scope": "Functional cancellation check; other evaluation work may be running."
+  },
+  "native_workflows": {
+    "status": "PASS",
+    "runs": [
+      {
+        "sex": "men",
+        "seconds": 107.595,
+        "initial_seconds": 5.357,
+        "probability": 0.8229788712684363,
+        "initial_advanced_final_order": "PASS",
+        "baseline_probability_and_metrics": "PASS",
+        "visual_export_and_import": "PASS"
+      },
+      {
+        "sex": "women",
+        "seconds": 132.774,
+        "initial_seconds": 0.474,
+        "probability": 0.485904994646593,
+        "initial_advanced_final_order": "PASS",
+        "baseline_probability_and_metrics": "PASS",
+        "visual_export_and_import": "PASS"
+      }
+    ],
+    "checks": [
+      "Dated validation report shown offline"
+    ]
+  },
+  "men_matrix": {
+    "python": "3.14.7",
+    "interpreter": "Local test path withheld; original retained in private evidence.",
+    "tk": "9.0.4",
+    "runs": [
+      {
+        "case": "forward",
+        "seconds": 96.49,
+        "gui_ticks": 1744,
+        "full_app_process_tree_working_set_mib": 533.9,
+        "visible_owned_console_windows": 0,
+        "probability": 0.8229788712684363,
+        "engine_seconds": 89.2,
+        "first_comparison_seconds": 87.695,
+        "comparison_navigation_seconds": 0.0576,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 3.428,
+          "features": 2.134,
+          "rebuilding": 74.385,
+          "training": 0.763,
+          "prediction": 0.047,
+          "validation": 5.447
+        },
+        "render_seconds": 0.05,
+        "peak_working_set_mib": 346.0,
+        "model": "v3_bayes_smoothed",
+        "report_lines": 277,
+        "comparison_rows": 153,
+        "copy_and_save": "PASS"
+      },
+      {
+        "case": "reverse",
+        "seconds": 107.16,
+        "gui_ticks": 1886,
+        "full_app_process_tree_working_set_mib": 533.6,
+        "visible_owned_console_windows": 0,
+        "probability": 0.17702112873156378,
+        "engine_seconds": 99.46,
+        "first_comparison_seconds": 97.139,
+        "comparison_navigation_seconds": 0.0024,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 3.67,
+          "features": 2.193,
+          "rebuilding": 78.849,
+          "training": 1.171,
+          "prediction": 0.074,
+          "validation": 4.93
+        },
+        "render_seconds": 0.06,
+        "peak_working_set_mib": 373.0,
+        "model": "v3_bayes_smoothed",
+        "report_lines": 277,
+        "comparison_rows": 153,
+        "copy_and_save": "PASS"
+      },
+      {
+        "case": "single-worker",
+        "seconds": 96.74,
+        "gui_ticks": 1748,
+        "full_app_process_tree_working_set_mib": 535.0,
+        "visible_owned_console_windows": 0,
+        "probability": 0.8229788712684363,
+        "engine_seconds": 90.02,
+        "first_comparison_seconds": 88.375,
+        "comparison_navigation_seconds": 0.0065,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 3.302,
+          "features": 2.142,
+          "rebuilding": 74.658,
+          "training": 0.825,
+          "prediction": 0.074,
+          "validation": 5.033
+        },
+        "render_seconds": 0.03,
+        "peak_working_set_mib": 337.3,
+        "model": "v3_bayes_smoothed",
+        "report_lines": 277,
+        "comparison_rows": 153,
+        "copy_and_save": "PASS"
+      },
+      {
+        "case": "historical",
+        "seconds": 94.1,
+        "gui_ticks": 1697,
+        "full_app_process_tree_working_set_mib": 483.6,
+        "visible_owned_console_windows": 0,
+        "probability": 0.8432395019728887,
+        "engine_seconds": 87.06,
+        "first_comparison_seconds": 85.626,
+        "comparison_navigation_seconds": 0.0059,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 3.779,
+          "features": 2.817,
+          "rebuilding": 69.06,
+          "training": 0.707,
+          "prediction": 0.058,
+          "validation": 5.315
+        },
+        "render_seconds": 0.028,
+        "peak_working_set_mib": 346.2,
+        "model": "v3_bayes_smoothed",
+        "report_lines": 270,
+        "comparison_rows": 147,
+        "copy_and_save": "PASS"
+      }
+    ],
+    "offline": true,
+    "startup": {
+      "seconds": 14.44,
+      "gui_ticks": 265,
+      "full_app_process_tree_working_set_mib": 212.4,
+      "visible_owned_console_windows": 0
+    },
+    "freshness": "Datasets through: men 2026-09-26  \u00b7  women 2026-09-26",
+    "status": "PASS"
+  },
+  "women_matrix": {
+    "python": "3.14.7",
+    "interpreter": "Local test path withheld; original retained in private evidence.",
+    "tk": "9.0.4",
+    "runs": [
+      {
+        "case": "forward",
+        "seconds": 148.15,
+        "gui_ticks": 2165,
+        "full_app_process_tree_working_set_mib": 989.9,
+        "visible_owned_console_windows": 0,
+        "probability": 0.485904994646593,
+        "engine_seconds": 146.22,
+        "first_comparison_seconds": 17.801,
+        "comparison_navigation_seconds": 0.0865,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 1.768,
+          "features": 5.626,
+          "cross_validation": 98.226,
+          "training": 27.565,
+          "prediction": 0.638,
+          "validation": 0.33
+        },
+        "render_seconds": 0.06,
+        "peak_working_set_mib": 886.0,
+        "model": "v1_current_ensemble",
+        "report_lines": 300,
+        "comparison_rows": 153,
+        "copy_and_save": "PASS"
+      },
+      {
+        "case": "reverse",
+        "seconds": 157.4,
+        "gui_ticks": 2159,
+        "full_app_process_tree_working_set_mib": 990.2,
+        "visible_owned_console_windows": 0,
+        "probability": 0.5140950053534071,
+        "engine_seconds": 155.47,
+        "first_comparison_seconds": 24.224,
+        "comparison_navigation_seconds": 0.0077,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 2.521,
+          "features": 6.137,
+          "cross_validation": 100.865,
+          "training": 27.953,
+          "prediction": 0.563,
+          "validation": 0.572
+        },
+        "render_seconds": 0.028,
+        "peak_working_set_mib": 880.5,
+        "model": "v1_current_ensemble",
+        "report_lines": 300,
+        "comparison_rows": 153,
+        "copy_and_save": "PASS"
+      },
+      {
+        "case": "single-worker",
+        "seconds": 243.84,
+        "gui_ticks": 3919,
+        "full_app_process_tree_working_set_mib": 310.8,
+        "visible_owned_console_windows": 0,
+        "probability": 0.485904994646593,
+        "engine_seconds": 241.81,
+        "first_comparison_seconds": 27.935,
+        "comparison_navigation_seconds": 0.0126,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 3.4,
+          "features": 9.338,
+          "cross_validation": 171.256,
+          "training": 40.299,
+          "prediction": 0.682,
+          "validation": 0.539
+        },
+        "render_seconds": 0.051,
+        "peak_working_set_mib": 199.3,
+        "model": "v1_current_ensemble",
+        "report_lines": 300,
+        "comparison_rows": 153,
+        "copy_and_save": "PASS"
+      },
+      {
+        "case": "historical",
+        "seconds": 196.15,
+        "gui_ticks": 3295,
+        "full_app_process_tree_working_set_mib": 304.3,
+        "visible_owned_console_windows": 0,
+        "probability": 0.5018935214876001,
+        "engine_seconds": 193.79,
+        "first_comparison_seconds": 24.778,
+        "comparison_navigation_seconds": 0.0032,
+        "comparison_navigation": "PASS: no worker, unchanged report/metrics/history",
+        "stage_timings_seconds": {
+          "loading": 2.723,
+          "features": 5.621,
+          "cross_validation": 135.243,
+          "training": 32.106,
+          "prediction": 0.368,
+          "validation": 0.642
+        },
+        "render_seconds": 0.047,
+        "peak_working_set_mib": 198.5,
+        "model": "v1_current_ensemble",
+        "report_lines": 293,
+        "comparison_rows": 148,
+        "copy_and_save": "PASS"
+      }
+    ],
+    "offline": true,
+    "startup": {
+      "seconds": 19.48,
+      "gui_ticks": 350,
+      "full_app_process_tree_working_set_mib": 209.8,
+      "visible_owned_console_windows": 0
+    },
+    "freshness": "Datasets through: men 2026-09-26  \u00b7  women 2026-09-26",
+    "status": "PASS"
+  },
+  "correction_rebuild_restore": {
+    "status": "PASS",
+    "cases": [
+      {
+        "outcome": "no_contest",
+        "status": "PASS",
+        "summary": {
+          "men": {
+            "corrected_fights": 1,
+            "added_fights": 0,
+            "binary_training_rows_added": 0,
+            "binary_training_rows_removed": 2,
+            "binary_training_rows_net": -2,
+            "changed": true
+          },
+          "women": {
+            "corrected_fights": 1,
+            "added_fights": 0,
+            "binary_training_rows_added": 0,
+            "binary_training_rows_removed": 2,
+            "binary_training_rows_net": -2,
+            "changed": true
+          }
+        },
+        "all_hashes_restored": true
+      },
+      {
+        "outcome": "draw",
+        "status": "PASS",
+        "summary": {
+          "men": {
+            "corrected_fights": 1,
+            "added_fights": 0,
+            "binary_training_rows_added": 0,
+            "binary_training_rows_removed": 2,
+            "binary_training_rows_net": -2,
+            "changed": true
+          },
+          "women": {
+            "corrected_fights": 1,
+            "added_fights": 0,
+            "binary_training_rows_added": 0,
+            "binary_training_rows_removed": 2,
+            "binary_training_rows_net": -2,
+            "changed": true
+          }
+        },
+        "all_hashes_restored": true
+      }
+    ]
+  },
+  "statistics_history_cache": {
+    "status": "PASS",
+    "checks": [
+      {
+        "name": "men statistics-only without prediction fitting",
+        "status": "PASS",
+        "seconds": 20.01,
+        "first_comparison_seconds": 11.915,
+        "stages": [
+          "checking",
+          "loading",
+          "loading",
+          "cache",
+          "features",
+          "cache",
+          "report",
+          "complete"
+        ]
+      },
+      {
+        "name": "men existing statistics navigation without another worker",
+        "status": "PASS",
+        "seconds": 0.068,
+        "history_entries": 11
+      },
+      {
+        "name": "men filtered-view complete TXT/HTML/clipboard values",
+        "status": "PASS"
+      },
+      {
+        "name": "women statistics-only without prediction fitting",
+        "status": "PASS",
+        "seconds": 17.213,
+        "first_comparison_seconds": 14.545,
+        "stages": [
+          "checking",
+          "loading",
+          "loading",
+          "features",
+          "cache",
+          "cache",
+          "cache",
+          "cache",
+          "cache",
+          "report",
+          "complete"
+        ]
+      },
+      {
+        "name": "women existing statistics navigation without another worker",
+        "status": "PASS",
+        "seconds": 0.009,
+        "history_entries": 12
+      },
+      {
+        "name": "women filtered-view complete TXT/HTML/clipboard values",
+        "status": "PASS"
+      },
+      {
+        "name": "zero dated history requires explicit confirmation",
+        "status": "PASS"
+      },
+      {
+        "name": "real comparison preview before training, then cancellation",
+        "status": "PASS",
+        "seconds": 17.649
+      },
+      {
+        "name": "history disabled stops both reuse and storage",
+        "status": "PASS"
+      },
+      {
+        "name": "saved historical/current versions compare and export offline",
+        "status": "PASS",
+        "context_changes": 4,
+        "probability_deltas": 2,
+        "metric_changes": 152
+      },
+      {
+        "name": "actual cache-clear worker preserves reports, datasets and open comparison",
+        "status": "PASS",
+        "removed_bytes": 461378359,
+        "history_entries": 12
+      },
+      {
+        "name": "frozen history remains within storage budget",
+        "status": "PASS",
+        "json_bytes": 1669893
+      }
+    ],
+    "offline": true
+  },
+  "native_txt_save": {
+    "status": "PASS",
+    "checks": [
+      {
+        "scenario": "save",
+        "observations": [
+          "default filename confirmed"
+        ],
+        "status": "PASS"
+      },
+      {
+        "scenario": "overwrite-cancel",
+        "observations": [
+          "default filename confirmed",
+          "native overwrite confirmation displayed"
+        ],
+        "status": "PASS"
+      },
+      {
+        "scenario": "cancel",
+        "observations": [
+          "default filename confirmed"
+        ],
+        "status": "PASS"
+      }
+    ]
+  },
+  "native_html_save": {
+    "status": "PASS",
+    "observations": [
+      "Native HTML filename and file type confirmed"
+    ],
+    "filename": "Islam Makhachev vs Justin Gaethje.html",
+    "utf8_complete_html": true
+  },
+  "layout": {
+    "status": "PASS",
+    "native_display_dpi": 120,
+    "method": "Tk scaling simulation on the current Windows display; not a change to Windows display scaling",
+    "scales": [
+      {
+        "scale_percent": 100,
+        "width": 1800,
+        "height": 990,
+        "output_height": 689,
+        "status": "PASS"
+      },
+      {
+        "scale_percent": 125,
+        "width": 1800,
+        "height": 990,
+        "output_height": 612,
+        "status": "PASS"
+      },
+      {
+        "scale_percent": 150,
+        "width": 1800,
+        "height": 990,
+        "output_height": 602,
+        "status": "PASS"
+      },
+      {
+        "scale_percent": 200,
+        "width": 1800,
+        "height": 990,
+        "output_height": 560,
+        "status": "PASS"
+      }
+    ]
+  },
+  "native_dependencies": {
+    "status": "PASS",
+    "pe_files": 299,
+    "missing": [],
+    "files": [
+      {
+        "file": "UFC Matchup Analyzer.exe",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "user32.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/libcrypto-3.dll",
+        "imports": [
+          "advapi32.dll",
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "crypt32.dll",
+          "kernel32.dll",
+          "user32.dll",
+          "vcruntime140.dll",
+          "ws2_32.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/libffi-8.dll",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/libssl-3.dll",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "libcrypto-3.dll",
+          "vcruntime140.dll",
+          "ws2_32.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/libtommath.dll",
+        "imports": [
+          "advapi32.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/pyexpat.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/python.exe",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/python3.dll",
+        "imports": [],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/python314.dll",
+        "imports": [
+          "advapi32.dll",
+          "api-ms-win-core-path-l1-1-0.dll",
+          "api-ms-win-crt-conio-l1-1-0.dll",
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-process-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "bcrypt.dll",
+          "kernel32.dll",
+          "vcruntime140.dll",
+          "version.dll",
+          "ws2_32.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/pythonw.exe",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/select.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "ws2_32.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/sqlite3.dll",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/unicodedata.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/vcruntime140.dll",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/vcruntime140_1.dll",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/winsound.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "user32.dll",
+          "vcruntime140.dll",
+          "winmm.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_asyncio.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_bz2.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_ctypes.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "libffi-8.dll",
+          "ole32.dll",
+          "oleaut32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_decimal.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_elementtree.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_hashlib.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "libcrypto-3.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_lzma.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_multiprocessing.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "ws2_32.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_overlapped.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "ws2_32.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_queue.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_remote_debugging.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_socket.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "iphlpapi.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "rpcrt4.dll",
+          "vcruntime140.dll",
+          "ws2_32.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_sqlite3.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "sqlite3.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_ssl.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "crypt32.dll",
+          "kernel32.dll",
+          "libcrypto-3.dll",
+          "libssl-3.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "ws2_32.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_uuid.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "rpcrt4.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_wmi.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "ole32.dll",
+          "oleaut32.dll",
+          "propsys.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_zoneinfo.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/_zstd.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/DLLs/libtommath.dll",
+        "imports": [
+          "advapi32.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/DLLs/tcl90.dll",
+        "imports": [
+          "advapi32.dll",
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "libtommath.dll",
+          "netapi32.dll",
+          "user32.dll",
+          "userenv.dll",
+          "vcruntime140.dll",
+          "ws2_32.dll",
+          "zlib1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/DLLs/tcl9tk90.dll",
+        "imports": [
+          "advapi32.dll",
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "comctl32.dll",
+          "comdlg32.dll",
+          "gdi32.dll",
+          "imm32.dll",
+          "kernel32.dll",
+          "ole32.dll",
+          "shell32.dll",
+          "user32.dll",
+          "vcruntime140.dll",
+          "winspool.drv"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/DLLs/zlib1.dll",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/DLLs/_tkinter.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "libtommath.dll",
+          "python314.dll",
+          "tcl90.dll",
+          "tcl9tk90.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/tcl/dde1.4/tcl9dde14.dll",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "user32.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/tcl/registry1.3/tcl9registry13.dll",
+        "imports": [
+          "advapi32.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "user32.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/81d243bd2c585b0f4821__mypyc.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/charset_normalizer/cd.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/charset_normalizer/md.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/lxml/builder.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/lxml/etree.cp314-win_amd64.pyd",
+        "imports": [
+          "advapi32.dll",
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "ws2_32.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/lxml/objectify.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "ws2_32.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/lxml/sax.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/lxml/_elementpath.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy.libs/libscipy_openblas64_-63c857e738469261263c764a36be9436.dll",
+        "imports": [
+          "api-ms-win-crt-conio-l1-1-0.dll",
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy.libs/msvcp140-a4c2229bdc2a2a630acdc095b4d86008.dll",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas.libs/msvcp140-a4c2229bdc2a2a630acdc095b4d86008.dll",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/_cyutility.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy.libs/libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+        "imports": [
+          "api-ms-win-crt-conio-l1-1-0.dll",
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/_cyutility.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/_isotonic.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/.libs/msvcp140.dll",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/.libs/vcomp140.dll",
+        "imports": [
+          "kernel32.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/cluster/_dbscan_inner.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "msvcp140.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/cluster/_hierarchical_fast.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "msvcp140.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/cluster/_k_means_common.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/cluster/_k_means_elkan.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/cluster/_k_means_lloyd.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/cluster/_k_means_minibatch.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/datasets/_svmlight_format_fast.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/decomposition/_cdnmf_fast.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/decomposition/_online_lda_fast.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/ensemble/_gradient_boosting.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/feature_extraction/_hashing_fast.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "msvcp140.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/linear_model/_cd_fast.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/linear_model/_sag_fast.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/linear_model/_sgd_fast.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/manifold/_barnes_hut_tsne.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/manifold/_utils.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/metrics/_dist_metrics.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/metrics/_pairwise_fast.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/neighbors/_ball_tree.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/neighbors/_kd_tree.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/neighbors/_partition_nodes.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/neighbors/_quad_tree.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/preprocessing/_csr_polynomial_expansion.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/preprocessing/_target_encoder_fast.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "msvcp140.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/svm/_liblinear.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/svm/_libsvm.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/svm/_libsvm_sparse.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/svm/_newrand.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/tree/_criterion.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/tree/_partitioner.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/tree/_splitter.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/tree/_tree.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "msvcp140.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/tree/_utils.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/utils/arrayfuncs.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/utils/murmurhash.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/utils/sparsefuncs_fast.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/utils/_cython_blas.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/utils/_fast_dict.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "msvcp140.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/utils/_heap.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/utils/_isfinite.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/utils/_openmp_helpers.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/utils/_random.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/utils/_seq_dataset.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/utils/_sorting.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/utils/_typedefs.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/utils/_vector_sentinel.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "msvcp140.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/utils/_weight_vector.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/_loss/_loss.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/__check_build/_check_build.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/metrics/cluster/_expected_mutual_info_fast.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/metrics/_pairwise_distances_reduction/_argkmin.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/metrics/_pairwise_distances_reduction/_argkmin_classmode.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/metrics/_pairwise_distances_reduction/_base.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "msvcp140.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/metrics/_pairwise_distances_reduction/_datasets_pair.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/metrics/_pairwise_distances_reduction/_middle_term_computer.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "msvcp140.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/metrics/_pairwise_distances_reduction/_radius_neighbors.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "msvcp140.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/metrics/_pairwise_distances_reduction/_radius_neighbors_classmode.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/ensemble/_hist_gradient_boosting/common.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/ensemble/_hist_gradient_boosting/histogram.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/ensemble/_hist_gradient_boosting/splitting.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/ensemble/_hist_gradient_boosting/_binning.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/ensemble/_hist_gradient_boosting/_bitset.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/ensemble/_hist_gradient_boosting/_gradient_boosting.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/ensemble/_hist_gradient_boosting/_predictor.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcomp140.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/cluster/_hdbscan/_linkage.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/cluster/_hdbscan/_reachability.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/sklearn/cluster/_hdbscan/_tree.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/cluster/_hierarchy.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/cluster/_optimal_leaf_ordering.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/cluster/_vq.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/fftpack/convolve.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/integrate/_dop.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/integrate/_odepack.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/integrate/_quadpack.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/integrate/_test_multivariate.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/integrate/_vode.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/interpolate/_dfitpack.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/interpolate/_dierckx.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/interpolate/_fitpack.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/interpolate/_interpnd.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/interpolate/_ppoly.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/interpolate/_rbfinterp_pythran.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/interpolate/_rgi_cython.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/linalg/cython_blas.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/linalg/cython_lapack.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/linalg/_batched_linalg.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/linalg/_cythonized_array_utils.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/linalg/_decomp_interpolative.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/linalg/_decomp_lu_cython.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/linalg/_decomp_update.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/linalg/_fblas.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/linalg/_flapack.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/linalg/_linalg_pythran.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/linalg/_matfuncs_expm.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/linalg/_matfuncs_schur_sqrtm.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/linalg/_matfuncs_sqrtm_triu.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/linalg/_solve_toeplitz.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/ndimage/_ctest.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/ndimage/_cytest.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/ndimage/_nd_image.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/ndimage/_ni_label.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/ndimage/_rank_filter_1d.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/odr/__odrpack.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/optimize/_bglu_dense.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/optimize/_direct.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/optimize/_group_columns.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/optimize/_lbfgsb.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/optimize/_lsap.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/optimize/_minpack.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/optimize/_moduleTNC.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/optimize/_pava_pybind.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/optimize/_slsqplib.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/optimize/_zeros.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/signal/_max_len_seq_inner.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/signal/_peak_finding_utils.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/signal/_sigtools.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/signal/_sosfilt.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/signal/_spline.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/signal/_upfirdn_apply.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/sparse/_csparsetools.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/sparse/_sparsetools.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/spatial/_ckdtree.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/spatial/_distance_pybind.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/spatial/_distance_wrap.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/spatial/_hausdorff.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/spatial/_qhull.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/spatial/_voronoi.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/special/cython_special.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/special/_comb.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/special/_ellip_harm_2.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/special/_gufuncs.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/special/_specfun.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/special/_special_ufuncs.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/special/_test_internal.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/special/_ufuncs.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/special/_ufuncs_cxx.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/stats/_ansari_swilk_statistics.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/stats/_biasedurn.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/stats/_qmc_cy.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/stats/_qmvnt_cy.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/stats/_sobol.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/stats/_stats.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/stats/_stats_pythran.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/_lib/messagestream.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/_lib/_ccallback_c.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/_lib/_fpumode.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/_lib/_test_ccallback.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/_lib/_test_deprecation_call.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/_lib/_test_deprecation_def.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/_lib/_uarray/_uarray.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/stats/_levy_stable/levyst.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/stats/_rcont/rcont.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/stats/_unuran/unuran_wrapper.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/spatial/transform/_rigid_transform_cy.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/spatial/transform/_rotation_cy.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/sparse/csgraph/_flow.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/sparse/csgraph/_matching.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/sparse/csgraph/_min_spanning_tree.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/sparse/csgraph/_reordering.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/sparse/csgraph/_shortest_path.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/sparse/csgraph/_tools.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/sparse/csgraph/_traversal.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/sparse/linalg/_propack.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/sparse/linalg/_dsolve/_superlu.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/sparse/linalg/_eigen/arpack/_arpacklib.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/optimize/cython_optimize/_zeros.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/optimize/_highspy/_core.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/optimize/_highspy/_highs_options.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/optimize/_lsq/givens_elimination.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/optimize/_trlib/_trlib.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas-64eda39e79589aedb16f58e5547eb599.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/io/matlab/_mio5_utils.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/io/matlab/_mio_utils.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/io/matlab/_streams.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/io/_fast_matrix_market/_fmm_core.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-filesystem-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/scipy/fft/_pocketfft/pypocketfft.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-private-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll"
+        ],
+        "subsystem": 3
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/algos.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/arrays.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/byteswap.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/groupby.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/hashing.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/hashtable.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/index.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/indexing.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/internals.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/interval.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/join.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/json.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/lib.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/missing.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/ops.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/ops_dispatch.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/pandas_datetime.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/pandas_parser.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/parsers.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/properties.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/reshape.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/sas.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/sparse.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/testing.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslib.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/writers.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/_cyutility.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/base.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/ccalendar.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/conversion.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/dtypes.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/fields.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/nattype.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/np_datetime.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/offsets.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/parsing.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/period.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/strptime.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/timedeltas.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/timestamps.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/timezones.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/tzconversion.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/tslibs/vectorized.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/window/aggregations.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "msvcp140-a4c2229bdc2a2a630acdc095b4d86008.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/pandas/_libs/window/indexers.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/fft/_pocketfft_umath.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "msvcp140-a4c2229bdc2a2a630acdc095b4d86008.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/linalg/lapack_lite.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas64_-63c857e738469261263c764a36be9436.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/linalg/_umath_linalg.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas64_-63c857e738469261263c764a36be9436.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/random/bit_generator.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/random/mtrand.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/random/_bounded_integers.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/random/_common.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/random/_generator.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/random/_mt19937.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/random/_pcg64.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/random/_philox.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/random/_sfc64.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/_core/_multiarray_tests.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/_core/_multiarray_umath.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-convert-l1-1-0.dll",
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-locale-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "api-ms-win-crt-time-l1-1-0.dll",
+          "api-ms-win-crt-utility-l1-1-0.dll",
+          "kernel32.dll",
+          "libscipy_openblas64_-63c857e738469261263c764a36be9436.dll",
+          "msvcp140-a4c2229bdc2a2a630acdc095b4d86008.dll",
+          "python314.dll",
+          "vcruntime140.dll",
+          "vcruntime140_1.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/_core/_operand_flag_tests.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/_core/_rational_tests.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-stdio-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/_core/_simd.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-heap-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/_core/_struct_ufunc_tests.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/numpy/_core/_umath_tests.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-environment-l1-1-0.dll",
+          "api-ms-win-crt-math-l1-1-0.dll",
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "api-ms-win-crt-string-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/lxml/html/diff.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      },
+      {
+        "file": "runtime/Lib/site-packages/lxml/html/_difflib.cp314-win_amd64.pyd",
+        "imports": [
+          "api-ms-win-crt-runtime-l1-1-0.dll",
+          "kernel32.dll",
+          "python314.dll",
+          "vcruntime140.dll"
+        ],
+        "subsystem": 2
+      }
+    ],
+    "scope": "Static AMD64 PE and normal/delay import checks. Dynamic imports are covered by prediction/maintenance runs; clean OS verification remains separate."
+  },
+  "source_audit": {
+    "status": "PASS",
+    "python_files": 96,
+    "public_files": 148,
+    "dependency_checks": 18,
+    "errors": []
+  },
+  "source_export": {
+    "status": "PASS",
+    "engine_files": 30,
+    "mismatches": [],
+    "scope": "Every retained engine file matches the checked fresh parent export."
+  },
+  "model_evaluation": {
+    "status": "LIMITED_RETROSPECTIVE_EVALUATION",
+    "protocol": "v06-frozen-20261013-1",
+    "models": {
+      "men": {
+        "model_version": "v3_bayes_smoothed",
+        "evaluated": 20,
+        "excluded": 0,
+        "failed": 0,
+        "remaining": 0,
+        "scores": {
+          "Model holdout": {
+            "accuracy": 0.6666666666666666,
+            "brier": 0.19919414753437092,
+            "log_loss": 0.5879968456337523
+          },
+          "50/50 holdout": {
+            "accuracy": 0.5555555555555556,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453
+          },
+          "Elo holdout": {
+            "accuracy": 0.6666666666666666,
+            "brier": 0.2444704320798059,
+            "log_loss": 0.68207491913272
+          }
+        },
+        "development_scores": {
+          "accuracy": 0.5454545454545454,
+          "brier": 0.2552952943380787,
+          "log_loss": 0.7076513891770783
+        },
+        "calibration": [
+          {
+            "low": 0.0,
+            "high": 0.2,
+            "count": 0,
+            "mean_probability": null,
+            "observed_rate": null
+          },
+          {
+            "low": 0.2,
+            "high": 0.4,
+            "count": 5,
+            "mean_probability": 0.36462139737959803,
+            "observed_rate": 0.2
+          },
+          {
+            "low": 0.4,
+            "high": 0.6,
+            "count": 3,
+            "mean_probability": 0.49938080529379114,
+            "observed_rate": 1.0
+          },
+          {
+            "low": 0.6,
+            "high": 0.8,
+            "count": 1,
+            "mean_probability": 0.7133572150033518,
+            "observed_rate": 1.0
+          },
+          {
+            "low": 0.8,
+            "high": 1.0,
+            "count": 0,
+            "mean_probability": null,
+            "observed_rate": null
+          }
+        ],
+        "uncertainty": {
+          "status": "Unavailable: fewer than five independent event/date clusters",
+          "clusters": 1
+        },
+        "event_dates": [
+          "2026-09-19",
+          "2026-09-26"
+        ],
+        "failures": []
+      },
+      "women": {
+        "model_version": "v1_current_ensemble",
+        "evaluated": 4,
+        "excluded": 0,
+        "failed": 0,
+        "remaining": 0,
+        "scores": {
+          "Model holdout": {
+            "accuracy": 1.0,
+            "brier": 0.21869054112706945,
+            "log_loss": 0.6303399136604039
+          },
+          "50/50 holdout": {
+            "accuracy": 0.3333333333333333,
+            "brier": 0.25,
+            "log_loss": 0.6931471805599453
+          },
+          "Elo holdout": {
+            "accuracy": 0.3333333333333333,
+            "brier": 0.24988997949655042,
+            "log_loss": 0.692926045294353
+          }
+        },
+        "development_scores": {
+          "accuracy": 0.0,
+          "brier": 0.2506238422523502,
+          "log_loss": 0.6943948657114716
+        },
+        "calibration": [
+          {
+            "low": 0.0,
+            "high": 0.2,
+            "count": 0,
+            "mean_probability": null,
+            "observed_rate": null
+          },
+          {
+            "low": 0.2,
+            "high": 0.4,
+            "count": 0,
+            "mean_probability": null,
+            "observed_rate": null
+          },
+          {
+            "low": 0.4,
+            "high": 0.6,
+            "count": 3,
+            "mean_probability": 0.48579438623188237,
+            "observed_rate": 0.3333333333333333
+          },
+          {
+            "low": 0.6,
+            "high": 0.8,
+            "count": 0,
+            "mean_probability": null,
+            "observed_rate": null
+          },
+          {
+            "low": 0.8,
+            "high": 1.0,
+            "count": 0,
+            "mean_probability": null,
+            "observed_rate": null
+          }
+        ],
+        "uncertainty": {
+          "status": "Unavailable: fewer than five independent event/date clusters",
+          "clusters": 1
+        },
+        "event_dates": [
+          "2026-09-19",
+          "2026-09-26"
+        ],
+        "failures": []
+      }
+    },
+    "cv_audit": {
+      "status": "FAIL",
+      "overlapping_bout_counts_by_fold": [
+        282,
+        300,
+        276,
+        277,
+        295
+      ],
+      "rows": 1868,
+      "unique_bouts": 934,
+      "finding": "Existing women ensemble uses shuffled, ungrouped folds; mirrored bouts cross training/validation folds. Internal calibration also uses ungrouped stratification. Outer evaluation remains strictly chronological; internal CV is not a clean accuracy estimate."
+    },
+    "report_sha256": "45a6b93b72c44ae46e8ee39d23ba7b8c8616d393aa31bc5a7c85abcc37f6f62c"
+  },
+  "visual_inspection": {
+    "status": "PASS",
+    "scope": "Owned native men/women charts; 100/200 percent Large text; offline paired bars and holdout calibration diagrams rendered in Edge."
+  },
+  "manual_evaluation_review": {
+    "status": "COMPLETE",
+    "scope": "Extreme correct/incorrect forecasts, all three incorrect men holdout choices, training-date cutoffs, and the two/one-bout sparse-history case with prior-only takedown defense reviewed. No tuning or accuracy claim."
+  },
+  "final_archive_checks": "Recorded separately beside the final archives; hashes cannot be embedded inside their own archive.",
+  "remaining_gates": [
+    "Women mirrored-bout internal CV/calibration defect",
+    "Clean Windows 10/11",
+    "Physical alternative display scaling",
+    "Dataset redistribution review",
+    "Remote source CI",
+    "Publication/public download"
+  ],
+  "fresh_portable_workflows": {
+    "status": "PASS",
+    "runs": [
+      {
+        "sex": "men",
+        "seconds": 120.48,
+        "initial_seconds": 7.868,
+        "probability": 0.8229788712684363,
+        "initial_advanced_final_order": "PASS",
+        "baseline_probability_and_metrics": "PASS",
+        "visual_export_and_import": "PASS"
+      },
+      {
+        "sex": "women",
+        "seconds": 152.745,
+        "initial_seconds": 1.498,
+        "probability": 0.485904994646593,
+        "initial_advanced_final_order": "PASS",
+        "baseline_probability_and_metrics": "PASS",
+        "visual_export_and_import": "PASS"
+      }
+    ],
+    "checks": [
+      "Dated validation report shown offline"
+    ]
+  },
+  "fresh_portable_scope": "Full workflow checks on an extracted candidate; final delivery preserves all tested executable/runtime/engine/application hashes. Final delivery archive hashes and startup checks are recorded externally."
+}

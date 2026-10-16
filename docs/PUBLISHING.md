@@ -4,12 +4,12 @@ The public repository is `kry4ek/ufc-matchup-analyzer`. Keep datasets, bundled r
 
 ## Current experimental publication
 
-The owner requested publication of v0.6.0 on October 13, 2026, following the earlier authorized v0.3/v0.4 experimental releases. The candidate is a **prerelease**, with unresolved dataset redistribution rights, unavailable clean-machine/display-scale checks and the disclosed women's mirrored-bout CV/calibration defect. This decision is separate from the verification gate. Keep dataset `redistribution_status` as `review_required` and keep failed/unavailable checks visible. Do not claim that permission was obtained or that the standard gate passed. See [DATA_NOTICE.md](../DATA_NOTICE.md) and [release verification](../RELEASE_VERIFICATION.md).
+The owner requested publication of v0.8.0 on October 16, 2026. It is an experimental **prerelease**, with unresolved dataset redistribution rights, deferred clean-machine/display-scale checks and an unsigned launcher. It includes the v0.7 chronological, mirrored-bout-grouped women's model; the historical v0.6 evaluation and its fold defect remain documented separately. Current retrospective results do not establish prospective performance or profitability. This publication decision is separate from the stable-release gate. Keep dataset `redistribution_status` as `review_required` and keep unavailable checks visible. Do not claim that permission was obtained or that the standard gate passed. See [DATA_NOTICE.md](../DATA_NOTICE.md), [the model decision](V0_7_MODEL_DECISION.md) and [release verification](../RELEASE_VERIFICATION.md).
 
 The release includes:
 
-- `ufc-matchup-analyzer-v0.6.0-windows.zip`: the complete Windows x64 app, including v0.5 improvements.
-- `ufc-matchup-analyzer-source-v0.6.0.zip`: curated source, without data/runtime.
+- `ufc-matchup-analyzer-v0.8.0-windows.zip`: the complete Windows x64 app, runtime and all 15 matching datasets.
+- `ufc-matchup-analyzer-source-v0.8.0.zip`: curated source, without data/runtime.
 - `SHA256SUMS.txt`, `archive_manifest.json` and the verification report.
 
 The owner requested omission of the separate dataset ZIP. Its CSV files remain

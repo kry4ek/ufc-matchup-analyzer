@@ -29,6 +29,8 @@ from analyzer_results import format_result,result_filename
 from analyzer_reporting import report_sections,overview_rows,format_html
 from analyzer_history import History,fingerprint
 from analyzer_widgets import CalendarDialog,SuggestPopup
+from analyzer_theme import COLORS, SIZES, apply_theme, readable_timestamp
+from analyzer_presentation import ScrollPanel, MatchupPanel, EvidencePanel
 from analyzer_errors import STATES, diagnostic_text
 from analyzer_fight_history import display_row, OLD_HISTORY_MESSAGE
 
@@ -206,6 +208,9 @@ class AnalyzerApp:
         if self.controller.cancel():self.stage_message='Cancelling safely…';self.cancel_button.configure(state='disabled')
 
     def poll(self):
+        if getattr(self,'poll_id',None):
+            try:self.window.after_cancel(self.poll_id)
+            except tk.TclError:pass
         try:
             for event in self.controller.poll():
                 if event['type']=='progress':self.stage_message='Cancelling safely…' if getattr(self.controller,'cancel_requested',False) else event['message']
@@ -218,7 +223,7 @@ class AnalyzerApp:
             self.controls()
             if self.closing and not self.controller.busy:self.destroy();return
         except (OSError,ValueError,RuntimeError) as exc:
-            self.controller.terminate();self.status.set('Operation stopped. Use Help → Check installation.')
+            self.controller.terminate();self.status.set('Operation stopped. Use Data & maintenance → Check installation.')
             messagebox.showerror('Operation stopped',str(exc),parent=self.window);self.controls()
         self.poll_id=self.window.after(150,self.poll)
 
@@ -229,7 +234,7 @@ class AnalyzerApp:
             if self.closing:return
             if event['code']=='worker_permission' and not self.closing and messagebox.askyesno('Retry with one worker','Windows blocked a parallel worker. Retry this analysis using one worker?',parent=self.window):
                 self.start(dict(self.last_request,workers=1));return
-            messagebox.showerror('Operation could not finish',event['message']+'\n\nUse Help → Open diagnostics for details.',parent=self.window)
+            messagebox.showerror('Operation could not finish',event['message']+'\n\nUse Data & maintenance → Open diagnostics for details.',parent=self.window)
             return
         operation=event['operation'];payload=event['payload']
         if operation=='predict':
@@ -249,10 +254,10 @@ class AnalyzerApp:
         else:
             failures=[c.get('path',c.get('package',c.get('component',''))) + ': '+c.get('message','Required component is missing or has the wrong version.') for c in payload['checks'] if c['status']=='FAIL']
             self.status.set('Installation needs attention. Analysis is disabled.')
-            if not self.result:self.set_text('INSTALLATION CHECK\n\n'+'\n'.join(failures)+'\n\nFor missing or damaged bundled files, extract a fresh copy of the complete ZIP. For an interrupted update, use Help → Check installation.\n')
+            if not self.result:self.set_text('INSTALLATION CHECK\n\n'+'\n'.join(failures)+'\n\nFor missing or damaged bundled files, extract a fresh copy of the complete ZIP. For an interrupted update, use Data & maintenance → Check installation.\n')
             request_path=getattr(self.controller,'request_path',None)
             if request_path:self.last_log=self.root/'.runtime/logs'/(request_path.stem+'.log')
-            messagebox.showerror('Installation needs attention','\n'.join(failures[:3])+'\n\nUse Help → Open diagnostics for all check details. Extract a fresh complete ZIP for missing or damaged bundled files.',parent=self.window)
+            messagebox.showerror('Installation needs attention','\n'.join(failures[:3])+'\n\nUse Data & maintenance → Open diagnostics for all check details. Extract a fresh complete ZIP for missing or damaged bundled files.',parent=self.window)
 
     def copy(self):
         if self.result_text:self.window.clipboard_clear();self.window.clipboard_append(self.result_text);self.status.set('Results copied to the clipboard.')
@@ -306,21 +311,29 @@ class AnalyzerApp(LegacyAnalyzerApp):
         super().__init__(window,root,controller,False)
         for child in window.winfo_children():
             if isinstance(child,ttk.Frame):child.destroy()
+        apply_theme(window)
         self.enhanced=True;self.history=History(self.root);self.history_contexts={};self.backup_available=False
+        self.history_ready=not autostart;self.active_refresh=None;self.pending_comparison=None
         self.viewing_other=False;self.new_result=None;self.preview=None;self.rows={};self.search_tasks={};self.coverage_task=None;self.progress_running=False
         self.active_sex=DIVISIONS[self.division.get()][0];self.category_names=self.preferences.get('category_names',{})
         self.collapsed=bool(self.preferences.get('inputs_collapsed',False));self.font_size=tk.StringVar(value=self.preferences.get('text_size','Medium'))
         self.history_setting=tk.BooleanVar(value=self.preferences.get('history_enabled',True));self.pending_stage=None
         self.frame=ttk.Frame(window,padding=14);self.frame.grid(row=0,column=0,sticky='nsew');self.frame.columnconfigure(0,weight=1);self.frame.rowconfigure(4,weight=1)
         title=ttk.Frame(self.frame);title.grid(row=0,column=0,sticky='ew');title.columnconfigure(0,weight=1)
-        ttk.Label(title,text='UFC Matchup Analyzer',style='Title.TLabel').grid(row=0,column=0,sticky='w')
-        ttk.Button(title,text='Recent analyses',command=self.show_history).grid(row=0,column=1,padx=8)
-        ttk.Label(title,text='Text size').grid(row=0,column=2)
-        size=ttk.Combobox(title,textvariable=self.font_size,values=('Small','Medium','Large'),width=8,state='readonly');size.grid(row=0,column=3,padx=(5,0));size.bind('<<ComboboxSelected>>',self.change_font)
-        self.input_toggle=ttk.Button(title,text='Edit matchup' if self.collapsed else 'Hide inputs',command=self.toggle_inputs);self.input_toggle.grid(row=0,column=4,padx=(8,0))
+        self.title_label=ttk.Label(title,text='UFC Matchup Analyzer',style='Title.TLabel',wraplength=430);self.title_label.grid(row=0,column=0,sticky='w')
+        self.history_button=ttk.Button(title,text='Recent analyses',command=self.show_history);self.history_button.grid(row=0,column=1,padx=8)
+        view_button=ttk.Menubutton(title,text='View');view_button.grid(row=0,column=2)
+        self.view_menu=tk.Menu(view_button,tearoff=False);view_button['menu']=self.view_menu
+        for label in ('Small','Medium','Large'):
+            self.view_menu.add_radiobutton(label=label+' text',variable=self.font_size,value=label,command=self.change_font)
+        self.view_menu.add_separator();self.view_menu.add_checkbutton(label='Keep recent analyses and reuse valid results',variable=self.history_setting,command=self.save_history_setting)
+        self.input_toggle=ttk.Button(title,text='Edit matchup' if self.collapsed else 'Hide inputs',command=self.toggle_inputs);self.input_toggle.grid(row=0,column=3,padx=(8,0))
         self.matchup_header=tk.StringVar(value='Choose a division, date and two fighters.')
         ttk.Label(self.frame,textvariable=self.matchup_header,style='Hint.TLabel',wraplength=850).grid(row=1,column=0,sticky='w',pady=(4,8))
-        self.inputs=ttk.Frame(self.frame);self.inputs.grid(row=2,column=0,sticky='ew');self.inputs.columnconfigure(0,weight=1);self.inputs.columnconfigure(2,weight=1)
+        self.input_scroll=ScrollPanel(self.frame);self.input_scroll.grid(row=2,column=0,sticky='ew')
+        self.input_scroll.canvas.configure(height=180,background=COLORS['background'])
+        self.inputs=self.input_scroll.content;self.inputs.configure(style='TFrame',padding=8)
+        self.inputs.columnconfigure(0,weight=1);self.inputs.columnconfigure(2,weight=1)
         division_frame=ttk.Frame(self.inputs);division_frame.grid(row=0,column=0,sticky='ew');division_frame.columnconfigure(0,weight=1)
         ttk.Label(division_frame,text='Division').grid(row=0,column=0,sticky='w')
         self.division_box=ttk.Combobox(division_frame,textvariable=self.division,values=list(DIVISIONS),state='readonly');self.division_box.grid(row=1,column=0,sticky='ew');self.division_box.bind('<<ComboboxSelected>>',self.change_division)
@@ -345,63 +358,94 @@ class AnalyzerApp(LegacyAnalyzerApp):
         self.coverage_warning=tk.StringVar();self.date_mode=tk.StringVar()
         ttk.Label(self.inputs,textvariable=self.date_mode,style='Hint.TLabel').grid(row=2,column=0,columnspan=3,sticky='w')
         ttk.Label(self.inputs,textvariable=self.coverage_warning,foreground='#725200',wraplength=950).grid(row=3,column=0,columnspan=3,sticky='w',pady=(3,5))
-        actions=ttk.Frame(self.frame);actions.grid(row=3,column=0,sticky='ew',pady=(5,8))
-        self.analyze_button=ttk.Button(actions,text='Analyze',command=self.analyze);self.analyze_button.pack(side='left')
-        self.compare_button=ttk.Button(actions,text='Compare statistics only',command=self.compare);self.compare_button.pack(side='left',padx=8)
-        self.cancel_button=ttk.Button(actions,text='Cancel',command=self.cancel);self.cancel_button.pack(side='left')
-        self.update_button=ttk.Button(actions,text='Update datasets',command=lambda:self.start_operation('update'));self.update_button.pack(side='right')
+        self.input_scroll.bind_children()
+        self.actions=ttk.Frame(self.frame);self.actions.grid(row=3,column=0,sticky='ew',pady=(5,12))
+        self.analyze_button=ttk.Button(self.actions,text='Analyze',style='Primary.TButton',command=self.analyze);self.analyze_button.pack(side='left')
+        self.compare_button=ttk.Button(self.actions,text='Compare statistics only',command=self.compare);self.compare_button.pack(side='left',padx=8)
+        self.cancel_button=ttk.Button(self.actions,text='Cancel',command=self.cancel)
+        self.operation_hint=tk.StringVar()
+        ttk.Label(self.actions,textvariable=self.operation_hint,style='Hint.TLabel').pack(side='left',padx=8)
         self.notebook=ttk.Notebook(self.frame);self.notebook.grid(row=4,column=0,sticky='nsew')
-        self.overview=ttk.Frame(self.notebook,padding=10);self.comparison=ttk.Frame(self.notebook,padding=10);full=ttk.Frame(self.notebook)
-        for tab,label in ((self.overview,'Overview'),(self.comparison,'Fighter comparison'),(full,'Full report')):self.notebook.add(tab,text=label)
-        self.recent_tab=ttk.Frame(self.notebook,padding=10);self.notebook.add(self.recent_tab,text='Recent fights')
+        self.overview=ttk.Frame(self.notebook);self.comparison=ttk.Frame(self.notebook,padding=12);self.report_tab=ttk.Frame(self.notebook)
+        full=self.report_tab
+        self.visual_tab=ttk.Frame(self.notebook,padding=12);self.recent_tab=ttk.Frame(self.notebook,padding=12)
+        self.tabs={'overview':self.overview,'statistics':self.comparison,'charts':self.visual_tab,'recent':self.recent_tab,'report':full}
+        for name,label in (('overview','Overview'),('statistics','Statistics'),('charts','Charts'),('recent','Recent fights'),('report','Report')):
+            self.notebook.add(self.tabs[name],text=label)
         self.build_recent_tab()
-        self.visual_tab=ttk.Frame(self.notebook,padding=10);self.notebook.add(self.visual_tab,text='Visual comparison')
         from analyzer_visuals import VisualPanel
         self.visual_panel=VisualPanel(self.visual_tab)
-        self.overview.columnconfigure(0,weight=1);self.overview.rowconfigure(4,weight=1)
+        self.overview.columnconfigure(0,weight=1);self.overview.rowconfigure(0,weight=1)
+        self.overview_scroll=ScrollPanel(self.overview);self.overview_scroll.grid(row=0,column=0,sticky='nsew')
+        content=self.overview_scroll.content
         self.summary=tk.StringVar(value='Enter a matchup and choose Analyze or Compare statistics only.')
-        ttk.Label(self.overview,textvariable=self.summary,font=('Segoe UI',11),wraplength=900).grid(row=0,column=0,sticky='w')
-        self.probability=tk.Canvas(self.overview,height=32,background='white',highlightthickness=0);self.probability.grid(row=1,column=0,sticky='ew',pady=8);self.probability.bind('<Configure>',lambda e:self.draw_probability())
-        self.result_warning=tk.StringVar();ttk.Label(self.overview,textvariable=self.result_warning,foreground='#725200',wraplength=900).grid(row=2,column=0,sticky='w',pady=(0,6))
-        self.overview_tree=self.table(self.overview,4)
-        summary_frame=ttk.Frame(self.overview);summary_frame.grid(row=3,column=0,sticky='ew',pady=(0,6));summary_frame.columnconfigure(0,weight=1)
+        self.matchup_panel=MatchupPanel(content);self.matchup_panel.grid(row=0,column=0,sticky='ew')
+        self.probability=self.matchup_panel.bar
+        self.result_warning=tk.StringVar()
+        ttk.Label(content,textvariable=self.result_warning,style='Warning.TLabel',wraplength=800).grid(row=1,column=0,sticky='ew',pady=(12,16))
+        ttk.Separator(content).grid(row=2,column=0,sticky='ew',pady=(0,16))
+        ttk.Label(content,text='Evidence quality',style='Section.TLabel').grid(row=3,column=0,sticky='w',pady=(0,8))
+        self.evidence_panel=EvidencePanel(content);self.evidence_panel.grid(row=4,column=0,sticky='ew')
+        ttk.Button(content,text='Evidence details',command=self.evidence_dialog).grid(row=5,column=0,sticky='w',pady=(8,16))
         self.matchup_observations=tk.StringVar()
-        self.summary_text=ScrolledText(summary_frame,height=4,wrap='word',font=('Segoe UI',10),background='#f7f8fa')
-        self.summary_text.grid(row=0,column=0,sticky='ew');self.summary_text.configure(state='disabled')
-        def update_summary(*unused):
-            self.summary_text.configure(state='normal');self.summary_text.delete('1.0','end');self.summary_text.insert('1.0',self.matchup_observations.get());self.summary_text.configure(state='disabled')
-        self.matchup_observations.trace_add('write',update_summary)
-        self.summary_metrics_button=ttk.Button(summary_frame,text='View supporting metrics',command=self.summary_metrics)
-        self.summary_metrics_button.grid(row=1,column=0,sticky='w')
-        self.comparison.columnconfigure(0,weight=1);self.comparison.rowconfigure(1,weight=1)
-        navigation=ttk.Frame(self.comparison);navigation.grid(row=0,column=0,sticky='ew',pady=(0,8));navigation.columnconfigure(3,weight=1)
+        self.observation_label=ttk.Label(content,textvariable=self.matchup_observations,style='Surface.TLabel',wraplength=800)
+        self.observation_label.grid(row=6,column=0,sticky='ew',pady=(0,8))
+        self.summary_metrics_button=ttk.Button(content,text='View supporting metrics',command=self.summary_metrics)
+        self.summary_metrics_button.grid(row=7,column=0,sticky='w',pady=(0,16))
+        ttk.Button(content,text='Recent form versus UFC career',command=self.open_recent_form).grid(row=10,column=0,sticky='w',pady=8)
+        ttk.Label(content,text='Key statistics',style='Section.TLabel').grid(row=8,column=0,sticky='w',pady=(0,8))
+        self.overview_tree=self.table(content,9,overview=True)
+        self.overview_scroll.bind_children()
+        self.comparison.columnconfigure(0,weight=1);self.comparison.rowconfigure(0,weight=1)
+        self.comparison_scroll=ScrollPanel(self.comparison);self.comparison_scroll.grid(row=0,column=0,sticky='nsew')
+        statistics=self.comparison_scroll.content
+        self.stat_legend=ttk.Frame(statistics);self.stat_legend.grid(row=0,column=0,sticky='ew',pady=(0,8))
+        self.stat_names={}
+        for col,side in enumerate(('a','b')):
+            self.stat_legend.columnconfigure(col,weight=1)
+            self.stat_names[side]=tk.StringVar(value='Fighter '+side.upper())
+            ttk.Label(self.stat_legend,textvariable=self.stat_names[side],foreground=COLORS['fighter_'+side],wraplength=360).grid(row=0,column=col,sticky='nw',padx=(0,12))
+        navigation=ttk.Frame(statistics);navigation.grid(row=1,column=0,sticky='ew',pady=(0,8));navigation.columnconfigure(3,weight=1)
         ttk.Label(navigation,text='Section').grid(row=0,column=0)
         self.section=tk.StringVar(value='All sections');self.section_box=ttk.Combobox(navigation,textvariable=self.section,values=['All sections'],state='readonly',width=32);self.section_box.grid(row=0,column=1,padx=8);self.section_box.bind('<<ComboboxSelected>>',lambda e:self.render_comparison())
         ttk.Label(navigation,text='Find metric').grid(row=0,column=2)
         self.filter=tk.StringVar();self.filter_entry=ttk.Entry(navigation,textvariable=self.filter);self.filter_entry.grid(row=0,column=3,sticky='ew',padx=8);self.filter.trace_add('write',lambda *a:self.render_comparison())
         ttk.Button(navigation,text='Clear',command=lambda:self.filter.set('')).grid(row=0,column=4)
-        self.comparison_tree=self.table(self.comparison,1)
-        self.details=ScrolledText(self.comparison,height=4,font=('Segoe UI',10),wrap='word',background='#f7f8fa');self.details.grid(row=2,column=0,sticky='ew',pady=(8,0));self.details.insert('1.0','Select a metric to read its definition, units, and support notes.');self.details.configure(state='disabled')
+        self.comparison_tree=self.table(statistics,2)
+        self.details=ScrolledText(statistics,height=4,font=('Segoe UI',SIZES.get(self.font_size.get(),10)),wrap='word',background='#f7f8fa');self.details.grid(row=3,column=0,sticky='ew',pady=(8,0));self.details.insert('1.0','Select a metric to read its definition, units, and support notes.');self.details.configure(state='disabled')
+        from analyzer_context_widgets import RecentForm
+        self.recent_form_panel=RecentForm(statistics);self.recent_form_panel.grid(row=4,column=0,sticky='ew',pady=8)
+        self.comparison_scroll.bind_children()
+        self.comparison_tree.bind('<MouseWheel>',lambda e:self.comparison_tree.yview_scroll(-int(e.delta/120),'units') or 'break')
+        self.details.bind('<MouseWheel>',lambda e:self.details.yview_scroll(-int(e.delta/120),'units') or 'break')
         full.columnconfigure(0,weight=1);full.rowconfigure(0,weight=1)
         self.output=ScrolledText(full,wrap='none',height=12,font=('Consolas',10),background='white',foreground='#182230',padx=12,pady=10);self.output.grid(row=0,column=0,sticky='nsew');self.output.bind('<Control-a>',self.select_all)
         self.report_horizontal=ttk.Scrollbar(full,orient='horizontal',command=self.output.xview);self.report_horizontal.grid(row=1,column=0,sticky='ew');self.output.configure(xscrollcommand=self.report_horizontal.set)
         footer=ttk.Frame(self.frame);footer.grid(row=5,column=0,sticky='ew',pady=(8,6))
-        self.copy_button=ttk.Button(footer,text='Copy complete report',command=self.copy,state='disabled');self.copy_button.pack(side='left')
-        self.save_button=ttk.Menubutton(footer,text='Save TXT / HTML…',state='disabled');self.save_button.pack(side='left',padx=8)
+        self.copy_button=ttk.Button(footer,text='Copy report',command=self.copy,state='disabled');self.copy_button.pack(side='left')
+        self.save_button=ttk.Menubutton(footer,text='Save report…',state='disabled');self.save_button.pack(side='left',padx=8)
         self.save_menu=tk.Menu(self.save_button,tearoff=False);self.save_button['menu']=self.save_menu
         self.save_menu.add_command(label='Save text report… (Ctrl+S)',command=self.save)
         self.save_menu.add_command(label='Save HTML report…',command=lambda:self.save('html'))
+        self.save_menu.add_command(label='Compact summary — Last 5…',command=lambda:self.save('compact5'))
+        self.save_menu.add_command(label='Compact summary — Last 3…',command=lambda:self.save('compact3'))
         self.recalculate_button=ttk.Button(footer,text='Recalculate',command=self.recalculate,state='disabled');self.recalculate_button.pack(side='left')
         self.open_new_button=ttk.Button(footer,text='Open new result',command=self.open_new)
         help_button=ttk.Menubutton(footer,text='Help');help_button.pack(side='right');self.help_menu=tk.Menu(help_button,tearoff=False);help_button['menu']=self.help_menu
-        for label,command in [('Quick instructions',self.help),('Check installation',lambda:self.start_operation('doctor')),('Open diagnostics',self.open_diagnostics),('Rebuild local features',lambda:self.start_operation('rebuild')),('Restore previous datasets',self.restore),('Dataset status and update details',self.maintenance_details)]:self.help_menu.add_command(label=label,command=command)
-        self.help_menu.add_command(label='Recheck recent events…',command=self.recheck_dialog)
-        self.help_menu.add_command(label='Clear calculation cache…',command=self.clear_calculation_cache)
-        self.help_menu.add_command(label='Model validation',command=self.validation_dialog)
-        self.help_menu.add_command(label='Import from previous installation…',command=self.import_dialog)
-        self.help_menu.add_command(label='Undo latest import…',command=self.undo_import)
-        self.help_menu.add_separator();self.help_menu.add_checkbutton(label='Keep recent analyses and reuse valid results',variable=self.history_setting,command=self.save_history_setting)
-        self.progress=ttk.Progressbar(self.frame,mode='indeterminate');self.progress.grid(row=6,column=0,sticky='ew',pady=(0,4))
+        data_button=ttk.Menubutton(footer,text='Data & maintenance');data_button.pack(side='right',padx=8)
+        self.data_menu=tk.Menu(data_button,tearoff=False);data_button['menu']=self.data_menu
+        self.commands={}
+        def command(menu,key,label,callback):
+            menu.add_command(label=label,command=callback);self.commands[key]=(menu,menu.index('end'))
+        command(self.help_menu,'instructions','Quick instructions',self.help)
+        command(self.help_menu,'validation','Model validation',self.validation_dialog)
+        for key,label,callback in [('update','Update datasets',lambda:self.start_operation('update')),('status','Dataset status and update details',self.maintenance_details),('recheck','Recheck recent events…',self.recheck_dialog),('restore','Restore previous datasets',self.restore)]:command(self.data_menu,key,label,callback)
+        self.data_menu.add_separator()
+        for key,label,callback in [('doctor','Check installation',lambda:self.start_operation('doctor')),('diagnostics','Open diagnostics',self.open_diagnostics),('rebuild','Rebuild local features',lambda:self.start_operation('rebuild')),('cache','Clear calculation cache…',self.clear_calculation_cache)]:command(self.data_menu,key,label,callback)
+        self.data_menu.add_separator()
+        command(self.data_menu,'import','Import from previous installation…',self.import_dialog)
+        command(self.data_menu,'undo','Undo latest import…',self.undo_import)
+        self.progress=ttk.Progressbar(self.frame,mode='indeterminate');self.progress.grid(row=6,column=0,sticky='ew',pady=(0,4));self.frame.rowconfigure(6,minsize=12)
         ttk.Label(self.frame,textvariable=self.status,wraplength=900).grid(row=7,column=0,sticky='w')
         self.stale=tk.StringVar();ttk.Label(self.frame,textvariable=self.stale,foreground='#725200',wraplength=900).grid(row=8,column=0,sticky='w')
         ttk.Label(self.frame,textvariable=self.freshness,style='Hint.TLabel',wraplength=900).grid(row=9,column=0,sticky='w')
@@ -422,18 +466,21 @@ class AnalyzerApp(LegacyAnalyzerApp):
             except tk.TclError:pass
         ui_scale=float(window.tk.call('tk','scaling'))/(96/72)
         window.minsize(min(round(900*ui_scale),window.winfo_screenwidth()-50),min(round(700*ui_scale),window.winfo_screenheight()-90))
-        if self.collapsed:self.inputs.grid_remove()
+        if self.collapsed:self.input_scroll.grid_remove()
         self.change_font();self.controls();self.queue_coverage()
+        self.refresh_button=ttk.Button(footer,text='Refresh and compare',command=self.refresh_dialog,state='disabled');self.refresh_button.pack(side='left',padx=8)
+        self.notebook.bind('<<NotebookTabChanged>>',self.tab_changed,add='+')
         if autostart:window.after(10,lambda:self.start_operation('startup'))
 
-    def table(self,parent,row):
+    def table(self,parent,row,overview=False):
         frame=ttk.Frame(parent);frame.grid(row=row,column=0,sticky='nsew');frame.columnconfigure(0,weight=1);frame.rowconfigure(0,weight=1)
-        tree=ttk.Treeview(frame,columns=('metric','a','b','diff'),show='headings',selectmode='browse',height=8)
-        tree.configure(style=('Overview.Treeview' if parent is self.overview else 'Comparison.Treeview'))
+        tree=ttk.Treeview(frame,columns=('metric','a','b','diff'),show='headings',selectmode='browse',height=12 if overview else 8)
+        tree.configure(style=('Overview.Treeview' if overview else 'Comparison.Treeview'))
         tree.grid(row=0,column=0,sticky='nsew')
         for name,label,width in [('metric','Metric',330),('a','Fighter A',185),('b','Fighter B',185),('diff','A−B',120)]:
             tree.heading(name,text=label);tree.column(name,width=width,minwidth=90,anchor='w' if name=='metric' else 'e',stretch=True)
-        vertical=ttk.Scrollbar(frame,command=tree.yview);vertical.grid(row=0,column=1,sticky='ns');tree.configure(yscrollcommand=vertical.set)
+        vertical=ttk.Scrollbar(frame,command=tree.yview)
+        if not overview:vertical.grid(row=0,column=1,sticky='ns');tree.configure(yscrollcommand=vertical.set)
         horizontal=ttk.Scrollbar(frame,orient='horizontal',command=tree.xview);horizontal.grid(row=1,column=0,sticky='ew');tree.configure(xscrollcommand=horizontal.set)
         tree.bind('<<TreeviewSelect>>',lambda e:self.metric_details(tree));tree.bind('<Return>',lambda e:self.metric_details(tree))
         return tree
@@ -443,31 +490,45 @@ class AnalyzerApp(LegacyAnalyzerApp):
 
     def toggle_inputs(self):
         self.collapsed=not self.collapsed
-        self.inputs.grid_remove() if self.collapsed else self.inputs.grid()
+        self.input_scroll.grid_remove() if self.collapsed else self.input_scroll.grid()
         self.input_toggle.configure(text='Edit matchup' if self.collapsed else 'Hide inputs')
+        self.controls()
 
     def resize(self,event):
         if event.widget is not self.window:return
-        width=max(500,self.window.winfo_width()-45)
+        width=max(240,self.window.winfo_width()-80)
+        if hasattr(self,'input_scroll'):
+            available=max(80,int(self.window.winfo_height()*.28))
+            self.input_scroll.canvas.configure(height=min(available,self.inputs.winfo_reqheight()))
+        if hasattr(self,'title_label'):
+            self.title_label.configure(wraplength=max(180,width-440))
         if hasattr(self,'recent_groups'):self.layout_recent()
-        for parent in (self.frame,self.overview,self.inputs):
+        if hasattr(self,'overview_scroll'):
+            for child in self.overview_scroll.content.winfo_children():
+                if isinstance(child,ttk.Label):child.configure(wraplength=width-35)
+        if hasattr(self,'stat_legend'):
+            for label in self.stat_legend.winfo_children():label.configure(wraplength=max(150,width//2-24))
+        for parent in (self.frame,self.inputs):
             for child in parent.winfo_children():
-                if isinstance(child,ttk.Label):
-                    try:child.configure(wraplength=width)
-                    except tk.TclError:pass
+                if isinstance(child,ttk.Label):child.configure(wraplength=width)
 
     def change_font(self,event=None):
-        points={'Small':9,'Medium':10,'Large':12}.get(self.font_size.get(),10)
+        points=apply_theme(self.window,self.font_size.get())
         self.output.configure(font=('Consolas',points));self.details.configure(font=('Segoe UI',points))
-        if hasattr(self,'summary_text'):self.summary_text.configure(font=('Segoe UI',points))
+        for panel in getattr(self,'bout_panels',{}).values():panel.text.configure(font=('Segoe UI',points))
         if hasattr(self,'visual_panel'):
             self.visual_panel.table.configure(font=('Segoe UI',points));self.visual_panel.points=points;self.visual_panel.draw()
-        from tkinter import font
-        line_height=font.Font(self.window,family='Segoe UI',size=points).metrics('linespace')
-        style=ttk.Style(self.window)
-        for name in ('Treeview','Overview.Treeview','Comparison.Treeview'):style.configure(name,font=('Segoe UI',points),rowheight=line_height+6)
         if self.result:self.fill_table(self.overview_tree,overview_rows(self.result));self.render_comparison()
         if hasattr(self,'recent_groups'):self.layout_recent()
+        if hasattr(self,'matchup_panel'):self.matchup_panel.layout();self.evidence_panel.layout()
+        self.resize(type('Resize',(),{'widget':self.window})())
+
+    def command_state(self,key):
+        menu,index=self.commands[key];return menu.entrycget(index,'state')
+
+    def set_command_state(self,key,state):
+        menu,index=self.commands[key]
+        if menu.entrycget(index,'state')!=state:menu.entryconfigure(index,state=state)
 
     def resize_text(self,delta):
         sizes=['Small','Medium','Large'];index=sizes.index(self.font_size.get()) if self.font_size.get() in sizes else 1
@@ -613,16 +674,30 @@ class AnalyzerApp(LegacyAnalyzerApp):
     def controls(self):
         if not getattr(self,'enhanced',False):return super().controls()
         busy=self.controller.busy;state='normal' if self.ready and not busy else 'disabled'
-        for control in (self.analyze_button,self.compare_button,self.update_button):control.configure(state=state)
+        for control in (self.analyze_button,self.compare_button):control.configure(state=state)
         for control in (self.date_entry,self.today_button,self.calendar_button,self.swap_button,*self.name_boxes.values()):control.configure(state='disabled' if busy else 'normal')
         self.division_box.configure(state='disabled' if busy else 'readonly')
         self.cancel_button.configure(state='normal' if busy and self.controller.cancellable else 'disabled')
+        if busy:
+            if not self.cancel_button.winfo_manager():self.cancel_button.pack(side='left',padx=8)
+            self.operation_hint.set('Cancellation is unavailable during this stage.' if not self.controller.cancellable else '')
+        else:self.cancel_button.pack_forget();self.operation_hint.set('')
+        show_inputs=not self.collapsed or busy or not self.result
+        for control,padding in ((self.analyze_button,0),(self.compare_button,8)):
+            if show_inputs and not control.winfo_manager():control.pack(side='left',padx=padding,before=self.cancel_button if busy else None)
+            elif not show_inputs:control.pack_forget()
+        self.actions.grid() if show_inputs else self.actions.grid_remove()
+        self.input_toggle.configure(style='Primary.TButton' if self.collapsed else 'TButton')
         self.recalculate_button.configure(state='normal' if self.result and self.result.get('calculation_request') and self.ready and not busy else 'disabled')
-        for index in (1,3):self.set_help_entry_state(index,'disabled' if busy else 'normal')
-        self.set_help_entry_state(4,'normal' if self.backup_available and not busy else 'disabled')
-        for index in (6,7):self.set_help_entry_state(index,'normal' if self.ready and not busy else 'disabled')
-        for index in (9,10):self.set_help_entry_state(index,'normal' if self.ready and not busy else 'disabled')
-        self.set_help_entry_state(12,'disabled' if busy and (self.last_request or {}).get('operation') in ('import_history','undo_import') else 'normal')
+        if hasattr(self,'refresh_button'):self.refresh_button.configure(state='normal' if self.result and self.result.get('result_state','complete') in ('complete','comparison') and self.ready and not busy else 'disabled')
+        if hasattr(self,'history_button'):self.history_button.configure(state='normal' if self.history_ready else 'disabled')
+        for key in ('update','recheck','cache','import','undo'):self.set_command_state(key,state)
+        for key in ('doctor','rebuild'):self.set_command_state(key,'disabled' if busy else 'normal')
+        self.set_command_state('restore','normal' if self.backup_available and not busy else 'disabled')
+        history_busy=busy and (self.last_request or {}).get('operation') in ('import_history','undo_import')
+        if self.view_menu.entrycget('Keep recent analyses and reuse valid results','state')!=('disabled' if history_busy else 'normal'):
+            self.view_menu.entryconfigure('Keep recent analyses and reuse valid results',state='disabled' if history_busy else 'normal')
+        self.progress.grid() if busy else self.progress.grid_remove()
         if busy and self.pending_stage and self.pending_stage.get('total'):
             if self.progress_running:self.progress.stop();self.progress_running=False
             total=self.pending_stage['total'];self.progress.configure(mode='determinate',maximum=total,value=self.pending_stage.get('completed',0))
@@ -630,6 +705,9 @@ class AnalyzerApp(LegacyAnalyzerApp):
         elif not busy:self.progress.stop();self.progress_running=False;self.progress.configure(mode='determinate',value=0)
 
     def poll(self):
+        if getattr(self,'poll_id',None):
+            try:self.window.after_cancel(self.poll_id)
+            except tk.TclError:pass
         try:
             for event in self.controller.poll():
                 if event.get('job_id') and event.get('job_id')!=getattr(self.controller,'job_id',None):continue
@@ -638,6 +716,8 @@ class AnalyzerApp(LegacyAnalyzerApp):
                     self.pending_stage=event;self.stage_message='Cancelling safely…' if getattr(self.controller,'cancel_requested',False) else event['message']
                     if event.get('target') and not self.stage_message.startswith(event['target'].title()+':') and not getattr(self.controller,'cancel_requested',False):self.stage_message=event['target'].title()+': '+self.stage_message
                     if event.get('total'):self.stage_message+=f" ({event.get('completed',0)}/{event['total']} {event.get('unit','models')} complete)"
+                elif event['type']=='history_ready':
+                    self.history_ready=True
                 elif event['type'] in ('initial_ready','comparison_ready'):
                     self.preview=event['payload']
                     if not self.viewing_other:self.display_result(self.preview)
@@ -653,6 +733,13 @@ class AnalyzerApp(LegacyAnalyzerApp):
         self.poll_id=self.window.after(150,self.poll)
 
     def handle_terminal(self,event):
+        if getattr(self,'active_refresh',None) and event['type']=='error':
+            if self.preview:
+                self.new_result=dict(self.preview,result_state='cancelled' if event.get('code')=='cancelled' else 'failed')
+                self.open_new_button.configure(text='Open partial report');self.open_new_button.pack(side='left',padx=8)
+            self.active_refresh=None;self.preview=None;self.viewing_other=False
+            self.status.set('Refresh '+('cancelled.' if event.get('code')=='cancelled' else 'failed: '+event.get('message','Unknown error'))+' Original report retained.')
+            return
         if event['type']=='error':
             if self.preview and (self.last_request or {}).get('operation') in ('predict','compare'):
                 self.preview=dict(self.preview,result_state='cancelled' if event['code']=='cancelled' else 'failed')
@@ -694,6 +781,24 @@ class AnalyzerApp(LegacyAnalyzerApp):
                 self.last_import_ui_preferences=self.preference_snapshot()
             messagebox.showinfo('Import history',payload['message'],parent=self.window);return
         if operation in ('predict','compare'):
+            if self.active_refresh:
+                session=self.active_refresh;self.active_refresh=None;self.preview=None
+                from analyzer_refresh import captured_entry
+                from analyzer_comparison import compare_entries
+                try:
+                    newer=self.history.load(payload['history_id']) if payload.get('history_id') else captured_entry(payload)
+                    compared=compare_entries(session['original'],newer)
+                except (OSError,ValueError,TypeError,KeyError) as exc:
+                    self.viewing_other=False;self.new_result=payload;self.open_new_button.pack(side='left',padx=8)
+                    self.status.set('Refresh complete; comparison unavailable: '+str(exc));return
+                self.viewing_other=False
+                if self.result is session['displayed']:
+                    self.display_result(payload);self.comparison_dialog(compared)
+                else:
+                    self.new_result=payload;self.pending_comparison=compared
+                    self.open_new_button.configure(text='Open comparison');self.open_new_button.pack(side='left',padx=8)
+                    self.status.set('Refresh complete. Open comparison when ready.')
+                return
             if self.viewing_other:
                 self.new_result=payload;self.open_new_button.pack(side='left',padx=8);self.status.set('New analysis complete. Click Open new result.')
             else:self.display_result(payload)
@@ -701,28 +806,29 @@ class AnalyzerApp(LegacyAnalyzerApp):
             if not self.collapsed:self.toggle_inputs()
             return
         super().handle_terminal(event)
+        if operation in ('startup','doctor'):self.history_ready=True
         if payload.get('catalogs'):self.catalogs={sex:FighterCatalog.from_payload(value) for sex,value in payload['catalogs'].items()}
         self.history_contexts=payload.get('calculation_fingerprints',{});self.backup_available=payload.get('backup_available',False);self.maintenance_status=payload.get('maintenance_status',{})
         self.refresh_coverage()
-        if operation=='update':self.status.set('Already up to date.' if payload.get('status')=='no_changes' else 'Update complete. Use Help → Dataset status and update details to view captured fights.')
+        if operation=='update':self.status.set('Already up to date.' if payload.get('status')=='no_changes' else 'Update complete. Use Data & maintenance → Dataset status and update details to view captured fights.')
 
     def display_result(self,payload):
         started=time.monotonic();self.result=payload;self.result_text=format_result(payload);self.set_text(self.result_text)
         state=payload.get('result_state','complete');title=payload['fighter_a']+' vs '+payload['fighter_b']
         self.matchup_header.set(title+' · '+str(payload.get('division',''))+' · '+payload['fight_date'])
         self.render_recent(payload)
-        self.visual_panel.show(payload)
-        if state=='complete':
-            description=f"{payload['fighter_a']}: {payload['fighter_a_win_probability']:.1%}     {payload['fighter_b']}: {payload['fighter_b_win_probability']:.1%}\nPredicted winner: {payload['predicted_winner']}\n"
-            description+=('Confidence: '+str(payload.get('confidence_tier')) if 'confidence_tier' in payload else 'Reliability: '+str(payload.get('reliability_label','See full report')))
-            if payload.get('reliability_score') is not None:description+=f" ({payload['reliability_score']}/100)"
-            if 'reliability_label' in payload:description+=' — stability of the probability, not outcome certainty'
-        else:description=('Initial comparison — partial evidence; advanced statistics pending.' if payload.get('quick_comparison') else 'Statistics comparison — no prediction calculated.' if state=='comparison' else 'Comparison ready; prediction running.' if state=='pending' else 'Statistics comparison — prediction '+state+'.')
-        description+='\nGenerated: '+str(payload.get('generated_at','Unknown'))
-        if payload.get('reused'):description+=' · Reused saved analysis'
-        self.summary.set(description);self.result_warning.set('\n'.join(payload.get('coverage_warnings',[]) + payload.get('warnings',[])) or 'Read the full report for model limitations and data support.')
+        self.visual_panel.show(payload,render=self.notebook.select()==str(self.visual_tab))
+        self.recent_form_panel.show(payload)
+        self.matchup_panel.show(payload);self.evidence_panel.show(payload)
+        self.comparison_scroll.canvas.yview_moveto(0)
+        for side in ('a','b'):self.stat_names[side].set(side.upper()+': '+payload['fighter_'+side])
+        description=self.matchup_panel.mode.get()
+        self.summary.set(description)
+        warnings=list(dict.fromkeys(payload.get('coverage_warnings',[])+payload.get('warnings',[])))
+        self.result_warning.set('\n'.join(warnings) or 'Experimental model · review evidence and methodology limitations before interpreting the result.')
         from analyzer_summary import format_summary
         self.matchup_observations.set(format_summary(payload))
+        self.overview_scroll.canvas.yview_moveto(0)
         self.summary_metrics_button.configure(state='normal' if any(x.get('metric_id') for x in payload.get('matchup_summary',{}).get('observations',[])) else 'disabled')
         self.sections=report_sections(payload);self.section_box['values']=['All sections','Summary supporting metrics']+[s['title'] for s in self.sections]
         if self.section.get() not in self.section_box['values']:self.section.set('All sections')
@@ -747,7 +853,7 @@ class AnalyzerApp(LegacyAnalyzerApp):
             lines=max(lines,label.count('\n')+1)
             item=tree.insert('','end',values=(label,row['a'],row['b'],row['difference']));self.rows[(str(tree),item)]=row
         line_height=font.Font(self.window,family='Segoe UI',size=points).metrics('linespace')
-        ttk.Style(self.window).configure(tree.cget('style'),rowheight=line_height*lines+6)
+        ttk.Style(self.window).configure(tree.cget('style'),rowheight=line_height*lines+10)
 
     def render_comparison(self):
         if not hasattr(self,'comparison_tree'):return
@@ -770,12 +876,7 @@ class AnalyzerApp(LegacyAnalyzerApp):
         if tree is self.overview_tree:self.notebook.select(self.comparison)
 
     def draw_probability(self):
-        if not hasattr(self,'probability'):return
-        self.probability.delete('all')
-        if not self.result or self.result.get('result_state','complete')!='complete':return
-        width=max(100,self.probability.winfo_width());pa=self.result['fighter_a_win_probability']
-        self.probability.create_rectangle(0,0,width*pa,30,fill='#d5e9f8',outline='');self.probability.create_rectangle(width*pa,0,width,30,fill='#e6e8ee',outline='')
-        self.probability.create_text(8,15,anchor='w',text=f"A {pa:.1%}",font=('Segoe UI',10,'bold'));self.probability.create_text(width-8,15,anchor='e',text=f"B {1-pa:.1%}",font=('Segoe UI',10,'bold'))
+        self.matchup_panel.draw()
 
     def update_stale(self):
         if not hasattr(self,'stale') or not self.result:return
@@ -786,12 +887,18 @@ class AnalyzerApp(LegacyAnalyzerApp):
 
     def save(self,report_format='txt'):
         if not self.result:return
-        extension='.html' if report_format=='html' else '.txt'
+        compact=report_format in ('compact3','compact5')
+        html_format=report_format=='html' or compact
+        extension='.html' if html_format else '.txt'
         filename=Path(result_filename(self.result)).with_suffix(extension).name
-        path=filedialog.asksaveasfilename(parent=self.window,title='Save HTML report' if report_format=='html' else 'Save text report',initialfile=filename,initialdir=self.preferences.get('save_directory',str(Path.home()/'Documents')),defaultextension=extension,filetypes=[('HTML report','*.html')] if report_format=='html' else [('Text files','*.txt')],confirmoverwrite=True)
+        if compact:filename=Path(filename).stem+' — compact Last '+report_format[-1]+'.html'
+        path=filedialog.asksaveasfilename(parent=self.window,title='Save compact summary' if compact else 'Save HTML report' if html_format else 'Save text report',initialfile=filename,initialdir=self.preferences.get('save_directory',str(Path.home()/'Documents')),defaultextension=extension,filetypes=[('HTML report','*.html')] if html_format else [('Text files','*.txt')],confirmoverwrite=True)
         if not path:return
         try:
-            value=format_html(self.result) if Path(path).suffix.lower() in ('.html','.htm') else self.result_text
+            if compact:
+                from analyzer_compact_report import compact_html
+                value=compact_html(self.result,report_format[-1])
+            else:value=format_html(self.result) if Path(path).suffix.lower() in ('.html','.htm') else self.result_text
             Path(path).write_text(value,encoding='utf-8',newline='\n');self.preferences['save_directory']=str(Path(path).parent);self.status.set('Results saved to '+str(path))
         except OSError as exc:messagebox.showerror('Could not save',str(exc)+'\nChoose a writable folder.',parent=self.window)
 
@@ -805,27 +912,108 @@ class AnalyzerApp(LegacyAnalyzerApp):
         if request.get('workers')=='automatic':request.pop('workers')
         request.update(force_recalculate=True,use_cache=False);self.viewing_other=False;self.preview=None;self.start(request)
 
+    def tab_changed(self,event=None):
+        if self.notebook.select()==str(self.visual_tab) and getattr(self.visual_panel,'dirty',False):
+            self.visual_panel.dirty=False;self.visual_panel.draw()
+
+    def start(self,request):
+        if self.controller.busy:return
+        if request.get('operation') in ('predict','compare'):
+            self.pending_comparison=None;self.new_result=None
+            self.open_new_button.configure(text='Open new result');self.open_new_button.pack_forget()
+        return super().start(request)
+
+    def open_recent_form(self):
+        self.notebook.select(self.comparison)
+        if not self.recent_form_panel.expanded:self.recent_form_panel.toggle()
+        self.window.update_idletasks()
+        content=self.comparison_scroll.content
+        self.comparison_scroll.canvas.yview_moveto(max(0,self.recent_form_panel.winfo_y()-12)/max(1,content.winfo_height()))
+        self.recent_form_panel.toggle_button.focus_set()
+
+    def refresh_dialog(self,entry=None):
+        if self.controller.busy or not self.ready:
+            self.status.set('Wait until the current operation and dataset checks finish before refreshing.');return
+        from analyzer_refresh import captured_entry,refresh_request
+        import copy
+        try:
+            if entry is None:
+                if not self.result:return
+                try:entry=self.history.load(self.result['history_id']) if self.result.get('history_id') else captured_entry(self.result)
+                except (OSError,ValueError,KeyError):entry=captured_entry(self.result)
+            entry=copy.deepcopy(entry);refresh_request(entry)
+        except (ValueError,TypeError,KeyError) as exc:messagebox.showinfo('Refresh unavailable',str(exc),parent=self.window);return
+        dialog=tk.Toplevel(self.window);dialog.title('Refresh and compare');dialog.transient(self.window)
+        frame=ttk.Frame(dialog,padding=16);frame.pack(fill='both',expand=True)
+        p=entry['payload']
+        ttk.Label(frame,text=p['fighter_a']+' vs '+p['fighter_b']+'\nOriginal generated '+readable_timestamp(p.get('generated_at','')),wraplength=540).pack(anchor='w')
+        use_today=tk.BooleanVar(value=False)
+        ttk.Radiobutton(frame,text='Keep original matchup date: '+p['fight_date'],variable=use_today,value=False).pack(anchor='w',pady=(12,4))
+        ttk.Radiobutton(frame,text="Use today's matchup date: "+dt.date.today().isoformat(),variable=use_today,value=True).pack(anchor='w')
+        ttk.Label(frame,text='Uses installed datasets and the current app. Matching calculation work may be reused; a new result is captured. Dataset downloads are available separately in Data & maintenance.',wraplength=540).pack(anchor='w',pady=12)
+        def begin():
+            try:
+                request=refresh_request(entry,use_today.get())
+                catalog=self.catalogs[request['sex']]
+                for side in ('a','b'):catalog.resolve(request['fighter_'+side],request['fighter_'+side+'_id'])
+            except (ValueError,TypeError,KeyError) as exc:messagebox.showerror('Could not refresh',str(exc),parent=dialog);return
+            if not self.result or self.result.get('history_id')!=entry.get('id'):
+                self.display_result(dict(p,history_id=entry.get('id')))
+            self.active_refresh=dict(original=entry,displayed=self.result)
+            self.viewing_other=True;self.preview=None;self.pending_comparison=None;dialog.destroy()
+            self.start(request)
+            if not self.controller.busy:self.active_refresh=None;self.viewing_other=False
+        buttons=ttk.Frame(frame);buttons.pack(anchor='w')
+        ttk.Button(buttons,text='Refresh and compare',command=begin,style='Primary.TButton').pack(side='left')
+        ttk.Button(buttons,text='Cancel',command=dialog.destroy).pack(side='left',padx=8)
+        dialog.bind('<Escape>',lambda e:dialog.destroy())
+
     def open_new(self):
+        if self.pending_comparison:
+            compared=self.pending_comparison;self.pending_comparison=None
+            if self.new_result:self.display_result(self.new_result)
+            self.new_result=None;self.open_new_button.pack_forget();self.open_new_button.configure(text='Open new result');self.comparison_dialog(compared);return
         if self.new_result:self.viewing_other=False;self.display_result(self.new_result);self.new_result=None;self.open_new_button.pack_forget()
 
     def show_history(self):
+        if not self.history_ready:
+            self.status.set('Saved reports become available after interrupted operations are checked.');return
         dialog=tk.Toplevel(self.window);dialog.title('Recent analyses');dialog.geometry('880x430');dialog.transient(self.window)
         frame=ttk.Frame(dialog,padding=12);frame.pack(fill='both',expand=True);frame.columnconfigure(0,weight=1);frame.rowconfigure(1,weight=1)
         ttk.Label(frame,text='Completed analyses stored on this computer. Outdated results remain viewable.').grid(row=0,column=0,sticky='w')
         tree=ttk.Treeview(frame,columns=('matchup','division','date','type','created','status'),show='headings',selectmode='extended');tree.grid(row=1,column=0,sticky='nsew',pady=8)
-        for column,label,width in [('matchup','Matchup',280),('division','Division',100),('date','Fight date',90),('type','Type',90),('created','Created',150),('status','Status',80)]:tree.heading(column,text=label);tree.column(column,width=width,minwidth=70)
+        for column,label,width in [('matchup','Matchup',280),('division','Division',100),('date','Fight date',90),('type','Type',90),('created','Created',260),('status','Status',80)]:tree.heading(column,text=label);tree.column(column,width=width,minwidth=70)
         scrollbar=ttk.Scrollbar(frame,command=tree.yview);scrollbar.grid(row=1,column=1,sticky='ns');tree.configure(yscrollcommand=scrollbar.set)
+        horizontal=ttk.Scrollbar(frame,orient='horizontal',command=tree.xview);horizontal.grid(row=2,column=0,sticky='ew');tree.configure(xscrollcommand=horizontal.set)
         entries={}
+        loading=tk.StringVar(value='Loading saved analysis metadata…')
+        ttk.Label(frame,textvariable=loading).grid(row=4,column=0,sticky='w',pady=4)
+        generation=[0]
         def refresh():
             tree.delete(*tree.get_children());entries.clear()
-            try:
-                for entry in self.history.entries():
-                    entries[entry['id']]=entry;p=entry['payload'];sex=entry['request']['sex'];current=fingerprint(entry['context'])==self.history_contexts.get(sex)
-                    tree.insert('','end',iid=entry['id'],values=(p['fighter_a']+' vs '+p['fighter_b'],p.get('division',''),p['fight_date'],entry['request']['operation'],entry['created_at'],'Current' if current else 'Outdated'))
-            except OSError as exc:messagebox.showerror('History unavailable',str(exc),parent=dialog)
+            import queue,threading
+            generation[0]+=1;token=generation[0];completed=queue.Queue(maxsize=1)
+            loading.set('Loading saved analysis metadata…')
+            def read():
+                try:completed.put((self.history.summaries(),None))
+                except (OSError,ValueError,TypeError,KeyError) as exc:completed.put(([],str(exc)))
+            def deliver():
+                try:
+                    if not dialog.winfo_exists() or generation[0]!=token:return
+                    try:values,error=completed.get_nowait()
+                    except queue.Empty:dialog.after(40,deliver);return
+                    if error:loading.set('History unavailable: '+error);return
+                    for entry in values:
+                        entries[entry['id']]=entry;p=entry['payload'];sex=entry['request']['sex'];current=entry['context_fingerprint']==self.history_contexts.get(sex)
+                        tree.insert('','end',iid=entry['id'],values=(p['fighter_a']+' vs '+p['fighter_b'],p.get('division',''),p['fight_date'],entry['request']['operation'],readable_timestamp(entry['created_at']),'Checking' if not self.history_contexts else 'Current' if current else 'Outdated'))
+                    loading.set(str(len(values))+' saved analyses. Double-click or select Open to view a report.')
+                except tk.TclError:return
+            threading.Thread(target=read,daemon=True).start();dialog.after(40,deliver)
         def open_entry(event=None):
             if tree.selection():
-                entry=entries[tree.selection()[0]];self.viewing_other=self.controller.busy;self.display_result(dict(entry['payload'],history_id=entry['id']));dialog.destroy()
+                try:entry=self.history.load(tree.selection()[0])
+                except (OSError,ValueError,KeyError,TypeError) as exc:messagebox.showerror('History unavailable',str(exc),parent=dialog);return
+                self.viewing_other=self.controller.busy;self.display_result(dict(entry['payload'],history_id=entry['id']));dialog.destroy()
         def remove():
             if self.controller.busy and (self.last_request or {}).get('operation') in ('import_history','undo_import'):
                 messagebox.showinfo('Import running','Wait for the history import to finish before deleting entries.',parent=dialog);return
@@ -838,16 +1026,22 @@ class AnalyzerApp(LegacyAnalyzerApp):
             if messagebox.askyesno('Clear history','Delete all locally saved analyses?',parent=dialog):
                 try:self.history.clear();refresh()
                 except OSError as exc:messagebox.showerror('Could not clear history',str(exc),parent=dialog)
-        buttons=ttk.Frame(frame);buttons.grid(row=2,column=0,sticky='w')
+        buttons=ttk.Frame(frame);buttons.grid(row=3,column=0,sticky='w',pady=(8,0))
         def compare_versions():
             selected=tree.selection()
             if len(selected)!=2:messagebox.showinfo('Select two analyses','Use Ctrl+click to select two saved versions of the same matchup.',parent=dialog);return
             try:
                 from analyzer_comparison import compare_entries
-                pair=sorted((entries[i] for i in selected),key=lambda e:e['created_at'])
+                pair=sorted((self.history.load(i) for i in selected),key=lambda e:e['created_at'])
                 self.comparison_dialog(compare_entries(*pair))
             except ValueError as exc:messagebox.showerror('Cannot compare these analyses',str(exc),parent=dialog)
         ttk.Button(buttons,text='Compare versions',command=compare_versions).pack(side='left',padx=(0,8))
+        def refresh_selected():
+            if len(tree.selection())!=1:messagebox.showinfo('Select one analysis','Choose one saved analysis to refresh.',parent=dialog);return
+            try:entry=self.history.load(tree.selection()[0])
+            except (OSError,ValueError,TypeError,KeyError) as exc:messagebox.showerror('History unavailable',str(exc),parent=dialog);return
+            dialog.destroy();self.refresh_dialog(entry)
+        ttk.Button(buttons,text='Refresh and compare',command=refresh_selected).pack(side='left',padx=8)
         for label,command in [('Open',open_entry),('Delete selected',remove),('Clear history',clear),('Close',dialog.destroy)]:ttk.Button(buttons,text=label,command=command).pack(side='left',padx=(0,8))
         tree.bind('<Return>',open_entry);tree.bind('<Double-1>',open_entry);dialog.bind('<Escape>',lambda e:dialog.destroy());refresh();tree.focus_set()
 
@@ -856,12 +1050,24 @@ class AnalyzerApp(LegacyAnalyzerApp):
         try:atomic_json(self.preferences_path,self.preferences)
         except OSError as exc:messagebox.showerror('Setting could not be saved',str(exc),parent=self.window)
 
+    def evidence_dialog(self):
+        if not self.result:return
+        from analyzer_evidence import format_evidence
+        dialog=tk.Toplevel(self.window);dialog.title('Evidence quality');dialog.geometry('780x480');dialog.transient(self.window)
+        dialog.columnconfigure(0,weight=1);dialog.rowconfigure(0,weight=1)
+        view=ScrolledText(dialog,wrap='word',font=('Segoe UI',SIZES.get(self.font_size.get(),10)));view.grid(row=0,column=0,sticky='nsew',padx=12,pady=12)
+        view.insert('1.0',format_evidence(self.result));view.configure(state='disabled')
+        actions=ttk.Frame(dialog);actions.grid(row=1,column=0,sticky='ew',padx=12,pady=(0,12))
+        ttk.Button(actions,text='Model validation',command=self.validation_dialog).pack(side='left')
+        ttk.Button(actions,text='Close',command=dialog.destroy).pack(side='right')
+        dialog.bind('<Escape>',lambda event:dialog.destroy());view.focus_set()
+
     def validation_dialog(self):
         from analyzer_validation import load_report,format_validation
         try:text=format_validation(load_report(self.root),self.root)
         except (OSError,ValueError,KeyError) as exc:text='Validation report could not be read: '+str(exc)
         dialog=tk.Toplevel(self.window);dialog.title('Model validation');dialog.geometry('850x650');dialog.transient(self.window)
-        output=ScrolledText(dialog,wrap='word',font=('Segoe UI',10));output.pack(fill='both',expand=True,padx=12,pady=12)
+        output=ScrolledText(dialog,wrap='word',font=('Segoe UI',SIZES.get(self.font_size.get(),10)));output.pack(fill='both',expand=True,padx=12,pady=12)
         output.insert('1.0',text);output.configure(state='disabled')
         charts=self.root/'docs/MODEL_VALIDATION.html'
         if charts.is_file():
@@ -879,7 +1085,7 @@ class AnalyzerApp(LegacyAnalyzerApp):
             value=preview(self.root,folder)
         except (OSError,ValueError,TypeError) as exc:messagebox.showerror('Import could not be reviewed',str(exc),parent=self.window);return
         dialog=tk.Toplevel(self.window);dialog.title('Review previous analyses');dialog.geometry('780x500');dialog.transient(self.window)
-        output=ScrolledText(dialog,wrap='word',font=('Segoe UI',10));output.pack(fill='both',expand=True,padx=12,pady=12)
+        output=ScrolledText(dialog,wrap='word',font=('Segoe UI',SIZES.get(self.font_size.get(),10)));output.pack(fill='both',expand=True,padx=12,pady=12)
         counts=value['counts'];output.insert('1.0','Ready to import: '+str(counts['valid'])+'\n'+', '.join(k+': '+str(v) for k,v in counts.items() if k!='valid')+'\n\n')
         for row in value['rows']:output.insert('end',row['name']+' — '+row['status']+(' — '+row['reason'] if row.get('reason') else '')+'\n')
         output.configure(state='disabled');prefs=tk.BooleanVar(value=False)
@@ -947,7 +1153,7 @@ class AnalyzerApp(LegacyAnalyzerApp):
     def corrections_dialog(self,value):
         dialog=tk.Toplevel(self.window);dialog.title('Review recorded-fight corrections');dialog.geometry('900x560');dialog.transient(self.window)
         text=ScrolledText(dialog,wrap='word',padx=12,pady=12);text.pack(fill='both',expand=True)
-        lines=['Checked '+value['start']+' through '+value['end'],'Preview captured: '+value['created_at']]
+        lines=['Checked '+value['start']+' through '+value['end'],'Preview captured: '+readable_timestamp(value['created_at'])]
         for sex,capture in value['captures'].items():
             lines+=['',sex.title()+' events:']+[e['event_date']+' '+e['event_name'] for e in capture['events']]
         for c in value['changes']:
@@ -996,7 +1202,7 @@ class AnalyzerApp(LegacyAnalyzerApp):
                 for field,label in [('events_inspected','Events inspected'),('decisive_fights','Decisive bouts'),('draws','Draws'),('no_contests','No contests'),('corrected_fights','Corrected bouts'),('binary_training_rows_added','Binary training rows added'),('binary_training_rows_removed','Binary training rows removed'),('binary_training_rows_net','Binary training row net change'),('data_through','Data through')]:
                     if field in value:text+='\n'+label+': '+str(value[field])
         dialog=tk.Toplevel(self.window);dialog.title('Dataset status and update details');dialog.geometry('650x380');dialog.transient(self.window)
-        details=ScrolledText(dialog,wrap='word',font=('Segoe UI',10),padx=12,pady=12)
+        details=ScrolledText(dialog,wrap='word',font=('Segoe UI',SIZES.get(self.font_size.get(),10)),padx=12,pady=12)
         details.pack(fill='both',expand=True);details.insert('1.0',text);details.configure(state='disabled')
         buttons=ttk.Frame(dialog);buttons.pack(pady=8)
         if status.get('last_changed_transaction') or status.get('transaction'):
@@ -1014,7 +1220,7 @@ class AnalyzerApp(LegacyAnalyzerApp):
         self.recent_holder=ttk.Frame(self.recent_canvas);self.recent_window=self.recent_canvas.create_window((0,0),window=self.recent_holder,anchor='nw')
         self.recent_holder.bind('<Configure>',lambda e:self.recent_canvas.configure(scrollregion=self.recent_canvas.bbox('all')))
         self.recent_canvas.bind('<Configure>',lambda e:(self.recent_canvas.itemconfigure(self.recent_window,width=e.width),self.layout_recent()))
-        self.recent_groups={};self.recent_trees={};self.recent_notes={};self.recent_titles={}
+        self.recent_groups={};self.recent_trees={};self.recent_notes={};self.recent_titles={};self.bout_panels={}
         for side in ('fighter_a','fighter_b'):
             group=ttk.Frame(self.recent_holder,padding=(0,0,8,8));group.columnconfigure(0,weight=1)
             title=tk.StringVar(value=side.replace('_',' ').title());self.recent_titles[side]=title
@@ -1026,6 +1232,10 @@ class AnalyzerApp(LegacyAnalyzerApp):
             horizontal=ttk.Scrollbar(group,orient='horizontal',command=tree.xview);horizontal.grid(row=2,column=0,sticky='ew');tree.configure(xscrollcommand=horizontal.set)
             note=tk.StringVar(value='No analysis selected.');self.recent_notes[side]=note
             ttk.Label(group,textvariable=note,wraplength=460).grid(row=3,column=0,sticky='w',pady=6)
+            from analyzer_context_widgets import BoutDetails
+            panel=BoutDetails(group);panel.grid(row=4,column=0,sticky='ew');self.bout_panels[side]=panel
+            tree.bind('<Return>',lambda e,side=side:self.toggle_bout(side))
+            tree.bind('<Double-1>',lambda e,side=side:self.toggle_bout(side))
             tree.bind('<<TreeviewSelect>>',lambda e,side=side:self.recent_selection(side))
             tree.bind('<FocusIn>',lambda e,side=side:self.recent_focus(side))
             tree.bind('<MouseWheel>',self.recent_scroll)
@@ -1059,6 +1269,8 @@ class AnalyzerApp(LegacyAnalyzerApp):
             self.recent_titles[side].set(payload[side]+f' · {len(rows)} recorded bouts' if history else payload[side])
             for i,row in enumerate(rows):tree.insert('','end',iid=str(i),values=display_row(row))
             self.recent_notes[side].set('Select a bout to see event, round and time.' if rows else 'No eligible recorded UFC fights before this date.' if history else OLD_HISTORY_MESSAGE)
+            message='Bout details will be captured when this analysis finishes.' if payload.get('result_state')=='pending' or payload.get('quick_comparison') else 'Bout details were not captured before this operation stopped. Run a new analysis to include them.' if payload.get('result_state') in ('failed','cancelled') else 'Not recorded in this saved analysis. Refresh to capture these details.'
+            self.bout_panels[side].reset(message);self.bout_panels[side].button.configure(state='disabled')
 
     def recent_selection(self,side):
         selection=self.recent_trees[side].selection()
@@ -1068,6 +1280,13 @@ class AnalyzerApp(LegacyAnalyzerApp):
         row=rows[int(selection[0])]
         _,opponent,result,division,method=display_row(row)
         self.recent_notes[side].set(opponent+' · '+result+' · '+division+' · '+method+'\nEvent: '+str(row.get('event_name') or 'N/A')+' · Round: '+str(row.get('round') or 'N/A')+' · Time: '+str(row.get('time') or 'N/A'))
+        bouts=self.result.get('bout_details',{}).get(side,{}).get('bouts',[])
+        self.bout_panels[side].button.configure(state='normal')
+        self.bout_panels[side].show(next((b for b in bouts if b['fight_id']==row['fight_id']),None))
+
+    def toggle_bout(self,side):
+        if not self.recent_trees[side].selection():return 'break'
+        self.recent_selection(side);return self.bout_panels[side].toggle()
 
     def maintenance_error_dialog(self,event):
         error=dict(event.get('maintenance_error') or {})
@@ -1080,7 +1299,7 @@ class AnalyzerApp(LegacyAnalyzerApp):
         names=[error.get('fighter_a'),error.get('fighter_b')]
         if any(names):text+='\nFight: '+' vs '.join(x or 'Unknown fighter' for x in names)
         text+='\n\n'+error['next_step']+'\n\n'+STATES.get(error.get('installation_state'),'Open details to check the transaction state.')
-        details=ScrolledText(dialog,wrap='word',font=('Segoe UI',11),padx=12,pady=12);details.pack(fill='both',expand=True);details.insert('1.0',text);details.configure(state='disabled')
+        details=ScrolledText(dialog,wrap='word',font=('Segoe UI',SIZES.get(self.font_size.get(),10)),padx=12,pady=12);details.pack(fill='both',expand=True);details.insert('1.0',text);details.configure(state='disabled')
         buttons=ttk.Frame(dialog,padding=10);buttons.pack(fill='x')
         request=dict(self.last_request or {})
         def retry():
@@ -1091,7 +1310,7 @@ class AnalyzerApp(LegacyAnalyzerApp):
         def view():
             path=Path(error.get('diagnostics_path') or '')
             if path.is_file() or path.is_dir():os.startfile(path)
-            else:messagebox.showinfo('Details unavailable','This diagnostic file is no longer available. Use Help → Open diagnostics.',parent=dialog)
+            else:messagebox.showinfo('Details unavailable','This diagnostic file is no longer available. Use Data & maintenance → Open diagnostics.',parent=dialog)
         ttk.Button(buttons,text='View details',command=view).pack(side='left',padx=(0,8))
         def copy():
             self.window.clipboard_clear();self.window.clipboard_append(diagnostic_text(error,VERSION))
@@ -1124,7 +1343,7 @@ class AnalyzerApp(LegacyAnalyzerApp):
         ttk.Button(dialog,text='Close',command=dialog.destroy).pack(pady=10);dialog.bind('<Escape>',lambda e:dialog.destroy())
 
     def help(self):
-        messagebox.showinfo('Quick instructions','Choose a division, date and two fighters. Suggestions appear as you type.\n\nAnalyze prepares statistics and then trains locally; Compare statistics only skips prediction training. Read Overview, browse Fighter comparison, or open the complete Full report.\n\nCopy and Save include the complete displayed report. Save supports TXT and offline HTML. Recent analyses keeps the latest 50 completed results and reuses identical valid results. Recalculate runs again.\n\nDataset updates need internet. Use Help for status, diagnostics, rebuild and recovery.\n\nKeyboard: Ctrl+Enter analyzes; Ctrl+S saves; Ctrl+Shift+C copies; Ctrl+F finds a metric; Ctrl+Plus/Minus changes text size.',parent=self.window)
+        messagebox.showinfo('Quick instructions','Choose a division, date and two fighters. Suggestions appear as you type.\n\nAnalyze prepares statistics and then trains locally; Compare statistics only skips prediction training. Read Overview, browse Statistics and Charts, or open the complete Report.\n\nCopy and Save include the complete displayed report. Save supports TXT and offline HTML. Recent analyses keeps the latest 50 completed results and reuses identical valid results. Recalculate bypasses saved results and the calculation cache.\n\nDataset updates need internet. Use Data & maintenance for updates, status, diagnostics, rebuild and recovery. View contains text size and history preferences.\n\nKeyboard: Ctrl+Enter analyzes; Ctrl+S saves; Ctrl+Shift+C copies; Ctrl+F finds a metric; Ctrl+Plus/Minus changes text size.',parent=self.window)
 
     def destroy(self):
         if getattr(self,'enhanced',False):

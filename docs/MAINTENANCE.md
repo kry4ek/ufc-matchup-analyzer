@@ -2,17 +2,17 @@
 
 ## Recheck recorded events
 
-**Help → Recheck recent events** fetches an inclusive completed-event range (default 90 days, maximum 20 events) and retains a correction preview. It reports the actual selected events and field-level differences. Oversized ranges, missing known bouts, malformed captures and conflicting identities stop the operation; nothing is deleted because a source response omitted a bout.
+**Data & maintenance → Recheck recent events** fetches an inclusive completed-event range (default 90 days, maximum 20 events) and retains a correction preview. It reports the actual selected events and field-level differences. Oversized ranges, missing known bouts, malformed captures and conflicting identities stop the operation; nothing is deleted because a source response omitted a bout.
 
 **Apply captured corrections** validates the preview digest and baseline dataset hashes under the operation lock, replaces complete paired source records, rebuilds affected advanced/Bayesian features, validates and installs both changed targets atomically. It uses the captured source rather than fetching again. Windows interrupted-transaction recovery and **Restore previous datasets** also apply to corrections. The women's advanced rows are rebuilt from the earliest changed old/new event date onward before Bayesian rebuilding.
 
 Correction summaries distinguish bouts corrected/added, binary rows added, binary rows removed, and signed net change. Last recheck time/range are recorded separately from the last data change. Historical cutoffs exclude later event dates but use the installed source; they do not reconstruct what the source reported on that historical day.
 
-Prepared calculations are stored separately under `.runtime/compute_cache`, bounded to 1 GiB. Changed source contents, dates, settings, implementation or runtime fingerprints prevent incompatible reuse. Clear the calculation cache through Help if needed; this does not delete saved analyses or recovery backups.
+Prepared calculations are stored separately under `.runtime/compute_cache`, bounded to 1 GiB. Changed source contents, dates, settings, implementation or runtime fingerprints prevent incompatible reuse. Clear the calculation cache through Data & maintenance if needed; this does not delete saved analyses or recovery backups.
 
 Portable users click **Update datasets**. It automatically updates both models using private staging, audits, rebuilding of changed data and validation before installation. No changes means no unnecessary rebuild. Failures preserve installed data. Progress and elapsed time are shown; cancellation stops before commit. Once committing starts, allow it to finish.
 
-The footer refreshes dates and fighter suggestions after success. **Help → Rebuild local features** works offline. **Help → Restore previous datasets** undoes the latest successful update/rebuild after confirmation. Startup checks unfinished journals and recovers inconsistent data before analysis. A still-running maintenance process blocks recovery.
+The footer refreshes dates and fighter suggestions after success. **Data & maintenance → Rebuild local features** works offline. **Data & maintenance → Restore previous datasets** undoes the latest successful update/rebuild after confirmation. Startup checks unfinished journals and recovers inconsistent data before analysis. A still-running maintenance process blocks recovery.
 
 The GUI checks free disk space, retains the latest recoverable backup and at most ten recent audit transactions (plus the retained backup's transaction), and bounds job/session logs. Data lives under `app` in the portable folder. Never delete or move it during an operation.
 
@@ -26,7 +26,7 @@ The following CLI workflow is for source users. Use `run.bat` on Windows; macOS/
 
 ## Status, backups and saved analyses
 
-**Help → Dataset status and update details** opens a selectable status view. It distinguishes data-through dates, the last successful online update check and the last successful data change. An unchanged update advances the check time without claiming new data. A rebuild does not count as an online check. Restoration records a data change. Successful-operation details persist when the app closes.
+**Data & maintenance → Dataset status and update details** opens a selectable status view. It distinguishes data-through dates, the last successful online update check and the last successful data change. An unchanged update advances the check time without claiming new data. A rebuild does not count as an online check. Restoration records a data change. Successful-operation details persist when the app closes.
 
 The view includes captured decisive bouts, draws, no-contests and binary training rows added. **View updated fights** lists captured bouts and training eligibility for the latest update with changes. The detailed list is retained with its transaction and recoverable backup. If an older audit has been pruned, the view explains its unavailability. Captured fights, fighter-stat rows and mirrored training rows are separate counts. CLI dry-runs report proposed binary rows and never claim installation.
 
@@ -74,6 +74,6 @@ Dataset checksums after a valid update are recorded in `.runtime/local_dataset_s
 
 Algorithm changes require separate evaluation, leakage-safe validation, and an explicit model-version decision. They are not promoted by a successful data update.
 
-In v0.6, use Help → Import from previous installation after the new app is ready. Close the previous app, select its extracted folder, review the counts and choose the analyses to import. Display preferences are optional. The importer preserves current records and history-storage settings; it does not copy datasets, caches or executable files. Help → Undo latest import removes only unchanged imported records and restores matching preferences. Keep the original installation until you have checked the imported reports.
+Use Data & maintenance → Import from previous installation after the new app is ready. Close the previous app, select its extracted folder, review the counts and choose the analyses to import. Display preferences are optional. The importer preserves current records and history-storage settings; it does not copy datasets, caches or executable files. Data & maintenance → Undo latest import removes only unchanged imported records and restores matching preferences. Keep the original installation until you have checked the imported reports.
 
 Help → Model validation presents a dated, offline report. A changed dataset or engine is identified as differing from the evaluated snapshot. The v0.6 report records an unresolved women-model fold defect and limited retrospective scoring; it does not clear the methodology gate.

@@ -3271,7 +3271,7 @@ def comparison_from_prepared(prepared):
     p = prepared
     result = dict(fighter_a=p['fighter_a'], fighter_b=p['fighter_b'],
                   fight_date=p['fight_date'].strftime('%Y-%m-%d'), division=p['args'].division,
-                  model_version='v1_current_ensemble', result_state='comparison',
+                  model_version='v2_chronological_calibrated_ensemble', result_state='comparison',
                   warnings=list(p['manual_profile_warnings']))
     for side in ('a', 'b'):
         snapshot = p['snapshot_'+side]
@@ -3312,24 +3312,19 @@ def predict_prepared_matchup(prepared, progress=None):
     X_pred_forward = pred_row_forward[feature_cols]
     X_pred_reverse = pred_row_reverse[feature_cols]
 
+    from chronological_ensemble import fit_ensemble, POLICY
     cached_models = prepared.get('cached_models')
     if cached_models:
-        pipelines, ensemble_weights = cached_models
-        notify("cache", "Using a compatible fitted women's ensemble")
+        pipelines, ensemble_weights, fold_audit = cached_models
+        notify("cache", "Using a compatible chronological women's ensemble")
     else:
-        models = build_models(y_train)
-        pipelines = {
-            name: build_model_pipeline(model, numeric_features, categorical_features)
-            for name, model in models.items()
-        }
-        notify("cross_validation", "Cross-validating women’s ensemble weights")
-        ensemble_weights = compute_model_weights(pipelines, X_train, y_train)
+        pipelines, ensemble_weights, fold_audit = fit_ensemble(
+            model_train_df, feature_cols, numeric_features, categorical_features, build_model_pipeline, progress=notify)
+    prepared['fitted_models'] = (pipelines, ensemble_weights, fold_audit)
     predictions = []
 
     for model_name, pipeline in pipelines.items():
-        if not cached_models:
-            notify("training", "Fitting women’s model: "+model_name, completed=len(predictions), total=len(pipelines))
-            pipeline.fit(X_train, y_train)
+        # Already fitted using disjoint chronological calibration.
 
         # Forward: fighter A vs fighter B.
         prob_a_forward = float(pipeline.predict_proba(X_pred_forward)[:, 1][0])
@@ -3354,7 +3349,6 @@ def predict_prepared_matchup(prepared, progress=None):
             }
         )
 
-    prepared['fitted_models'] = (pipelines, ensemble_weights)
     notify("prediction", "Combining forward/reverse estimates and reliability")
     pred_df = pd.DataFrame(predictions)
     base_probs = pred_df["fighter_a_win_probability"].astype(float)
@@ -3537,6 +3531,8 @@ def predict_prepared_matchup(prepared, progress=None):
         ensemble_weights=ensemble_weights,
         pred_row_forward=pred_row_forward,
     )
+    summary["model_version"] = POLICY
+    summary["fold_audit"] = fold_audit
     for side, fighter in (("a", fighter_a), ("b", fighter_b)):
         history_dates = hist_stats.loc[hist_stats["fighter"] == fighter, "event_date"].dropna()
         summary[f"fighter_{side}_comparison"]["history_max_event_date_before"] = (
